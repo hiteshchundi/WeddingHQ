@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed":"#ffdbd0","on-surface-variant":"#C9C2B7","outline-variant":"#c4c8be","text-secondary-light":"#A8A296","primary":"#7D9274","tertiary-fixed-dim":"#ccc6b9","background":"#1E1D1B","on-tertiary":"#ffffff","on-secondary":"#ffffff","border-dark":"#383531","surface-variant":"#e6e2de","on-primary-fixed-variant":"#3a4b35","surface-container-highest":"#413C36","illustration-rose":"#B87B7C","on-primary-container":"#dff3d4","on-secondary-fixed":"#390c00","primary-fixed-dim":"#b9ccaf","surface-bright":"#fdf9f5","tertiary-container":"#6f6b60","surface-container-lowest":"#2B2926","secondary":"#924a31","surface-container-low":"#242220","illustration-indigo":"#4A586E","surface-tint":"#52634b","on-error-container":"#93000a","surface-light":"#262422","on-background":"#1c1b1a","illustration-brick":"#9E4732","canvas-dark":"#1E1D1B","secondary-fixed-dim":"#ffb59d","accent-terracotta-soft":"#C87558","text-primary-dark":"#F5F2EB","text-primary-light":"#2C2B29","outline":"#747870","on-surface":"#F5F2EB","on-secondary-container":"#78361e","primary-container":"#5e7057","on-tertiary-fixed-variant":"#4a473d","tertiary-fixed":"#e8e2d5","error-container":"#ffdad6","on-error":"#ffffff","canvas-light":"#1E1D1B","inverse-primary":"#b9ccaf","on-primary":"#ffffff","surface-dim":"#ddd9d6","on-tertiary-container":"#f3eddf","surface-dark":"#262422","primary-dark":"#7D9274","surface":"#1E1D1B","border-light":"#383531","illustration-ochre":"#C29B38","surface-container":"#302D29","comfort-border":"#DDD6C7","surface-container-high":"#38342F","text-secondary-dark":"#A8A296","on-tertiary-fixed":"#1e1c13","comfort-canvas":"#F7F3EA","inverse-on-surface":"#f4f0ec","on-primary-fixed":"#EAF0E6","tertiary":"#565349","primary-fixed":"#3A4736","inverse-surface":"#31302e","secondary-container":"#fea183","error":"#ba1a1a","comfort-surface":"#EFE9DC","on-secondary-fixed-variant":"#74331c"},borderRadius: { "sm": "0.125rem", "DEFAULT": "0.25rem", "md": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },spacing:{"margin":"2.5rem","space-sm":"0.5rem","space-xl":"2.5rem","gutter-mobile":"1rem","space-md":"1rem","space-lg":"1.5rem","gutter":"1.5rem","margin-mobile":"1rem","space-xs":"0.25rem"},fontFamily:{"headline-lg-mobile":["Newsreader"],"headline-lg":["Newsreader"],"headline-sm":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"hero-display":["Newsreader"],"couple-title":["Newsreader"],"stat-metric":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"hero-display-mobile":["Newsreader"]},fontSize:{"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.01em","fontWeight":"600"}],"hero-display":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"400"}],"couple-title":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"400"}],"stat-metric":["32px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"hero-display-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="p-space-lg flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="Wedding HQ" class="w-6 h-6 shrink-0" src="../assets/wedding-hq-mark.svg"/><span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Wedding HQ</span></div><div class="mt-space-xs pt-space-xs"><p class="font-couple-title text-couple-title text-on-surface">Ravi &amp; Priya</p><p class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider mt-0.5">12 days to go</p></div></div><nav class="flex-1 px-space-sm py-space-xs overflow-y-auto space-y-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-sm"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-sm" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="events" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-body-md text-body-md">Events</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="guests" href="#"><span class="material-symbols-outlined text-[20px]">groups</span><span class="font-body-md text-body-md">Guests</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="tasks" href="#"><span class="material-symbols-outlined text-[20px]">task_alt</span><span class="font-body-md text-body-md">Tasks</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="vendors" href="#"><span class="material-symbols-outlined text-[20px]">storefront</span><span class="font-body-md text-body-md">Vendors</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span class="font-body-md text-body-md">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="messages" href="#"><span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span><span class="font-body-md text-body-md">Messages</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="photos" href="#"><span class="material-symbols-outlined text-[20px]">photo_library</span><span class="font-body-md text-body-md">Photos</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span class="font-body-md text-body-md">Activity</span></a></nav><div class="p-space-sm space-y-1 bg-surface-container-low"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-md text-body-md">Settings</span></a><button class="w-full flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">palette</span><span class="font-body-md text-body-md">Appearance</span></span><span class="font-label-sm text-label-sm uppercase text-text-secondary-light tracking-wider">Comfort</span></button><button class="w-full flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">left_panel_close</span><span class="font-body-md text-body-md">Collapse</span></button></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin flex items-center justify-between"><div class="flex items-center gap-space-md"><span class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Eye comfort is on</span><div class="flex items-center gap-2"><span class="font-label-md text-label-md text-text-secondary-light">Overview</span><span class="text-outline-variant">/</span><span class="font-label-md text-label-md text-on-surface font-semibold"></span></div></div><div class="flex items-center gap-space-md"><button class="inline-flex items-center gap-space-xs bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">add</span><span class="">Add household</span></button><div class="flex items-center gap-space-xs"><button aria-label="Appearance Control" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">palette</span></button><button aria-label="Help and Support" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button></div><div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-md font-semibold">P</div></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="max-w-[1200px] mx-auto p-margin"><div class="flex flex-col w-full">
+<div class="w-full flex flex-col gap-8 pb-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-text-secondary-light">Overview</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-primary">Wedding status</span>
+</div>
+<h1 class="font-hero-display text-hero-display text-on-surface tracking-tight leading-none">
+          Ravi &amp; Priya
+        </h1>
+<p class="font-body-md text-body-md text-text-secondary-light flex flex-wrap items-center gap-2 mt-1">
+<span class="text-on-surface font-medium">Good morning, Priya</span>
+<span class="text-outline-variant">•</span>
+<span class="">December 18–20, 2026</span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">location_on</span>Hyderabad</span>
+</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-md text-label-md font-semibold tracking-wide">12 days to go</span>
+</div>
+<div class="relative">
+<button aria-expanded="false" class="p-2.5 rounded-xl bg-surface-container-low text-on-surface-variant hover:bg-surface-container hover:text-on-surface shadow-sm transition-all duration-150 flex items-center justify-center" id="appearanceToggleBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<div class="hidden absolute right-0 mt-2 w-72 p-4 rounded-xl bg-surface-container-lowest shadow-xl z-30 transition-all flex flex-col gap-3" id="appearancePopover">
+<div class="flex items-center justify-between pb-1">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[15px]">Reading Atmosphere</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light">Comfort Mode</span>
+</div>
+<div class="grid grid-cols-3 gap-1 bg-surface-container-low p-1 rounded-lg">
+<button class="appearance-mode-btn active px-2 py-1.5 rounded text-center font-label-md text-label-md bg-surface-container-lowest text-on-surface shadow-sm font-medium" type="button">Light</button>
+<button class="appearance-mode-btn px-2 py-1.5 rounded text-center font-label-md text-label-md text-text-secondary-light hover:text-on-surface" type="button">Sepia</button>
+<button class="appearance-mode-btn px-2 py-1.5 rounded text-center font-label-md text-label-md text-text-secondary-light hover:text-on-surface" type="button">Nocturne</button>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Eye Warmth Filter</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">Subtle parchment tone</span>
+</div>
+<button aria-checked="true" class="w-10 h-6 bg-primary rounded-full relative p-0.5 transition-colors" id="warmthToggle" role="switch" type="button">
+<span class="w-5 h-5 bg-surface-container-lowest rounded-full block transform translate-x-4 transition-transform shadow-sm"></span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 rounded-xl bg-surface-container-low shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Guests</span>
+<span class="material-symbols-outlined text-[18px] text-text-secondary-light">group</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">342</span>
+<span class="font-label-md text-label-md text-primary font-medium">Confirmed</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light mt-1 flex items-center gap-1.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="">25 awaiting RSVP</span>
+</p>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-surface-container-low shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Tasks</span>
+<span class="material-symbols-outlined text-[18px] text-text-secondary-light">checklist</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">12</span>
+<span class="font-label-md text-label-md text-text-secondary-light font-medium">Remaining</span>
+</div>
+<p class="font-body-md text-body-md text-secondary mt-1 flex items-center gap-1.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="">4 urgent &amp; overdue</span>
+</p>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-surface-container-low shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Expenses</span>
+<span class="material-symbols-outlined text-[18px] text-text-secondary-light">account_balance</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">₹13.8L</span>
+<span class="font-label-md text-label-md text-text-secondary-light font-medium">Actual spend</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light mt-1 flex items-center gap-1.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="">₹14.5L estimated cap</span>
+</p>
+</div>
+</div>
+<div class="p-5 rounded-xl bg-surface-container-low shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Photos</span>
+<span class="material-symbols-outlined text-[18px] text-text-secondary-light">photo_library</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">83</span>
+<span class="font-label-md text-label-md text-secondary font-medium">Waiting</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light mt-1 flex items-center gap-1.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-text-secondary-light"></span>
+<span class="">Waiting for review</span>
+</p>
+</div>
+</div>
+</div>
+<div class="w-full rounded-2xl bg-surface-container p-6 shadow-sm flex flex-col gap-5">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[22px] text-secondary">priority_high</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Needs Your Attention</h2>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light"></span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+<div class="p-4 rounded-xl bg-surface-container-lowest flex items-center justify-between gap-4 shadow-sm hover:bg-surface-bright transition-colors">
+<div class="flex items-start gap-3 min-w-0">
+<div class="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[15px] truncate">4 tasks are overdue</span>
+<span class="font-body-md text-body-md text-text-secondary-light text-[13px] truncate">Sangeet sound engineer and invitation follow-up</span>
+</div>
+</div>
+<a class="flex-shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="">View tasks</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-lowest flex items-center justify-between gap-4 shadow-sm hover:bg-surface-bright transition-colors">
+<div class="flex items-start gap-3 min-w-0">
+<div class="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[15px] truncate">25 households haven't replied</span>
+<span class="font-body-md text-body-md text-text-secondary-light text-[13px] truncate">Reddy and Sharma households</span>
+</div>
+</div>
+<a class="flex-shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md hover:opacity-90 transition-all" href="#">
+<span class="">Send reminder</span>
+<span class="material-symbols-outlined text-[14px]">send</span>
+</a>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-lowest flex items-center justify-between gap-4 shadow-sm hover:bg-surface-bright transition-colors">
+<div class="flex items-start gap-3 min-w-0">
+<div class="w-2 h-2 rounded-full bg-text-secondary-light mt-2 flex-shrink-0"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[15px] truncate">Reception venue details incomplete</span>
+<span class="font-body-md text-body-md text-text-secondary-light text-[13px] truncate">Reception venue details need confirmation</span>
+</div>
+</div>
+<a class="flex-shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="">Add venue</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-lowest flex items-center justify-between gap-4 shadow-sm hover:bg-surface-bright transition-colors">
+<div class="flex items-start gap-3 min-w-0">
+<div class="w-2 h-2 rounded-full bg-text-secondary-light mt-2 flex-shrink-0"></div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface text-[15px] truncate">83 photos waiting for approval</span>
+<span class="font-body-md text-body-md text-text-secondary-light text-[13px] truncate">Guest uploads from recent events</span>
+</div>
+</div>
+<a class="flex-shrink-0 inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-primary hover:text-on-primary transition-all" href="#">
+<span class="">Review photos</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-7 flex flex-col gap-5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">event_available</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Coming Up</h2>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light"></span>
+</div>
+<div class="flex flex-col gap-4">
+<div class="p-6 rounded-2xl bg-surface-container-low shadow-sm flex flex-col gap-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-primary"></div>
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">In 2 Days • Dec 18</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface font-serif mt-0.5">Sangeet &amp; Musical Night</h3>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">7:00 PM</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="">Example Convention Centre, Hall 3</span>
+</div>
+<div class="pt-2 flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="">Venue Secured</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="">Invitations Sent</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high font-label-sm text-label-sm text-secondary font-medium">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="">Sound Check Pending</span>
+</span>
+</div>
+</div>
+<div class="p-6 rounded-2xl bg-surface-container-low shadow-sm flex flex-col gap-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-outline-variant group-hover:bg-primary transition-colors"></div>
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-text-secondary-light font-semibold">In 3 Days • Dec 19</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface font-serif mt-0.5">Wedding Muhurtham</h3>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">9:00 AM</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">temple_hindu</span>
+<span class="">Temple Mandapam Venue, Old City</span>
+</div>
+<div class="pt-2 flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="">Priest Confirmed</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high font-label-sm text-label-sm text-primary font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="">Puja Items Listed</span>
+</span>
+</div>
+</div>
+<div class="p-6 rounded-2xl bg-surface-container-low shadow-sm flex flex-col gap-4 relative overflow-hidden group">
+<div class="absolute top-0 left-0 bottom-0 w-1.5 bg-secondary"></div>
+<div class="flex items-start justify-between gap-3">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-semibold">In 4 Days • Dec 20</span>
+<h3 class="font-headline-lg text-headline-lg text-on-surface font-serif mt-0.5">Reception</h3>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm font-semibold">7:30 PM</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px]">nature_people</span>
+<span class="">Grand Palace Lawn, Jubilee Hills</span>
+</div>
+<div class="pt-2 flex flex-wrap items-center gap-2">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">report_problem</span>
+<span class="">Floor Plan Action Needed</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-high font-label-sm text-label-sm text-text-secondary-light font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="">Caterer Ready</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 flex flex-col gap-5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">history</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Recent Activity</h2>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light"></span>
+</div>
+<div class="p-6 rounded-2xl bg-surface-container-low shadow-sm flex flex-col gap-5">
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface leading-snug">
+<strong class="font-semibold">Reddy Family</strong> confirmed Reception attendance.
+              </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-primary font-medium">3 attending</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">25m ago</span>
+</div>
+</div>
+</div>
+<div class="w-full h-px bg-surface-container-high"></div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface leading-snug">
+<strong class="font-semibold">Rahul</strong> marked task completed:
+              </p>
+<p class="font-body-md text-body-md text-text-secondary-light italic mt-0.5 truncate">
+                “Confirm decorator for entrance archway”
+              </p>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">1h ago</span>
+</div>
+</div>
+<div class="w-full h-px bg-surface-container-high"></div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface leading-snug">
+<strong class="font-semibold">Lead Planner</strong> attached document:
+              </p>
+<p class="font-body-md text-body-md text-text-secondary-light mt-0.5 truncate">
+                Royal Caterers final banquet agreement.pdf
+              </p>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">3h ago</span>
+</div>
+</div>
+<div class="w-full h-px bg-surface-container-high"></div>
+<div class="flex gap-4 items-start">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface leading-snug">
+<strong class="font-semibold">12 new guest snapshots</strong> uploaded to Reception gallery draft.
+              </p>
+<div class="flex items-center gap-2 mt-1">
+<a class="font-label-sm text-label-sm text-primary hover:underline font-semibold" href="#">View activity</a>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">5h ago</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container flex items-center justify-between gap-4 hidden">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-text-secondary-light">auto_stories</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold"></span>
+<span class="font-label-sm text-label-sm text-text-secondary-light"></span>
+</div>
+</div>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-bright transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span class="">PDF</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const popoverBtn = document.getElementById('appearanceToggleBtn');
+    const popover = document.getElementById('appearancePopover');
+    const warmthBtn = document.getElementById('warmthToggle');
+
+    if (popoverBtn && popover) {
+      popoverBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isHidden = popover.classList.contains('hidden');
+        if (isHidden) {
+          popover.classList.remove('hidden');
+          popoverBtn.setAttribute('aria-expanded', 'true');
+        } else {
+          popover.classList.add('hidden');
+          popoverBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!popover.contains(e.target) && !popoverBtn.contains(e.target)) {
+          popover.classList.add('hidden');
+          popoverBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    if (warmthBtn) {
+      warmthBtn.addEventListener('click', () => {
+        const checked = warmthBtn.getAttribute('aria-checked') === 'true';
+        warmthBtn.setAttribute('aria-checked', (!checked).toString());
+        const knob = warmthBtn.querySelector('span');
+        if (checked) {
+          warmthBtn.classList.remove('bg-primary');
+          warmthBtn.classList.add('bg-surface-container-highest');
+          if (knob) knob.classList.remove('translate-x-4');
+        } else {
+          warmthBtn.classList.remove('bg-surface-container-highest');
+          warmthBtn.classList.add('bg-primary');
+          if (knob) knob.classList.add('translate-x-4');
+        }
+      });
+    }
+
+    const modeButtons = document.querySelectorAll('.appearance-mode-btn');
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        modeButtons.forEach(b => {
+          b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-medium');
+          b.classList.add('text-text-secondary-light');
+        });
+        btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm', 'font-medium');
+        btn.classList.remove('text-text-secondary-light');
+      });
+    });
+  })();
+</script></div></main></div>
+</body></html>

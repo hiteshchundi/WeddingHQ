@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed":"#ffdbd0","on-surface-variant":"#444841","outline-variant":"#c4c8be","text-secondary-light":"#706D65","primary":"#465840","tertiary-fixed-dim":"#ccc6b9","background":"#fdf9f5","on-tertiary":"#ffffff","on-secondary":"#ffffff","border-dark":"#383531","surface-variant":"#e6e2de","on-primary-fixed-variant":"#3a4b35","surface-container-highest":"#e6e2de","illustration-rose":"#B87B7C","on-primary-container":"#dff3d4","on-secondary-fixed":"#390c00","primary-fixed-dim":"#b9ccaf","surface-bright":"#fdf9f5","tertiary-container":"#6f6b60","surface-container-lowest":"#ffffff","secondary":"#924a31","surface-container-low":"#f7f3ef","illustration-indigo":"#4A586E","surface-tint":"#52634b","on-error-container":"#93000a","surface-light":"#F5F2EB","on-background":"#1c1b1a","illustration-brick":"#9E4732","canvas-dark":"#1E1D1B","secondary-fixed-dim":"#ffb59d","accent-terracotta-soft":"#C87558","text-primary-dark":"#F5F2EB","text-primary-light":"#2C2B29","outline":"#747870","on-surface":"#1c1b1a","on-secondary-container":"#78361e","primary-container":"#5e7057","on-tertiary-fixed-variant":"#4a473d","tertiary-fixed":"#e8e2d5","error-container":"#ffdad6","on-error":"#ffffff","canvas-light":"#FBF9F5","inverse-primary":"#b9ccaf","on-primary":"#ffffff","surface-dim":"#ddd9d6","on-tertiary-container":"#f3eddf","surface-dark":"#262422","primary-dark":"#7D9274","surface":"#fdf9f5","border-light":"#E6E2D8","illustration-ochre":"#C29B38","surface-container":"#f1edea","comfort-border":"#DDD6C7","surface-container-high":"#ebe7e4","text-secondary-dark":"#A8A296","on-tertiary-fixed":"#1e1c13","comfort-canvas":"#F7F3EA","inverse-on-surface":"#f4f0ec","on-primary-fixed":"#101f0c","tertiary":"#565349","primary-fixed":"#d4e9ca","inverse-surface":"#31302e","secondary-container":"#fea183","error":"#ba1a1a","comfort-surface":"#EFE9DC","on-secondary-fixed-variant":"#74331c"},borderRadius: { "sm": "0.125rem", "DEFAULT": "0.25rem", "md": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },spacing:{"margin":"2.5rem","space-sm":"0.5rem","space-xl":"2.5rem","gutter-mobile":"1rem","space-md":"1rem","space-lg":"1.5rem","gutter":"1.5rem","margin-mobile":"1rem","space-xs":"0.25rem"},fontFamily:{"headline-lg-mobile":["Newsreader"],"headline-lg":["Newsreader"],"headline-sm":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"hero-display":["Newsreader"],"couple-title":["Newsreader"],"stat-metric":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"hero-display-mobile":["Newsreader"]},fontSize:{"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.01em","fontWeight":"600"}],"hero-display":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"400"}],"couple-title":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"400"}],"stat-metric":["32px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"hero-display-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="p-space-lg flex flex-col gap-space-sm"><div class="flex items-center gap-2.5"><img alt="Wedding HQ" class="w-6 h-6 shrink-0" src="../assets/wedding-hq-mark.svg"/><span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Wedding HQ</span></div><div class="mt-space-xs pt-space-xs"><p class="font-couple-title text-couple-title text-on-surface">Ravi &amp; Priya</p><p class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider mt-0.5">12 days to go</p></div></div><nav class="flex-1 px-space-sm py-space-xs overflow-y-auto space-y-1"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="events" href="#"><span class="material-symbols-outlined text-[20px]">calendar_today</span><span class="font-body-md text-body-md">Events</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-semibold shadow-sm transition-colors" data-path="guests" href="#"><span class="material-symbols-outlined text-[20px]">groups</span><span class="font-body-md text-body-md">Guests</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="tasks" href="#"><span class="material-symbols-outlined text-[20px]">task_alt</span><span class="font-body-md text-body-md">Tasks</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="vendors" href="#"><span class="material-symbols-outlined text-[20px]">storefront</span><span class="font-body-md text-body-md">Vendors</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span class="font-body-md text-body-md">Expenses</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="messages" href="#"><span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span><span class="font-body-md text-body-md">Messages</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="photos" href="#"><span class="material-symbols-outlined text-[20px]">photo_library</span><span class="font-body-md text-body-md">Photos</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span class="font-body-md text-body-md">Activity</span></a></nav><div class="p-space-sm space-y-1 bg-surface-container-low"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-md text-body-md">Settings</span></a><button class="w-full flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">palette</span><span class="font-body-md text-body-md">Appearance</span></span><span class="font-label-sm text-label-sm uppercase text-text-secondary-light tracking-wider">Comfort</span></button><button class="w-full flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">left_panel_close</span><span class="font-body-md text-body-md">Collapse</span></button></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-margin flex items-center justify-between"><div class="flex items-center gap-space-xs text-text-secondary-light font-label-sm text-label-sm"><span class="hover:text-on-surface cursor-pointer"></span><span class="text-outline-variant">/</span><span class="text-on-surface font-medium">Guests</span></div><div class="flex items-center gap-space-md"><button class="inline-flex items-center gap-space-xs bg-primary text-on-primary hover:bg-primary-container px-3.5 py-1.5 rounded-lg font-label-md text-label-md transition-colors shadow-sm" type="button"><span class="material-symbols-outlined text-[18px]">person_add</span><span>+ Add household</span></button><div class="flex items-center gap-space-xs"><button aria-label="Appearance Control" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">palette</span></button><button aria-label="Help and Support" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help_outline</span></button></div><div class="w-8 h-8 rounded-full bg-primary/20 text-primary font-semibold flex items-center justify-center text-sm ring-1 ring-border-light cursor-pointer select-none">RP</div></div></div></header><main class="relative pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="px-margin py-space-xl flex flex-col gap-space-lg max-w-[1280px] mx-auto w-full">
+<!-- Header & Stat Context -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs text-text-secondary-light">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Guest Management</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Households &amp; RSVPs</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Guests</h1>
+<p class="font-body-md text-body-md text-text-secondary-light">
+<span class="text-on-surface font-medium">342</span> Confirmed · 
+          <span class="text-secondary font-medium">25</span> Awaiting Reply · 
+          <span class="text-on-surface font-medium">58</span> Total Households
+        </p>
+</div>
+<!-- Quick Action Controls -->
+<div class="flex items-center gap-space-sm flex-wrap">
+<button class="inline-flex items-center gap-space-xs bg-surface-container-high hover:bg-surface-variant text-on-surface px-4 py-2 rounded-lg font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">swap_vert</span>
+<span class="">Import / Export</span>
+</button>
+<button class="inline-flex items-center gap-space-xs bg-primary text-on-primary hover:bg-primary-container px-4 py-2 rounded-lg font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span class="">Add household</span>
+</button>
+</div>
+</div>
+<!-- Overview Pulse Banners (Bento Glance) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-center gap-space-md shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">diversity_3</span>
+</div>
+<div>
+<p class="font-stat-metric text-stat-metric text-on-surface leading-none">367</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light mt-1">Total Invites Sent</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-center gap-space-md shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">how_to_reg</span>
+</div>
+<div>
+<p class="font-stat-metric text-stat-metric text-primary leading-none">342</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light mt-1">Attending Guests</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-center gap-space-md shadow-sm">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">schedule</span>
+</div>
+<div>
+<p class="font-stat-metric text-stat-metric text-secondary leading-none">25</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light mt-1">Pending Headcounts</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl flex items-center gap-space-md shadow-sm hidden">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[22px]">restaurant_menu</span>
+</div>
+<div>
+<p class="font-stat-metric text-stat-metric text-on-surface leading-none">48</p>
+<p class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light mt-1">Special Dietary Needs</p>
+</div>
+</div>
+</div>
+<!-- Editorial Tab Navigation & Sticky Header Strip -->
+<div class="flex items-center justify-between gap-space-md bg-surface-container-low px-space-md py-space-xs rounded-xl shadow-sm">
+<div class="flex items-center gap-space-md">
+<button class="relative py-2.5 px-space-sm font-label-md text-label-md text-primary font-semibold transition-colors" type="button">Households</button>
+<button class="py-2.5 px-space-sm font-label-md text-label-md text-text-secondary-light hover:text-on-surface transition-colors" type="button">RSVPs</button>
+<button class="py-2.5 px-space-sm font-label-md text-label-md text-text-secondary-light hover:text-on-surface transition-colors" type="button">Import / Export</button>
+<button class="py-2.5 px-space-sm font-label-md text-label-md text-text-secondary-light hover:text-on-surface transition-colors hidden" type="button">
+          Accommodations &amp; Transit
+        </button>
+</div>
+<div class="hidden lg:flex items-center gap-space-xs text-text-secondary-light font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+<span class="">Reception RSVP deadline in 6 days</span>
+</div>
+</div>
+<!-- Triage Alert Bar -->
+<div class="bg-secondary-fixed/30 rounded-xl p-space-md flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm shadow-sm">
+<div class="flex items-center gap-space-sm text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[20px] text-secondary">notification_important</span>
+<p class="font-body-md text-body-md text-on-surface">
+<strong class="font-semibold text-secondary">25 households haven't replied yet</strong> · 4 households need follow-up before the Reception deadline
+        </p>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="inline-flex items-center gap-space-xs bg-surface-container-lowest hover:bg-surface-container text-secondary px-3 py-1.5 rounded-lg font-label-sm text-label-sm shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">send</span>
+<span class="">Send gentle nudge to all pending</span>
+</button>
+</div>
+</div>
+<!-- Filter & Search Controls Bar -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col lg:flex-row items-center justify-between gap-space-md shadow-sm">
+<!-- Search -->
+<div class="relative w-full lg:w-96">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-[18px] text-text-secondary-light">search</span>
+<input class="w-full h-10 pl-10 pr-4 bg-surface-container-lowest text-on-surface placeholder:text-text-secondary-light font-body-md text-body-md rounded-lg focus:outline-none focus:ring-1 focus:ring-primary shadow-sm" placeholder="Search household, guest name, phone..." type="text"/>
+</div>
+<!-- Select Filters -->
+<div class="flex items-center gap-space-sm w-full lg:w-auto flex-wrap sm:flex-nowrap">
+<div class="flex items-center gap-space-xs w-full sm:w-auto">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase whitespace-nowrap">Ceremony:</span>
+<select class="h-10 bg-surface-container-lowest text-on-surface font-label-md text-label-md px-3 rounded-lg focus:outline-none shadow-sm cursor-pointer w-full sm:w-auto">
+<option value="all">All Ceremonies</option>
+<option value="mehendi">Mehendi</option>
+<option value="sangeet">Sangeet</option>
+<option value="wedding">Muhurtham / Wedding</option>
+<option value="reception">Reception</option>
+</select>
+</div>
+<div class="flex items-center gap-space-xs w-full sm:w-auto">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase whitespace-nowrap">Status:</span>
+<select class="h-10 bg-surface-container-lowest text-on-surface font-label-md text-label-md px-3 rounded-lg focus:outline-none shadow-sm cursor-pointer w-full sm:w-auto">
+<option value="all">All RSVPs</option>
+<option value="attending">Attending (Full)</option>
+<option value="partial">Attending (Partial)</option>
+<option value="pending">Awaiting Reply</option>
+<option value="declined">Declined</option>
+</select>
+</div>
+<button class="h-10 px-3 bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant rounded-lg flex items-center justify-center shadow-sm transition-colors" title="Additional Filters" type="button">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Structured Household Register Table -->
+<div class="bg-surface-container-low rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-text-secondary-light font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md font-semibold">Household &amp; Primary Contact</th>
+<th class="py-3 px-space-md font-semibold">Party Size</th>
+<th class="py-3 px-space-md font-semibold">Invited Events</th>
+<th class="py-3 px-space-md font-semibold">RSVP Attendance</th>
+
+<th class="py-3 px-space-md font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-md text-body-md">
+<!-- Row 1: Reddy Family -->
+<tr class="hover:bg-surface-container/40 transition-colors">
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Reddy Family</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-surface-container-high text-tertiary">Maternal</span>
+</div>
+<span class="text-text-secondary-light font-medium mt-0.5">Ravi Reddy · +91 98490 12345</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light italic mt-0.5">Bride's maternal uncle &amp; family</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">6 Total</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">4 Adults · 2 Children</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Sangeet</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Wedding</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Reception</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary w-fit font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="">3 Attending</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">Reception confirmed</span>
+</div>
+</td>
+
+<td class="py-4 px-space-md align-top text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" title="Send SMS message" type="button">
+<span class="material-symbols-outlined text-[18px]">chat_bubble_outline</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" title="Edit Household" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" title="More options" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Kapoor Household -->
+<tr class="bg-surface-container-lowest/50 hover:bg-surface-container/40 transition-colors">
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Kapoor Household</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-surface-container-high text-tertiary">Groom's Side</span>
+</div>
+<span class="text-text-secondary-light font-medium mt-0.5">Ananya &amp; Vikram Kapoor · +91 98112 34567</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light italic mt-0.5">College batchmates &amp; close family friends</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">4 Total</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">4 Adults</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Mehendi</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Sangeet</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Reception</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary w-fit font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="">4 Attending</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">All events confirmed</span>
+</div>
+</td>
+
+<td class="py-4 px-space-md align-top text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chat_bubble_outline</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Sharma Clan (Overdue Triage) -->
+<tr class="hover:bg-surface-container/40 transition-colors">
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Sharma Family</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-surface-container-high text-tertiary">Paternal</span>
+</div>
+<span class="text-text-secondary-light font-medium mt-0.5">Suresh Sharma · +91 94480 87654</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light italic mt-0.5">Paternal grandfather's brother</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">7 Total</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">6 Adults · 1 Child</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Wedding</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Reception</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/10 text-secondary w-fit font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="">Awaiting Reply</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">Reminder sent yesterday by email</span>
+</div>
+</td>
+
+<td class="py-4 px-space-md align-top text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-secondary/10 rounded transition-colors" title="Send urgent reminder" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Verma & Family -->
+<tr class="bg-surface-container-lowest/50 hover:bg-surface-container/40 transition-colors">
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Verma &amp; Family (Mumbai)</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-surface-container-high text-tertiary">Bride's Side</span>
+</div>
+<span class="text-text-secondary-light font-medium mt-0.5">Rajesh Verma · +91 98200 45678</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light italic mt-0.5">Cousin family</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">3 Total</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">3 Adults</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Sangeet</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Wedding</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Reception</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/10 text-secondary w-fit font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="">Awaiting Reply</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary mt-1">Pending 6 days (Overdue)</span>
+</div>
+</td>
+
+<td class="py-4 px-space-md align-top text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-secondary hover:bg-secondary/10 rounded transition-colors" title="Send reminder" type="button">
+<span class="material-symbols-outlined text-[18px]">send</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: Kulkarni Household -->
+<tr class="hover:bg-surface-container/40 transition-colors">
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Kulkarni Household</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-surface-container-high text-tertiary">Neighbourhood</span>
+</div>
+<span class="text-text-secondary-light font-medium mt-0.5">Dr. Arvind Kulkarni · +91 99224 56789</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light italic mt-0.5">Family Physician &amp; family</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">2 Total</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">2 Adults</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Wedding</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Reception</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary w-fit font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="">2 Attending</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">Confirmed RSVP</span>
+</div>
+</td>
+
+<td class="py-4 px-space-md align-top text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chat_bubble_outline</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+ Row 6: Mehta Family 
+<tr class="bg-surface-container-lowest/50 hover:bg-surface-container/40 transition-colors">
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Mehta Family</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-primary/15 text-primary">NRI / International</span>
+</div>
+<span class="text-text-secondary-light font-medium mt-0.5">Sneha Mehta · +1 408 555 0192</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light italic mt-0.5">San Jose, CA · First Cousin</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">4 Total</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">2 Adults · 2 Children</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-wrap gap-1 max-w-[200px]">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Sangeet</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Wedding</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[11px]">Reception</span>
+</div>
+</td>
+<td class="py-4 px-space-md align-top">
+<div class="flex flex-col">
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-primary/10 text-primary w-fit font-label-sm text-label-sm font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="">4 Attending</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary-light mt-1">Confirmed</span>
+</div>
+</td>
+
+<td class="py-4 px-space-md align-top text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chat_bubble_outline</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:text-on-surface hover:bg-surface-container-high rounded transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer Counter -->
+<div class="bg-surface-container p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-text-secondary-light font-label-md text-label-md">
+<p class="">Showing <span class="font-semibold text-on-surface">1 - 6</span> of 58 households</p>
+<div class="flex items-center gap-space-xs">
+<button class="p-2 rounded hover:bg-surface-container-high disabled:opacity-40 transition-colors" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="px-3 py-1 rounded bg-primary text-on-primary font-semibold text-label-sm">1</span>
+<button class="px-3 py-1 rounded hover:bg-surface-container-high text-on-surface transition-colors text-label-sm font-medium" type="button">2</button>
+<button class="px-3 py-1 rounded hover:bg-surface-container-high text-on-surface transition-colors text-label-sm font-medium" type="button">3</button>
+<span class="px-1 text-outline-variant">…</span>
+<button class="px-3 py-1 rounded hover:bg-surface-container-high text-on-surface transition-colors text-label-sm font-medium" type="button">10</button>
+<button class="p-2 rounded hover:bg-surface-container-high text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Editorial Detail Mosaic / Summary Notes below register -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md pt-space-xs">
+<!-- Visual RSVP Distribution Chart Card -->
+<div class="bg-surface-container-low p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Headcount Progress</h3>
+<span class="font-label-sm text-label-sm text-primary font-semibold">93.2% Response</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light mt-1">Confirmed guest seats allocated across all major ceremonial dining sessions.</p>
+</div>
+<div class="py-space-md">
+<!-- Subtle SVG Donut / Headcount bar -->
+<div class="flex items-center gap-space-lg">
+<svg class="w-24 h-24 shrink-0 -rotate-90" viewbox="0 0 36 36">
+<!-- Background circle -->
+<path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<!-- Confirmed segment (342/367 = 93%) -->
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="93, 100" stroke-linecap="round" stroke-width="3.5"></path>
+</svg>
+<div class="flex flex-col gap-1.5 flex-1">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="flex items-center gap-1.5 text-on-surface">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                  Confirmed Attending
+                </span>
+<span class="font-semibold text-on-surface">342</span>
+</div>
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="flex items-center gap-1.5 text-on-surface">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                  Awaiting Response
+                </span>
+<span class="font-semibold text-secondary">25</span>
+</div>
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="flex items-center gap-1.5 text-text-secondary-light">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+                  Declined with Regrets
+                </span>
+<span class="font-semibold text-text-secondary-light">14</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-space-xs text-text-secondary-light font-label-sm text-label-sm">
+<span class="">Reception RSVP deadline: <strong>December 15, 2026 (5:00 PM IST)</strong></span>
+</div>
+</div>
+<!-- Quick Hospitality & Logistics Insights -->
+<div class="bg-surface-container-low p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">RSVP Follow-up</h3>
+<span class="material-symbols-outlined text-primary text-[20px]">room_service</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light mt-1">A few households still need a response or an internal note before the deadline.</p>
+</div>
+<div class="space-y-space-sm my-space-md">
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px]">bed</span>
+<span class="font-label-md text-label-md text-on-surface">Households awaiting response</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">25 pending</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px]">directions_car</span>
+<span class="font-label-md text-label-md text-on-surface">Reminders due this week</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">4 due</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[18px]">flatware</span>
+<span class="font-label-md text-label-md text-on-surface">Reception deadline</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">6 days</span>
+</div>
+</div>
+<button class="w-full text-center py-2 bg-surface-container-high hover:bg-surface-variant text-on-surface rounded-lg font-label-md text-label-md transition-colors" type="button">
+          Manage Hospitality Desks →
+        </button>
+</div>
+<!-- Wedding Note / Coordinator Callout -->
+<div class="bg-surface-container p-space-lg rounded-xl shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-space-xs text-primary mb-1">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Master Coordinator's Memo</span>
+</div>
+<h4 class="font-couple-title text-couple-title text-on-surface">Maternal Family Arrivals</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed">
+            The Reddy and Sharma elders arrive via morning express trains on Dec 16. Breakfast seating is reserved at the private courtyard pavilion before Mehendi celebrations begin at 3:00 PM.
+          </p>
+</div>
+<div class="pt-space-md flex items-center justify-between text-text-secondary-light font-label-sm text-label-sm">
+<span class="">Coordinator: <strong>Priya S.</strong></span>
+<span class="">Updated 2 hours ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Filter and search micro-interactions
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('input[type="text"]');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(val) ? '' : 'none';
+        });
+      });
+    }
+  });
+</script></main></div>
+</body></html>

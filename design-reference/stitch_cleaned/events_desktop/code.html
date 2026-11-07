@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed":"#ffdbd0","on-surface-variant":"#444841","outline-variant":"#c4c8be","text-secondary-light":"#706D65","primary":"#465840","tertiary-fixed-dim":"#ccc6b9","background":"#fdf9f5","on-tertiary":"#ffffff","on-secondary":"#ffffff","border-dark":"#383531","surface-variant":"#e6e2de","on-primary-fixed-variant":"#3a4b35","surface-container-highest":"#e6e2de","illustration-rose":"#B87B7C","on-primary-container":"#dff3d4","on-secondary-fixed":"#390c00","primary-fixed-dim":"#b9ccaf","surface-bright":"#fdf9f5","tertiary-container":"#6f6b60","surface-container-lowest":"#ffffff","secondary":"#924a31","surface-container-low":"#f7f3ef","illustration-indigo":"#4A586E","surface-tint":"#52634b","on-error-container":"#93000a","surface-light":"#F5F2EB","on-background":"#1c1b1a","illustration-brick":"#9E4732","canvas-dark":"#1E1D1B","secondary-fixed-dim":"#ffb59d","accent-terracotta-soft":"#C87558","text-primary-dark":"#F5F2EB","text-primary-light":"#2C2B29","outline":"#747870","on-surface":"#1c1b1a","on-secondary-container":"#78361e","primary-container":"#5e7057","on-tertiary-fixed-variant":"#4a473d","tertiary-fixed":"#e8e2d5","error-container":"#ffdad6","on-error":"#ffffff","canvas-light":"#FBF9F5","inverse-primary":"#b9ccaf","on-primary":"#ffffff","surface-dim":"#ddd9d6","on-tertiary-container":"#f3eddf","surface-dark":"#262422","primary-dark":"#7D9274","surface":"#fdf9f5","border-light":"#E6E2D8","illustration-ochre":"#C29B38","surface-container":"#f1edea","comfort-border":"#DDD6C7","surface-container-high":"#ebe7e4","text-secondary-dark":"#A8A296","on-tertiary-fixed":"#1e1c13","comfort-canvas":"#F7F3EA","inverse-on-surface":"#f4f0ec","on-primary-fixed":"#101f0c","tertiary":"#565349","primary-fixed":"#d4e9ca","inverse-surface":"#31302e","secondary-container":"#fea183","error":"#ba1a1a","comfort-surface":"#EFE9DC","on-secondary-fixed-variant":"#74331c"},borderRadius: { "sm": "0.125rem", "DEFAULT": "0.25rem", "md": "0.375rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },spacing:{"margin":"2.5rem","space-sm":"0.5rem","space-xl":"2.5rem","gutter-mobile":"1rem","space-md":"1rem","space-lg":"1.5rem","gutter":"1.5rem","margin-mobile":"1rem","space-xs":"0.25rem"},fontFamily:{"headline-lg-mobile":["Newsreader"],"headline-lg":["Newsreader"],"headline-sm":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"hero-display":["Newsreader"],"couple-title":["Newsreader"],"stat-metric":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"hero-display-mobile":["Newsreader"]},fontSize:{"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"400"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"22px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.01em","fontWeight":"600"}],"hero-display":["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"400"}],"couple-title":["26px",{"lineHeight":"34px","letterSpacing":"-0.01em","fontWeight":"400"}],"stat-metric":["32px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"hero-display-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"400"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Persistent Navigation Sidebar -->
+<aside class="fixed left-0 top-0 h-screen w-64 bg-surface-container-low flex flex-col z-50 shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-r border-comfort-border/40">
+<div class="p-space-lg flex flex-col gap-space-sm border-b border-comfort-border/40">
+<div class="flex items-center gap-2 text-primary">
+<img alt="Wedding HQ" class="w-6 h-6 shrink-0" src="../assets/wedding-hq-mark.svg"/>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold tracking-tight">Wedding HQ</span>
+</div>
+<div class="mt-space-xs pt-space-xs">
+<p class="font-couple-title text-couple-title text-on-surface">Ravi &amp; Priya</p>
+<p class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider mt-0.5">12 days to go</p>
+</div>
+</div>
+<nav class="flex-1 px-space-sm py-space-md overflow-y-auto space-y-1">
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="overview" href="#">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+<span class="font-body-md text-body-md">Overview</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-semibold shadow-sm" data-path="events" href="#">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="font-body-md text-body-md">Events</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="guests" href="#">
+<span class="material-symbols-outlined text-[20px]">groups</span>
+<span class="font-body-md text-body-md">Guests</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="tasks" href="#">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span class="font-body-md text-body-md">Tasks</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="vendors" href="#">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+<span class="font-body-md text-body-md">Vendors</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="expenses" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Expenses</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="messages" href="#">
+<span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
+<span class="font-body-md text-body-md">Messages</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="photos" href="#">
+<span class="material-symbols-outlined text-[20px]">photo_library</span>
+<span class="font-body-md text-body-md">Photos</span>
+</a>
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="activity" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="font-body-md text-body-md">Activity</span>
+</a>
+</nav>
+<div class="p-space-sm space-y-1 bg-surface-container-low border-t border-comfort-border/40">
+<a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+<button class="w-full flex items-center justify-between px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button">
+<span class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+<span class="font-body-md text-body-md">Appearance</span>
+</span>
+<span class="font-label-sm text-label-sm uppercase text-text-secondary-light tracking-wider bg-surface px-2 py-0.5 rounded border border-comfort-border/60">Comfort</span>
+</button>
+<button class="w-full flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">left_panel_close</span>
+<span class="font-body-md text-body-md">Collapse</span>
+</button>
+</div>
+</aside>
+<div class="pl-64">
+<!-- Clean Sparse Top Navigation Bar -->
+<header class="fixed top-0 left-64 right-0 z-40 bg-surface/85 backdrop-blur-xl border-b border-comfort-border/40 shadow-[0_1px_8px_rgba(0,0,0,0.02)]">
+<div class="h-16 w-full px-margin flex items-center justify-between">
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md">
+<span></span>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-medium">Events</span>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="inline-flex items-center gap-space-xs bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Add event</span>
+</button>
+<div class="flex items-center gap-1 border-l border-comfort-border/60 pl-3">
+<button aria-label="Appearance Mode" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors font-label-sm text-label-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">palette</span>
+<span>Comfort</span>
+</button>
+<button aria-label="Help and Support" class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">help_outline</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-md font-semibold">P</div>
+</div>
+</div>
+</header>
+<main class="relative pt-16 bg-surface min-h-screen">
+<div class="flex flex-col w-full">
+<div class="max-w-[1280px] w-full mx-auto px-margin py-8 flex flex-col gap-8">
+ Events Header 
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-comfort-border/40">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Events</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">3 events planned</span>
+</div>
+<h1 class="font-hero-display text-hero-display text-on-surface tracking-tight leading-none">Events</h1>
+<p class="font-headline-sm text-headline-sm text-text-secondary-light font-normal">December 18–20, 2026 · Hyderabad · 3 Core Ceremonies</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="inline-flex items-center gap-2 bg-surface-container-high text-on-surface px-4 py-2.5 rounded-lg font-label-md text-label-md hover:bg-surface-variant transition-colors shadow-sm hidden" type="button">
+<span class="material-symbols-outlined text-[18px] text-tertiary">picture_as_pdf</span>
+<span>Export Run-Sheet PDF</span>
+</button>
+<button class="inline-flex items-center gap-2 bg-primary text-on-primary px-5 py-2.5 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>+ Add event</span>
+</button>
+</div>
+</header>
+<!-- View Controls & Legend -->
+<div class="flex items-center justify-between gap-4 p-1.5 bg-surface-container-low rounded-xl border border-comfort-border/40">
+<div class="inline-flex items-center p-1 bg-surface-container rounded-lg gap-1">
+<button class="px-4 py-2 rounded-lg bg-surface text-on-surface font-label-md text-label-md shadow-sm transition-all" id="btn-chrono">
+              Chronological Itinerary
+            </button>
+<button class="px-4 py-2 rounded-lg text-text-secondary-light hover:text-on-surface font-label-md text-label-md transition-all" id="btn-calendar">
+              Calendar View
+            </button>
+<button class="px-4 py-2 rounded-lg text-text-secondary-light hover:text-on-surface font-label-md text-label-md transition-all" id="btn-print">
+              List View
+            </button>
+</div>
+<div class="hidden sm:flex items-center gap-3 pr-3 text-text-secondary-light font-label-sm text-label-sm">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span> Ready &amp; Confirmed</span>
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-secondary-container"></span> Pending Action</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Main Events Feed -->
+<div class="lg:col-span-8 flex flex-col gap-10">
+<!-- Day 1 Card -->
+<article class="relative flex flex-col gap-6 p-7 bg-surface-container-low rounded-xl shadow-sm hover:shadow-md transition-shadow border border-comfort-border/30">
+<div class="flex flex-wrap items-baseline justify-between gap-4 pb-4 border-b border-comfort-border/30">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-surface-container text-primary font-label-sm text-label-sm uppercase tracking-wider rounded-lg font-semibold">Day 1</span>
+<span class="font-headline-sm text-headline-sm text-text-secondary-light font-medium">Friday, December 18, 2026</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-fixed text-on-primary-fixed rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">check_circle</span>
+<span>4/5 Tasks Cleared</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Sangeet &amp; Musical Night</h2>
+<span class="font-headline-sm text-headline-sm text-primary font-semibold">7:00 PM onwards · Doors open 6:30 PM</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-tertiary">location_on</span>
+<span>Example Convention Centre, Grand Ballroom &amp; Hall A · Jubilee Hills, Hyderabad</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="relative h-44 rounded-xl overflow-hidden bg-surface-container">
+<div class="w-full h-full bg-surface-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[36px]">event</span></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark/60 via-transparent to-transparent flex items-end p-4">
+<span class="text-text-primary-dark font-label-sm text-label-sm bg-surface-dark/70 px-2.5 py-1 rounded-lg backdrop-blur-sm">Grand Ballroom 1,200 sq.m</span>
+</div>
+</div>
+<div class="flex flex-col justify-between p-4 bg-surface rounded-xl gap-3 border border-comfort-border/30">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-text-secondary-light font-label-sm text-label-sm uppercase tracking-wider">
+<span>Guest Attendance</span>
+<span class="text-primary font-semibold">90% Confirmed</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">112</span>
+<span class="font-body-md text-body-md text-text-secondary-light">/ 125 households (240 guests)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mt-1">
+<div class="bg-primary h-full rounded-full" style="width: 89.6%"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col gap-1 text-text-secondary-light font-label-md text-label-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">person</span>
+<span>Coordinator: <strong class="text-on-surface font-medium">Rahul (Planner)</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">mic</span>
+<span>Lead MC: <strong class="text-on-surface font-medium">Kavita</strong></span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-surface rounded-xl border border-comfort-border/30">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">styler</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Dress Code</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Indo-Western / Glam Festive</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">restaurant</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Vendor</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Royal Caterers · Confirmed</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pt-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Readiness &amp; Setup Checklist</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Venue Contract &amp; Deposit</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Invitations Sent &amp; QR links active</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">DJ &amp; Sound Engineer confirmed</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Choreographer lineup locked</span>
+</div>
+<div class="sm:col-span-2 flex items-center justify-between gap-3 p-3 bg-secondary-fixed/30 rounded-lg">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px]">warning</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Sound Check scheduled for 4:30 PM (Pending final acoustic clearance)</span>
+</div>
+<button class="px-3 py-1 bg-surface text-secondary text-label-sm font-label-sm rounded-lg hover:bg-secondary-fixed transition-colors">Clear item</button>
+</div>
+</div>
+</div>
+</article>
+<!-- Day 2 Card -->
+<article class="relative flex flex-col gap-6 p-7 bg-surface-container-low rounded-xl shadow-sm hover:shadow-md transition-shadow border border-comfort-border/30">
+<div class="flex flex-wrap items-baseline justify-between gap-4 pb-4 border-b border-comfort-border/30">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-surface-container text-primary font-label-sm text-label-sm uppercase tracking-wider rounded-lg font-semibold">Day 2</span>
+<span class="font-headline-sm text-headline-sm text-text-secondary-light font-medium">Saturday, December 19, 2026</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary-fixed text-on-primary-fixed rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">done_all</span>
+<span>All 5 Milestones Ready</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Wedding Ceremony (Muhurtham)</h2>
+<span class="font-headline-sm text-headline-sm text-primary font-semibold">9:15 AM Auspicious Window</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light">Baraat arrival 8:00 AM · Seemantham &amp; Ganesh Puja 8:30 AM · Talambralu 10:15 AM</p>
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-tertiary">temple_hindu</span>
+<span>Temple Mandapam Pavilion, Old City Heritage Grounds, Hyderabad</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="relative h-44 rounded-xl overflow-hidden bg-surface-container">
+<div class="w-full h-full bg-surface-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[36px]">event</span></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark/60 via-transparent to-transparent flex items-end p-4">
+<span class="text-text-primary-dark font-label-sm text-label-sm bg-surface-dark/70 px-2.5 py-1 rounded-lg backdrop-blur-sm">Courtyard Mandapam</span>
+</div>
+</div>
+<div class="flex flex-col justify-between p-4 bg-surface rounded-xl gap-3 border border-comfort-border/30">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-text-secondary-light font-label-sm text-label-sm uppercase tracking-wider">
+<span>Guest Attendance</span>
+<span class="text-primary font-semibold">93% Confirmed</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">168</span>
+<span class="font-body-md text-body-md text-text-secondary-light">/ 180 households (342 guests)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mt-1">
+<div class="bg-primary h-full rounded-full" style="width: 93.3%"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col gap-1 text-text-secondary-light font-label-md text-label-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">supervisor_account</span>
+<span>Coordinators: <strong class="text-on-surface font-medium">Panditji &amp; Family Elders</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">directions_bus</span>
+<span>Buses from ITC Kohenur: <strong class="text-on-surface font-medium">7:30 AM sharp</strong></span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-surface rounded-xl border border-comfort-border/30">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">checkroom</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Dress Code</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Traditional Kanjeevaram / Kurta Pajama &amp; Veshti</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">lunch_dining</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Vendor</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Royal Caterers · Confirmed</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pt-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Readiness &amp; Setup Checklist</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Priest &amp; Puja items confirmed</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Mandap floral setup (Begins 4:00 AM)</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Live Nadaswaram &amp; Carnatic ensemble locked</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Event timing and venue access confirmed</span>
+</div>
+<div class="sm:col-span-2 flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Guest invitation details confirmed</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Day 3 Card -->
+<article class="relative flex flex-col gap-6 p-7 bg-surface-container-low rounded-xl shadow-sm hover:shadow-md transition-shadow border border-comfort-border/30">
+<div class="flex flex-wrap items-baseline justify-between gap-4 pb-4 border-b border-comfort-border/30">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-surface-container text-primary font-label-sm text-label-sm uppercase tracking-wider rounded-lg font-semibold">Day 3</span>
+<span class="font-headline-sm text-headline-sm text-text-secondary-light font-medium">Sunday, December 20, 2026</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-secondary-fixed text-on-secondary-fixed rounded-full font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">pending</span>
+<span>1 Review Required</span>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Reception</h2>
+<span class="font-headline-sm text-headline-sm text-primary font-semibold">7:30 PM onwards</span>
+</div>
+<div class="flex items-center gap-2 text-text-secondary-light font-body-md text-body-md">
+<span class="material-symbols-outlined text-[18px] text-tertiary">deck</span>
+<span>Grand Palace Lawn, ITC Kohenur, Hyderabad</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="relative h-44 rounded-xl overflow-hidden bg-surface-container">
+<div class="w-full h-full bg-surface-container flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[36px]">event</span></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dark/60 via-transparent to-transparent flex items-end p-4">
+<span class="text-text-primary-dark font-label-sm text-label-sm bg-surface-dark/70 px-2.5 py-1 rounded-lg backdrop-blur-sm">Grand Palace Lawn</span>
+</div>
+</div>
+<div class="flex flex-col justify-between p-4 bg-surface rounded-xl gap-3 border border-comfort-border/30">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between text-text-secondary-light font-label-sm text-label-sm uppercase tracking-wider">
+<span>Guest Attendance</span>
+<span class="text-primary font-semibold">92% Confirmed</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-stat-metric text-stat-metric text-on-surface">195</span>
+<span class="font-body-md text-body-md text-text-secondary-light">/ 210 households (400 guests)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mt-1">
+<div class="bg-primary h-full rounded-full" style="width: 92.8%"></div>
+</div>
+</div>
+<div class="pt-2 flex flex-col gap-1 text-text-secondary-light font-label-md text-label-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">person</span>
+<span>Coordinators: <strong class="text-on-surface font-medium">Rahul &amp; Lead Event Manager</strong></span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">photo_camera</span>
+<span>Photography: <strong class="text-on-surface font-medium">Master Studio (Team of 6)</strong></span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-surface rounded-xl border border-comfort-border/30">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">award_star</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Dress Code</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Formal Western / Traditional Evening Elegance</span>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[22px] mt-0.5">cake</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Vendor</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Tiered Wedding Cake &amp; Global Dinner Vendor</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 pt-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-text-secondary-light font-semibold">Readiness &amp; Setup Checklist</span>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Venue Ballroom &amp; Lawn booked</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Master photographer studio ready</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Cake &amp; Western dinner confirmed</span>
+</div>
+<div class="flex items-center gap-2.5 p-2.5 bg-surface rounded-lg border border-comfort-border/20">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Valet parking &amp; security crew secured</span>
+</div>
+<div class="sm:col-span-2 flex items-center justify-between gap-3 p-3 bg-secondary-fixed/30 rounded-lg">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px]">priority_high</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Reception venue details require final review</span>
+</div>
+<button class="px-3 py-1 bg-surface text-secondary text-label-sm font-label-sm rounded-lg hover:bg-secondary-fixed transition-colors">Review now</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Right Companion Sidebar -->
+<aside class="lg:col-span-4 flex flex-col gap-6 sticky top-24">
+<!-- Run-Sheet Quick Navigator -->
+<div class="p-6 bg-surface-container-low rounded-xl flex flex-col gap-5 shadow-sm border border-comfort-border/30">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Event Summary</h3>
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider">Quick Jump</span>
+</div>
+<div class="flex flex-col gap-2.5">
+<a class="flex items-center justify-between p-3 bg-surface rounded-lg hover:bg-surface-container-high transition-colors group border border-comfort-border/20" href="#">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light">Fri, Sangeet · 7:00 PM</span>
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-primary transition-colors">Day 1: Sangeet</span>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:translate-x-0.5 transition-transform text-[20px]">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-3 bg-surface rounded-lg hover:bg-surface-container-high transition-colors group border border-comfort-border/20" href="#">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light">Sat, Wedding · 9:15 AM</span>
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-primary transition-colors">Day 2: Wedding (Muhurtham)</span>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:translate-x-0.5 transition-transform text-[20px]">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-3 bg-surface rounded-lg hover:bg-surface-container-high transition-colors group border border-comfort-border/20" href="#">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-text-secondary-light">Sun, Reception · 7:30 PM</span>
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-primary transition-colors">Day 3: Reception</span>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:translate-x-0.5 transition-transform text-[20px]">chevron_right</span>
+</a>
+</div>
+<div class="p-3.5 bg-surface rounded-lg flex items-center justify-between border border-comfort-border/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">groups</span>
+<span class="font-label-md text-label-md text-on-surface">Total Registered Guests</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">400</span>
+</div>
+</div>
+<!-- Weather Forecast Card -->
+<div class="p-6 bg-surface-container-low rounded-xl flex flex-col gap-4 shadow-sm border border-comfort-border/30">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-text-secondary-light uppercase tracking-wider font-semibold">Setup Status</span>
+<span class="material-symbols-outlined text-illustration-ochre text-[22px]">sunny</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-hero-display text-hero-display text-on-surface leading-none">2/3</span>
+<span class="font-body-md text-body-md text-text-secondary-light">events fully ready</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">All three events have dates, venues and guest invitations in place. One Reception venue detail still needs review.</p>
+<div class="grid grid-cols-3 gap-2 pt-2 text-center">
+<div class="p-2 bg-surface rounded-lg flex flex-col gap-1 border border-comfort-border/20">
+<span class="font-label-sm text-label-sm text-text-secondary-light">Sangeet</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Ready</span>
+</div>
+<div class="p-2 bg-surface rounded-lg flex flex-col gap-1 border border-comfort-border/20">
+<span class="font-label-sm text-label-sm text-text-secondary-light">Wedding</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Ready</span>
+</div>
+<div class="p-2 bg-surface rounded-lg flex flex-col gap-1 border border-comfort-border/20">
+<span class="font-label-sm text-label-sm text-text-secondary-light">Reception</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Review</span>
+</div>
+</div>
+</div>
+<!-- Emergency Coordinator Contacts Card -->
+<div class="p-6 bg-surface-container-low rounded-xl flex flex-col gap-4 shadow-sm border border-comfort-border/30">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Help Contacts</h3>
+<span class="material-symbols-outlined text-secondary text-[20px]">phone_in_talk</span>
+</div>
+<p class="font-body-md text-body-md text-text-secondary-light">People organisers can contact quickly during the wedding.</p>
+<div class="flex flex-col gap-3">
+<div class="p-3 bg-surface rounded-lg flex items-center justify-between border border-comfort-border/20">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Rahul (Planner)</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">Wedding coordinator</span>
+</div>
+<a class="px-2.5 py-1.5 bg-surface-container text-primary rounded-md font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-colors" href="tel:+919876543210">+91 98765 43210</a>
+</div>
+<div class="p-3 bg-surface rounded-lg flex items-center justify-between border border-comfort-border/20">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Shastriji</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">Lead Priest &amp; Muhurtham Rituals</span>
+</div>
+<span class="px-2.5 py-1.5 bg-surface-container text-tertiary rounded-md font-label-sm text-label-sm">Family Liaison</span>
+</div>
+<div class="p-3 bg-surface rounded-lg flex items-center justify-between border border-comfort-border/20">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Vikram</span>
+<span class="font-label-sm text-label-sm text-text-secondary-light">Venue contact</span>
+</div>
+<a class="px-2.5 py-1.5 bg-surface-container text-primary rounded-md font-label-sm text-label-sm hover:bg-primary hover:text-on-primary transition-colors" href="tel:+919811122334">Direct Desk</a>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+  (function() {
+    const toggles = [document.getElementById('btn-chrono'), document.getElementById('btn-calendar'), document.getElementById('btn-print')];
+    toggles.forEach(btn => {
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        toggles.forEach(b => {
+          b.className = 'px-4 py-2 rounded-lg text-text-secondary-light hover:text-on-surface font-label-md text-label-md transition-all';
+        });
+        btn.className = 'px-4 py-2 rounded-lg bg-surface text-on-surface font-label-md text-label-md shadow-sm transition-all';
+      });
+    });
+  })();
+</script>
+</body></html>
