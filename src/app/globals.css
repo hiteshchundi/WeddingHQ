@@ -172,6 +172,7 @@
 
 .page-header-inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -179,6 +180,7 @@
 
 .organiser-page-title {
   font-size: var(--text-2xl);
+  overflow-wrap: anywhere;
 }
 
 .organiser-content {

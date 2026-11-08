@@ -3,7 +3,7 @@ import { PageHeader } from "../../../components/layout/page-header";
 import { Card } from "../../../components/ui/card";
 import { ActivityItem } from "../../../components/wedding/activity-item";
 import { AttentionItem } from "../../../components/wedding/attention-item";
-import { EventCard } from "../../../components/wedding/event-card";
+import { UpcomingEvents } from "../../../components/wedding/upcoming-events";
 import { Metric } from "../../../components/wedding/metric";
 import { weddingFixture } from "../../../fixtures/wedding";
 
@@ -14,7 +14,7 @@ export default async function WeddingPage({
 }) {
   const { weddingId } = await params;
   const basePath = `/weddings/${encodeURIComponent(weddingId)}`;
-  const { identity, summary, attention, upcomingEvents, recentActivity } = weddingFixture;
+  const { identity, summary, attention, recentActivity } = weddingFixture;
 
   return (
     <>
@@ -64,9 +64,7 @@ export default async function WeddingPage({
         <div className="grid gap-8 lg:grid-cols-2">
           <section aria-labelledby="coming-up-title" className="space-y-4">
             <h2 id="coming-up-title" className="text-2xl font-semibold">Coming up</h2>
-            <ul className="space-y-4">
-              {upcomingEvents.map((event) => <EventCard key={event.id} {...event} />)}
-            </ul>
+            <UpcomingEvents basePath={basePath} />
           </section>
 
           <section aria-labelledby="activity-title" className="space-y-4">

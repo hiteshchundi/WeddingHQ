@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { OrganiserShell } from "../../../components/layout/organiser-shell";
+import { WeddingEventsProvider } from "../../../components/wedding/events-context";
 
 export default async function WeddingLayout({
   children,
@@ -9,5 +10,9 @@ export default async function WeddingLayout({
   params: Promise<{ weddingId: string }>;
 }) {
   const { weddingId } = await params;
-  return <OrganiserShell weddingId={weddingId}>{children}</OrganiserShell>;
+  return (
+    <OrganiserShell weddingId={weddingId}>
+      <WeddingEventsProvider key={weddingId}>{children}</WeddingEventsProvider>
+    </OrganiserShell>
+  );
 }
