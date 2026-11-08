@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
+import { notifyPreferences } from "./preferences";
 
-// Future controls only need to set root data-theme and data-eye-comfort.
-// Auto comfort uses local evening hours (19:00–07:00), without persistence.
+// Auto comfort follows browser-local evening hours, including while left open.
 export function ThemeEffects() {
   useEffect(() => {
     const syncPeriod = () => {
       const hour = new Date().getHours();
-      document.documentElement.dataset.comfortPeriod =
-        hour >= 19 || hour < 7 ? "night" : "day";
+      const period = hour >= 19 || hour < 7 ? "night" : "day";
+      if (document.documentElement.dataset.comfortPeriod !== period) {
+        document.documentElement.dataset.comfortPeriod = period;
+        notifyPreferences();
+      }
     };
 
     syncPeriod();

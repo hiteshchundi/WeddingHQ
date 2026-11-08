@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 import { ThemeEffects } from "../components/theme/theme-effects";
+import { preferenceBootstrap } from "../components/theme/preferences";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -28,7 +29,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${jakarta.variable} ${newsreader.variable}`}
       data-theme="system"
       data-eye-comfort="off"
+      data-comfort-period="day"
+      data-sidebar-collapsed="false"
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: preferenceBootstrap }} />
+      </head>
       <body>
         <ThemeEffects />
         {children}
