@@ -1,16 +1,38 @@
 import type { Metadata } from "next";
+import { Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import type { ReactNode } from "react";
+import { ThemeEffects } from "../components/theme/theme-effects";
 import "./globals.css";
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-jakarta",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-newsreader",
+});
 
 export const metadata: Metadata = {
   title: "Wedding HQ",
-  description: "Wedding HQ prototype scaffold.",
+  description: "Wedding HQ prototype design foundation preview.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={`${jakarta.variable} ${newsreader.variable}`}
+      data-theme="system"
+      data-eye-comfort="off"
+    >
+      <body>
+        <ThemeEffects />
+        {children}
+      </body>
     </html>
   );
 }

@@ -1,9 +1,129 @@
-* {
-  box-sizing: border-box;
+@import "tailwindcss" source("../");
+
+@theme static {
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --spacing: initial;
+
+  --color-background: #f7f5ef;
+  --color-surface: #fcfbf7;
+  --color-surface-alt: #efece4;
+  --color-primary-text: #282a25;
+  --color-secondary-text: #6d7068;
+  --color-border: #ddd9cf;
+  --color-sage: #6f7f63;
+  --color-sage-hover: #5f6f55;
+  --color-sage-soft: #e5eadf;
+  --color-clay: #b97a61;
+  --color-on-sage: #fcfbf7;
+
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3rem;
 }
 
-body {
-  margin: 0;
-  padding: 2rem;
-  line-height: 1.5;
+@theme inline {
+  --font-sans: var(--font-jakarta);
+  --font-editorial: var(--font-newsreader);
+}
+
+/* System follows the browser; explicit modes only change tokens. */
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #1d201c;
+  --color-surface: #252821;
+  --color-surface-alt: #2d3029;
+  --color-primary-text: #f1efe7;
+  --color-secondary-text: #a9aba1;
+  --color-border: #3b3e36;
+  --color-sage: #98a88b;
+  --color-sage-hover: #a9b79d;
+  --color-sage-soft: #32382f;
+  --color-clay: #c48a72;
+  --color-on-sage: #1d201c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-background: #1d201c;
+    --color-surface: #252821;
+    --color-surface-alt: #2d3029;
+    --color-primary-text: #f1efe7;
+    --color-secondary-text: #a9aba1;
+    --color-border: #3b3e36;
+    --color-sage: #98a88b;
+    --color-sage-hover: #a9b79d;
+    --color-sage-soft: #32382f;
+    --color-clay: #c48a72;
+    --color-on-sage: #1d201c;
+  }
+}
+
+/* Comfort overrides only the two approved surface tokens. */
+:root:is(
+  [data-eye-comfort="on"],
+  [data-eye-comfort="auto"][data-comfort-period="night"]
+) {
+  --color-background: #f4f0e6;
+  --color-surface: #faf7ef;
+}
+
+:root[data-theme="dark"]:is(
+  [data-eye-comfort="on"],
+  [data-eye-comfort="auto"][data-comfort-period="night"]
+) {
+  --color-background: #211f1a;
+  --color-surface: #29261f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):is(
+    [data-eye-comfort="on"],
+    [data-eye-comfort="auto"][data-comfort-period="night"]
+  ) {
+    --color-background: #211f1a;
+    --color-surface: #29261f;
+  }
+}
+
+@layer base {
+  body {
+    background: var(--color-background);
+    color: var(--color-primary-text);
+    font-family: var(--font-jakarta), sans-serif;
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  :where(button, input):focus-visible {
+    outline: 2px solid var(--color-sage-hover);
+    outline-offset: 4px;
+  }
 }
