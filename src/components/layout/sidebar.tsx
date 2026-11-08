@@ -1,5 +1,6 @@
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import Link from "next/link";
+import { weddingFixture } from "../../fixtures/wedding";
 import { BrandMark } from "../brand/brand-mark";
 import { Button } from "../ui/button";
 import { isCurrentPath, navigationHref, organiserNavigation } from "./navigation";
@@ -45,11 +46,11 @@ export function Sidebar({
       </div>
       <div className="sidebar-identity">
         <div className="sidebar-expanded flex-col gap-1">
-          <p className="font-editorial text-2xl">Ravi &amp; Priya</p>
-          <p className="text-sm text-secondary-text">12 days to go</p>
+          <p className="font-editorial text-2xl">{weddingFixture.identity.coupleNames}</p>
+          <p className="text-sm text-secondary-text">{weddingFixture.identity.countdown}</p>
         </div>
-        <span className="sidebar-collapsed text-sm font-semibold" title="Ravi & Priya">
-          R+P
+        <span className="sidebar-collapsed text-sm font-semibold" title={weddingFixture.identity.coupleNames}>
+          {weddingFixture.identity.monogram}
         </span>
       </div>
       <nav id="organiser-sidebar-nav" aria-label="Organiser" className="sidebar-nav">
