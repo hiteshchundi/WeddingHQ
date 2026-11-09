@@ -31,6 +31,37 @@ const team: TeamMember[] = [
   { id: "ananya", name: "Ananya", role: "ADMIN" },
 ];
 
+export const messageAudienceLabels = {
+  EVENT_ALL: "All event invitees",
+  EVENT_NO_RSVP: "Awaiting RSVP",
+  EVENT_RSVP_YES: "Confirmed",
+  EVENT_RSVP_MAYBE: "Maybe",
+  EVENT_RSVP_NO: "Declined",
+} as const;
+export const messageStatusLabels = { SCHEDULED: "Scheduled", SENT: "Sent", DRAFT: "Draft" } as const;
+
+// Presentation-only Communication fields. No recipient lists or delivery state.
+export type MessageAudience = { type: keyof typeof messageAudienceLabels; eventId: string };
+export type WeddingMessage = {
+  id: string;
+  subject: string;
+  body: string;
+  audience: MessageAudience;
+  status: keyof typeof messageStatusLabels;
+  scheduledAt: string | null;
+  sentAt: string | null;
+  createdAt: string;
+};
+
+const messages: WeddingMessage[] = [
+  { id: "reception-rsvp-reminder", subject: "Reception RSVP reminder", body: "Please let us know whether your household can join the Reception. You can update your response through your guest link. We look forward to celebrating together.", audience: { type: "EVENT_NO_RSVP", eventId: "reception" }, status: "SCHEDULED", scheduledAt: "2026-12-08T10:00:00+05:30", sentAt: null, createdAt: "2026-12-04T09:00:00+05:30" },
+  { id: "wedding-ceremony-details", subject: "Wedding ceremony details", body: "The Wedding ceremony starts at 9:00 AM. Please arrive a little early so we can welcome you before the ceremony. Traditional attire is welcome.", audience: { type: "EVENT_RSVP_YES", eventId: "wedding" }, status: "SCHEDULED", scheduledAt: "2026-12-18T10:00:00+05:30", sentAt: null, createdAt: "2026-12-05T11:30:00+05:30" },
+  { id: "sangeet-timing-update", subject: "Sangeet timing update", body: "Sangeet begins at 7:00 PM. Please check your guest page for the event details. We cannot wait to enjoy the evening with you!", audience: { type: "EVENT_ALL", eventId: "sangeet" }, status: "SENT", scheduledAt: null, sentAt: "2026-12-04T16:00:00+05:30", createdAt: "2026-12-04T15:45:00+05:30" },
+  { id: "reception-welcome", subject: "A welcome from Ravi and Priya", body: "Thank you for being part of our celebration. The latest event details are available on your guest page.", audience: { type: "EVENT_ALL", eventId: "reception" }, status: "SENT", scheduledAt: null, sentAt: "2026-12-03T12:00:00+05:30", createdAt: "2026-12-03T11:45:00+05:30" },
+  { id: "reception-maybe-followup", subject: "Can you join us at the Reception?", body: "If your plans are clearer now, please update your Reception response through your guest link. We would love to see you.", audience: { type: "EVENT_RSVP_MAYBE", eventId: "reception" }, status: "DRAFT", scheduledAt: null, sentAt: null, createdAt: "2026-12-06T09:00:00+05:30" },
+  { id: "wedding-family-note", subject: "A note before the Wedding", body: "We are grateful for your good wishes and look forward to sharing this special day with our family and friends.", audience: { type: "EVENT_ALL", eventId: "wedding" }, status: "DRAFT", scheduledAt: null, sentAt: null, createdAt: "2026-12-06T10:00:00+05:30" },
+];
+
 export const vendorCategories = ["Catering", "Photography", "Decoration", "Venue", "Makeup", "Music", "Other"] as const;
 export const expenseCategories = ["Venue", "Catering", "Photography", "Decoration", "Music", "Other"] as const;
 export const vendorStatusLabels = { PROSPECT: "Considering", CONFIRMED: "Confirmed", COMPLETED: "Completed", CANCELLED: "Cancelled" } as const;
@@ -260,6 +291,7 @@ export const weddingFixture = {
   tasks,
   vendors,
   expenses,
+  messages,
   identity: {
     coupleNames: "Ravi & Priya",
     monogram: "R+P",
@@ -282,7 +314,7 @@ export const weddingFixture = {
       issue: `${summary.householdsAwaiting} households haven't replied`,
       action: "Send reminder",
       destination: "messages",
-      available: false,
+      available: true,
     },
     {
       id: "reception-venue",

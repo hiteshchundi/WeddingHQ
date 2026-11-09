@@ -18,7 +18,7 @@ export const organiserNavigation = [
   { label: "Tasks", segment: "tasks", icon: ListTodo, available: true },
   { label: "Vendors", segment: "vendors", icon: Store, available: true },
   { label: "Expenses", segment: "expenses", icon: Wallet, available: true },
-  { label: "Messages", segment: "messages", icon: Mail, available: false },
+  { label: "Messages", segment: "messages", icon: Mail, available: true },
   { label: "Photos", segment: "photos", icon: Images, available: false },
   { label: "Activity", segment: "activity", icon: Activity, available: false },
   { label: "Settings", segment: "settings", icon: Settings, available: false },

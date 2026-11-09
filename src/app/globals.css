@@ -263,7 +263,8 @@
 
 .household-drawer,
 .task-drawer,
-.cost-drawer {
+.cost-drawer,
+.message-drawer {
   inset: 0;
   width: min(640px, 100%);
   max-width: 100%;
@@ -276,13 +277,14 @@
 
 .household-drawer > header,
 .task-drawer > header,
-.cost-drawer > header {
+.cost-drawer > header,
+.message-drawer > header {
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-html:has(.household-drawer[open], .task-drawer[open], .cost-drawer[open]) {
+html:has(.household-drawer[open], .task-drawer[open], .cost-drawer[open], .message-drawer[open]) {
   overflow: hidden;
 }
 
