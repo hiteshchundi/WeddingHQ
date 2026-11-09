@@ -21,9 +21,10 @@ export function Sidebar({
   function renderLink(item: (typeof organiserNavigation)[number]) {
     const href = navigationHref(basePath, item.segment);
     const Icon = item.icon;
+    const content = <><Icon size={20} aria-hidden="true" /><span className="sidebar-expanded">{item.label}</span></>;
     return (
       <li key={item.label}>
-        <Link
+        {item.available ? <Link
           href={href}
           prefetch={false}
           className="shell-nav-link"
@@ -31,9 +32,8 @@ export function Sidebar({
           aria-label={item.label}
           aria-current={isCurrentPath(pathname, href, basePath) ? "page" : undefined}
         >
-          <Icon size={20} aria-hidden="true" />
-          <span className="sidebar-expanded">{item.label}</span>
-        </Link>
+          {content}
+        </Link> : <span role="link" aria-disabled="true" aria-label={`${item.label} — available later`} title={`${item.label} — available later`} className="shell-nav-link">{content}</span>}
       </li>
     );
   }
@@ -55,6 +55,7 @@ export function Sidebar({
       </div>
       <nav id="organiser-sidebar-nav" aria-label="Organiser" className="sidebar-nav">
         <ul className="space-y-1">{organiserNavigation.slice(0, -1).map(renderLink)}</ul>
+        <p className="sidebar-expanded px-3 pt-4 text-xs text-secondary-text">More areas are planned for a later phase.</p>
         <ul className="mt-auto pt-6">{organiserNavigation.slice(-1).map(renderLink)}</ul>
       </nav>
       <Button

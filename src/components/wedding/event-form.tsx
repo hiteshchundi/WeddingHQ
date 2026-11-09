@@ -65,14 +65,14 @@ export function EventForm({
 
   return (
     <form onSubmit={submit} className="space-y-6">
-      <p className="text-sm text-secondary-text">Times are shown for Hyderabad. Prototype changes reset on reload.</p>
+      <p className="text-sm text-secondary-text">Fields marked * are required. Times are shown for Hyderabad. Changes reset on reload.</p>
       {error ? <p role="alert" className="font-semibold">{error}</p> : null}
       <div className="grid gap-4 md:grid-cols-2">
         <div className="md:col-span-2">
-          <Input ref={nameInput} id="event-name" name="name" label="Event name" required maxLength={200} defaultValue={initialEvent?.name ?? ""} />
+          <Input ref={nameInput} id="event-name" name="name" label="Event name *" autoComplete="off" required maxLength={200} defaultValue={initialEvent?.name ?? ""} />
         </div>
-        <Input id="event-date" name="date" label="Date" type="date" required defaultValue={initialEvent?.startsAt.slice(0, 10) ?? weddingFixture.events[0]?.startsAt.slice(0, 10)} />
-        <Input id="event-start" name="startTime" label="Start time" type="time" required defaultValue={initialEvent?.startsAt.slice(11, 16) ?? ""} />
+        <Input id="event-date" name="date" label="Date *" type="date" required defaultValue={initialEvent?.startsAt.slice(0, 10) ?? weddingFixture.events[0]?.startsAt.slice(0, 10)} />
+        <Input id="event-start" name="startTime" label="Start time *" type="time" required defaultValue={initialEvent?.startsAt.slice(11, 16) ?? ""} />
         <Input id="event-end" name="endTime" label="End time" type="time" defaultValue={initialEvent?.endsAt.slice(11, 16) ?? ""} helperText="Optional; on the selected event date." />
         <Input id="event-venue" name="venue" label="Venue" defaultValue={initialEvent?.venue.name ?? ""} />
         <Input id="event-map" name="googleMapsUrl" label="Google Maps link" type="url" pattern="https?://.+" defaultValue={initialEvent?.venue.googleMapsUrl ?? ""} helperText="Optional; use an http:// or https:// link." />

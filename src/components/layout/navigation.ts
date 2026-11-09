@@ -12,16 +12,16 @@ import {
 } from "lucide-react";
 
 export const organiserNavigation = [
-  { label: "Overview", segment: "", icon: LayoutDashboard },
-  { label: "Events", segment: "events", icon: CalendarDays },
-  { label: "Guests", segment: "guests", icon: Users },
-  { label: "Tasks", segment: "tasks", icon: ListTodo },
-  { label: "Vendors", segment: "vendors", icon: Store },
-  { label: "Expenses", segment: "expenses", icon: Wallet },
-  { label: "Messages", segment: "messages", icon: Mail },
-  { label: "Photos", segment: "photos", icon: Images },
-  { label: "Activity", segment: "activity", icon: Activity },
-  { label: "Settings", segment: "settings", icon: Settings },
+  { label: "Overview", segment: "", icon: LayoutDashboard, available: true },
+  { label: "Events", segment: "events", icon: CalendarDays, available: true },
+  { label: "Guests", segment: "guests", icon: Users, available: true },
+  { label: "Tasks", segment: "tasks", icon: ListTodo, available: true },
+  { label: "Vendors", segment: "vendors", icon: Store, available: false },
+  { label: "Expenses", segment: "expenses", icon: Wallet, available: false },
+  { label: "Messages", segment: "messages", icon: Mail, available: false },
+  { label: "Photos", segment: "photos", icon: Images, available: false },
+  { label: "Activity", segment: "activity", icon: Activity, available: false },
+  { label: "Settings", segment: "settings", icon: Settings, available: false },
 ] as const;
 
 export const mobilePrimaryNavigation = [

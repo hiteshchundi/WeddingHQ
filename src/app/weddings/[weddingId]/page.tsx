@@ -52,9 +52,10 @@ export default async function WeddingPage({
               {attention.map((item) => (
                 <AttentionItem
                   key={item.id}
+                  itemId={item.id}
                   issue={item.issue}
                   action={item.action}
-                  href={`${basePath}/${item.destination}`}
+                  href={item.available ? `${basePath}/${item.destination}` : undefined}
                 />
               ))}
             </ul>

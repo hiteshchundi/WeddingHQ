@@ -50,13 +50,14 @@ export function MobileMoreMenu({
               <X size={20} />
             </IconButton>
           </header>
+          <p className="mt-4 text-sm text-secondary-text">These areas will be available in a later phase.</p>
           <nav aria-label="More organiser pages" className="mt-4">
             <ul className="space-y-1">
-              {secondaryNavigation.map(({ label, segment, icon: Icon }) => {
+              {secondaryNavigation.map(({ label, segment, icon: Icon, available }) => {
                 const href = navigationHref(basePath, segment);
                 return (
                   <li key={label}>
-                    <Link
+                    {available ? <Link
                       href={href}
                       prefetch={false}
                       className="shell-nav-link"
@@ -65,7 +66,7 @@ export function MobileMoreMenu({
                     >
                       <Icon size={22} aria-hidden="true" />
                       <span>{label}</span>
-                    </Link>
+                    </Link> : <span role="link" aria-disabled="true" aria-label={`${label} — available later`} className="shell-nav-link"><Icon size={22} aria-hidden="true" /><span>{label}</span></span>}
                   </li>
                 );
               })}

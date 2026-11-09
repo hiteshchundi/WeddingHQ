@@ -26,7 +26,7 @@ export function Input({
     .join(" ");
 
   return (
-    <div className="grid gap-2">
+    <div className="grid min-w-0 content-start gap-2">
       <label htmlFor={id} className="text-sm font-medium">
         {label}
       </label>

@@ -122,7 +122,7 @@
     line-height: 1.5;
   }
 
-  :where(button, input, a, select):focus-visible {
+  :where(button, input, a, select, textarea):focus-visible {
     outline: 2px solid var(--color-sage-hover);
     outline-offset: 4px;
   }
@@ -198,7 +198,7 @@
   color: var(--color-secondary-text);
 }
 
-.shell-nav-link:hover,
+.shell-nav-link:not([aria-disabled="true"]):hover,
 .mobile-nav-item:hover {
   background: var(--color-surface-alt);
   color: var(--color-primary-text);
@@ -213,6 +213,10 @@
 
 .shell-nav-link svg {
   flex-shrink: 0;
+}
+
+.shell-nav-link[aria-disabled="true"] {
+  cursor: not-allowed;
 }
 
 .mobile-bottom-nav {

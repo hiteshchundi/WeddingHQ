@@ -157,7 +157,7 @@ const events: WeddingEvent[] = [
     youtubeLiveUrl: "",
     invitedHouseholds: 126,
     order: 1,
-    relativeTime: "2 days away",
+    relativeTime: "12 days away",
   },
   {
     id: "wedding",
@@ -177,7 +177,7 @@ const events: WeddingEvent[] = [
     youtubeLiveUrl: "",
     invitedHouseholds: 180,
     order: 2,
-    relativeTime: "3 days away",
+    relativeTime: "13 days away",
   },
   {
     id: "reception",
@@ -193,7 +193,7 @@ const events: WeddingEvent[] = [
     youtubeLiveUrl: "",
     invitedHouseholds: 180,
     order: 3,
-    relativeTime: "4 days away",
+    relativeTime: "14 days away",
   },
 ];
 
@@ -220,24 +220,28 @@ export const weddingFixture = {
       issue: `${summary.tasksOverdue} tasks are overdue`,
       action: "View tasks",
       destination: "tasks",
+      available: true,
     },
     {
       id: "awaiting-rsvp",
       issue: `${summary.householdsAwaiting} households haven't replied`,
       action: "Send reminder",
       destination: "messages",
+      available: false,
     },
     {
       id: "reception-venue",
       issue: "Reception venue details aren't complete",
       action: "Add venue",
-      destination: "events",
+      destination: "events/reception",
+      available: true,
     },
     {
       id: "photo-review",
       issue: `${summary.photosAwaitingReview} photos are waiting for approval`,
       action: "Review photos",
       destination: "photos",
+      available: false,
     },
   ],
   events,
