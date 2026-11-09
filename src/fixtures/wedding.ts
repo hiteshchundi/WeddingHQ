@@ -31,6 +31,31 @@ const team: TeamMember[] = [
   { id: "ananya", name: "Ananya", role: "ADMIN" },
 ];
 
+export type WeddingPhoto = {
+  id: string;
+  eventId: string;
+  status: "PENDING" | "APPROVED" | "REJECTED";
+  uploaderLabel: string;
+  originalFilename: string;
+  previewUrl: string | null;
+  uploadedAt: string;
+};
+
+// A representative subset, not the Overview's aggregate of 83 awaiting review.
+// Null preview URLs deliberately render neutral blocks, not stock photography.
+const photos: WeddingPhoto[] = [
+  { id: "photo-01", eventId: "reception", status: "PENDING", uploaderLabel: "Guest", originalFilename: "reception-01.jpg", previewUrl: null, uploadedAt: "2026-12-06T10:05:00+05:30" },
+  { id: "photo-02", eventId: "wedding", status: "PENDING", uploaderLabel: "Guest", originalFilename: "wedding-01.jpg", previewUrl: null, uploadedAt: "2026-12-06T09:50:00+05:30" },
+  { id: "photo-03", eventId: "sangeet", status: "PENDING", uploaderLabel: "Guest", originalFilename: "sangeet-01.jpg", previewUrl: null, uploadedAt: "2026-12-06T09:30:00+05:30" },
+  { id: "photo-04", eventId: "reception", status: "PENDING", uploaderLabel: "Guest", originalFilename: "reception-02.png", previewUrl: null, uploadedAt: "2026-12-06T09:10:00+05:30" },
+  { id: "photo-05", eventId: "wedding", status: "PENDING", uploaderLabel: "Guest", originalFilename: "wedding-02.jpg", previewUrl: null, uploadedAt: "2026-12-06T08:50:00+05:30" },
+  { id: "photo-06", eventId: "sangeet", status: "PENDING", uploaderLabel: "Guest", originalFilename: "sangeet-02.webp", previewUrl: null, uploadedAt: "2026-12-06T08:30:00+05:30" },
+  { id: "photo-07", eventId: "reception", status: "APPROVED", uploaderLabel: "Guest", originalFilename: "reception-03.jpg", previewUrl: null, uploadedAt: "2026-12-05T16:30:00+05:30" },
+  { id: "photo-08", eventId: "wedding", status: "APPROVED", uploaderLabel: "Guest", originalFilename: "wedding-03.jpg", previewUrl: null, uploadedAt: "2026-12-05T16:00:00+05:30" },
+  { id: "photo-09", eventId: "sangeet", status: "APPROVED", uploaderLabel: "Guest", originalFilename: "sangeet-03.png", previewUrl: null, uploadedAt: "2026-12-05T15:30:00+05:30" },
+  { id: "photo-10", eventId: "reception", status: "APPROVED", uploaderLabel: "Guest", originalFilename: "reception-04.jpg", previewUrl: null, uploadedAt: "2026-12-05T15:00:00+05:30" },
+];
+
 export const messageAudienceLabels = {
   EVENT_ALL: "All event invitees",
   EVENT_NO_RSVP: "Awaiting RSVP",
@@ -292,6 +317,8 @@ export const weddingFixture = {
   vendors,
   expenses,
   messages,
+  photos,
+  photoUploadEventId: "reception",
   identity: {
     coupleNames: "Ravi & Priya",
     monogram: "R+P",
@@ -328,7 +355,7 @@ export const weddingFixture = {
       issue: `${summary.photosAwaitingReview} photos are waiting for approval`,
       action: "Review photos",
       destination: "photos",
-      available: false,
+      available: true,
     },
   ],
   events,

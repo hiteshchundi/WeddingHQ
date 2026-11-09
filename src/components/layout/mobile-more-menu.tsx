@@ -51,7 +51,7 @@ export function MobileMoreMenu({
               <X size={20} />
             </IconButton>
           </header>
-          <p className="mt-4 text-sm text-secondary-text">Photos, Activity and Settings will be available in a later phase.</p>
+          <p className="mt-4 text-sm text-secondary-text">Activity and Settings will be available in a later phase.</p>
           <nav aria-label="More organiser pages" className="mt-4">
             <ul className="space-y-1">
               {secondaryNavigation.map(({ label, segment, icon: Icon, available }) => {

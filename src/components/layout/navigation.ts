@@ -19,7 +19,7 @@ export const organiserNavigation = [
   { label: "Vendors", segment: "vendors", icon: Store, available: true },
   { label: "Expenses", segment: "expenses", icon: Wallet, available: true },
   { label: "Messages", segment: "messages", icon: Mail, available: true },
-  { label: "Photos", segment: "photos", icon: Images, available: false },
+  { label: "Photos", segment: "photos", icon: Images, available: true },
   { label: "Activity", segment: "activity", icon: Activity, available: false },
   { label: "Settings", segment: "settings", icon: Settings, available: false },
 ] as const;
