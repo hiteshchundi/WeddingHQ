@@ -59,7 +59,7 @@ export function PhotosPage() {
         {notice ? <p role="status" className="break-words text-sm font-semibold">{notice}</p> : null}
         <section id="photo-panel" role="tabpanel" aria-labelledby={`photo-tab-${view}`} tabIndex={0} className="space-y-4">
           <h2 className="text-lg font-semibold">{view === "APPROVED" ? "Approved gallery preview" : "Pending review"} · {visible.length}</h2>
-          {view === "APPROVED" ? <p className="text-sm text-secondary-text">Only approved photos appear in this gallery preview. The private guest gallery will be added later.</p> : null}
+          {view === "APPROVED" ? <p className="text-sm text-secondary-text">Only approved photos appear in this gallery preview. Moderation changes stay in this view; the guest demo keeps its original sample gallery.</p> : null}
           {!visible.length ? <Card className="space-y-3"><h3 className="text-lg font-semibold">{view === "PENDING" ? "No photos awaiting review" : "No approved photos yet"}{eventFilter ? " for this event" : ""}</h3><p className="text-sm text-secondary-text">{view === "PENDING" ? "New photos will appear here for review." : "Photos you approve will appear here."}</p>{eventFilter ? <Button variant="secondary" onClick={() => setEventFilter("")}>Show all events</Button> : null}</Card>
             : <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 xl:grid-cols-4">{visible.map((photo) => <li key={photo.id} className="min-w-0 overflow-hidden rounded-lg border border-border bg-surface">
               <button className="block w-full text-left" aria-label={`${photo.status === "PENDING" ? "Review" : "View"} ${photo.originalFilename} · ${eventName(photo.eventId)}`} onClick={() => { setNotice(""); setSelectedId(photo.id); }}>

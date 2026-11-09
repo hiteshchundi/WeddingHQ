@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { IconButton } from "../ui/icon-button";
 import { Input } from "../ui/input";
+import { useDemoTasks } from "./demo-tasks";
 import { useWeddingEvents } from "./events-context";
 import { overdueDays, taskDate, taskPriorityLabels, taskStatusLabels } from "./task-display";
 import { TaskForm } from "./task-form";
@@ -15,9 +16,9 @@ import { TaskRow } from "./task-row";
 
 const views = { all: "All", overdue: "Overdue", upcoming: "Upcoming", completed: "Completed" } as const;
 
-export function TasksPage() {
+export function TasksPage({ weddingId }: { weddingId: string }) {
   const { events } = useWeddingEvents();
-  const [tasks, setTasks] = useState(weddingFixture.tasks);
+  const [tasks, setTasks] = useDemoTasks(weddingId);
   const [search, setSearch] = useState("");
   const [view, setView] = useState<keyof typeof views>("all");
   const [assignee, setAssignee] = useState("");
@@ -56,7 +57,7 @@ export function TasksPage() {
   function openForm(id: string) { setNotice(""); setEditing(id); }
   function saveTask(task: WeddingTask) {
     setTasks((current) => current.some((item) => item.id === task.id) ? current.map((item) => item.id === task.id ? task : item) : [task, ...current]);
-    setNotice(`${task.title} ${editing === "new" ? "created" : "updated"} for this view.`);
+    setNotice(`${task.title} ${editing === "new" ? "created" : "updated"} for this demo.`);
     setEditing(null);
     clearFilters();
   }
@@ -70,7 +71,7 @@ export function TasksPage() {
     <>
       <PageHeader title="Tasks" action={<Button onClick={() => openForm("new")} className="gap-2"><Plus size={18} aria-hidden="true" />New task</Button>} />
       <main id="organiser-content" tabIndex={-1} className="organiser-content space-y-6">
-        <p className="text-sm text-secondary-text">Sample tasks · as of {taskDate(`${weddingFixture.taskReferenceDate}T12:00:00+05:30`)}. Overview shows the full wedding snapshot. Changes here reset on reload.</p>
+        <p className="text-sm text-secondary-text">Sample tasks · as of {taskDate(`${weddingFixture.taskReferenceDate}T12:00:00+05:30`)}. Overview shows the full wedding snapshot. Task changes are shared with the collaborator demo in this browser tab. They reset when the tab closes.</p>
         <section aria-label="Search and filter tasks" className="space-y-4">
           <Input id="task-search" label="Search tasks" type="search" autoComplete="off" placeholder="Task, description, person or event" value={search} onChange={(event) => setSearch(event.target.value)} />
           <div className="flex flex-wrap gap-2" role="group" aria-label="Task views">

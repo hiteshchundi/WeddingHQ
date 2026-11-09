@@ -6,12 +6,14 @@ import { BrandMark } from "../brand/brand-mark";
 import { AppearanceControl } from "../theme/appearance-control";
 import { Card } from "../ui/card";
 import { Metric } from "./metric";
+import { useDemoTasks } from "./demo-tasks";
 import { overdueDays, taskDate, taskStatusLabels } from "./task-display";
 import { TaskRow } from "./task-row";
 
-export function CollaboratorTasks() {
+export function CollaboratorTasks({ weddingId }: { weddingId: string }) {
   const collaborator = weddingFixture.team.find((member) => member.id === weddingFixture.demoCollaboratorMembershipId)!;
-  const [tasks, setTasks] = useState(() => weddingFixture.tasks.filter((task) => task.assigneeMembershipId === collaborator.id));
+  const [allTasks, setTasks] = useDemoTasks(weddingId);
+  const tasks = allTasks.filter((task) => task.assigneeMembershipId === collaborator.id);
   const [notice, setNotice] = useState("");
   const listTitle = useRef<HTMLHeadingElement>(null);
   const overdue = tasks.filter((task) => overdueDays(task) > 0).length;
@@ -32,7 +34,7 @@ export function CollaboratorTasks() {
           <p className="break-words font-editorial text-3xl">{weddingFixture.identity.coupleNames}</p>
           <p className="text-sm text-secondary-text">{collaborator.name} · Demo collaborator</p>
           <h1 className="text-2xl font-semibold">Your tasks</h1>
-          <p className="text-sm text-secondary-text">As of {taskDate(`${weddingFixture.taskReferenceDate}T12:00:00+05:30`)}. Changes here are local to this view, independent of the organiser view, and reset on reload.</p>
+          <p className="text-sm text-secondary-text">As of {taskDate(`${weddingFixture.taskReferenceDate}T12:00:00+05:30`)}. Task changes are shared with the organiser demo in this browser tab. They reset when the tab closes.</p>
         </div>
         <Card>
           <dl className="grid grid-cols-3 gap-4">

@@ -39,7 +39,7 @@ export function TaskForm({ task, events, onSave, onCancel }: {
   const fieldClass = "min-h-[44px] w-full min-w-0 rounded-md border border-border bg-surface px-3 text-base text-primary-text focus:border-sage";
   return (
     <form onSubmit={submit} className="space-y-6">
-      <p className="text-sm text-secondary-text">Fields marked * are required. Due dates use Hyderabad time. Changes reset on reload.</p>
+      <p className="text-sm text-secondary-text">Fields marked * are required. Due dates use Hyderabad time. Task changes stay in this browser tab until it closes.</p>
       {error ? <p role="alert" className="text-sm font-semibold">{error}</p> : null}
       <Input ref={titleInput} id="task-title" name="title" label="Task name *" required maxLength={200} autoComplete="off" defaultValue={task?.title ?? ""} />
       <div className="grid gap-2">

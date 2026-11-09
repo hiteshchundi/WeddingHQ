@@ -19,7 +19,8 @@ const newsreader = Newsreader({
 
 export const metadata: Metadata = {
   title: "Wedding HQ",
-  description: "Wedding HQ prototype design foundation preview.",
+  description: "Wedding HQ wedding coordination prototype.",
+  icons: { icon: "/brand/wedding-hq-mark.svg" },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
