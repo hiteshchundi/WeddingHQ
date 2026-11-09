@@ -3,8 +3,6 @@ const summary = {
   householdsAwaiting: 25,
   tasksRemaining: 12,
   tasksOverdue: 4,
-  actualSpend: "₹13.8L",
-  estimatedSpend: "₹14.5L",
   photosAwaitingReview: 83,
 };
 
@@ -31,6 +29,60 @@ const team: TeamMember[] = [
   { id: "ravi", name: "Ravi", role: "OWNER" },
   { id: "rahul", name: "Rahul", role: "COLLABORATOR" },
   { id: "ananya", name: "Ananya", role: "ADMIN" },
+];
+
+export const vendorCategories = ["Catering", "Photography", "Decoration", "Venue", "Makeup", "Music", "Other"] as const;
+export const expenseCategories = ["Venue", "Catering", "Photography", "Decoration", "Music", "Other"] as const;
+export const vendorStatusLabels = { PROSPECT: "Considering", CONFIRMED: "Confirmed", COMPLETED: "Completed", CANCELLED: "Cancelled" } as const;
+
+export type WeddingVendor = {
+  id: string;
+  name: string;
+  category: string;
+  contact: { person: string; phone: string; email: string };
+  eventIds: string[];
+  estimatedCostMinor: number | null;
+  actualCostMinor: number | null;
+  currency: "INR";
+  responsibleMembershipId: string | null;
+  status: keyof typeof vendorStatusLabels;
+  notes: string;
+};
+
+export type WeddingExpense = {
+  id: string;
+  name: string;
+  category: string;
+  eventId: string | null;
+  vendorId: string | null;
+  estimatedAmountMinor: number | null;
+  actualAmountMinor: number | null;
+  currency: "INR";
+  notes: string;
+  createdByMembershipId: string;
+};
+
+// All monetary values are integer paise. Vendor costs are reference information
+// only; the expense records below supply the wedding's financial totals.
+const vendors: WeddingVendor[] = [
+  { id: "royal-caterers", name: "Royal Caterers", category: "Catering", contact: { person: "Ramesh", phone: "+91 90000 00101", email: "ramesh@example.com" }, eventIds: ["wedding", "reception"], estimatedCostMinor: 32000000, actualCostMinor: 30000000, currency: "INR", responsibleMembershipId: "ravi", status: "CONFIRMED", notes: "Reference quote for the Wedding and Reception." },
+  { id: "frame-story", name: "Frame Story Photography", category: "Photography", contact: { person: "Asha", phone: "+91 90000 00102", email: "asha@example.com" }, eventIds: ["sangeet", "wedding", "reception"], estimatedCostMinor: 20000000, actualCostMinor: 19000000, currency: "INR", responsibleMembershipId: "priya", status: "CONFIRMED", notes: "Family photo list to be confirmed." },
+  { id: "dream-decorators", name: "Dream Decorators", category: "Decoration", contact: { person: "Suresh", phone: "+91 90000 00103", email: "suresh@example.com" }, eventIds: ["wedding", "reception"], estimatedCostMinor: 18000000, actualCostMinor: 17000000, currency: "INR", responsibleMembershipId: "rahul", status: "CONFIRMED", notes: "Decoration plan confirmed with Rahul." },
+  { id: "convention-centre", name: "Example Convention Centre", category: "Venue", contact: { person: "Meera", phone: "+91 90000 00104", email: "meera.venue@example.com" }, eventIds: ["sangeet", "wedding"], estimatedCostMinor: 40000000, actualCostMinor: 40000000, currency: "INR", responsibleMembershipId: "priya", status: "CONFIRMED", notes: "Venue contact for Sangeet and Wedding." },
+  { id: "mira-makeup", name: "Mira Makeup", category: "Makeup", contact: { person: "Mira", phone: "+91 90000 00105", email: "mira@example.com" }, eventIds: ["wedding"], estimatedCostMinor: 7000000, actualCostMinor: 6500000, currency: "INR", responsibleMembershipId: "priya", status: "CONFIRMED", notes: "Getting-ready time to be shared with the family." },
+  { id: "evening-notes", name: "Evening Notes Music", category: "Music", contact: { person: "Arjun", phone: "+91 90000 00106", email: "arjun@example.com" }, eventIds: ["sangeet"], estimatedCostMinor: 10000000, actualCostMinor: 9500000, currency: "INR", responsibleMembershipId: "ananya", status: "CONFIRMED", notes: "Sangeet playlist coordinated with Rahul." },
+  { id: "celebration-ensemble", name: "Celebration Ensemble", category: "Music", contact: { person: "Nikhil", phone: "", email: "nikhil@example.com" }, eventIds: ["reception"], estimatedCostMinor: 4500000, actualCostMinor: null, currency: "INR", responsibleMembershipId: null, status: "PROSPECT", notes: "An optional performance being considered." },
+];
+
+// These seven records total ₹14.5L estimated / ₹13.8L actual.
+const expenses: WeddingExpense[] = [
+  { id: "venue-booking", name: "Venue booking", category: "Venue", eventId: null, vendorId: "convention-centre", estimatedAmountMinor: 40000000, actualAmountMinor: 40000000, currency: "INR", notes: "Sangeet and Wedding venue costs.", createdByMembershipId: "priya" },
+  { id: "catering", name: "Wedding and Reception catering", category: "Catering", eventId: null, vendorId: "royal-caterers", estimatedAmountMinor: 35000000, actualAmountMinor: 33000000, currency: "INR", notes: "Total catering costs recorded for the wedding; vendor quote fields are references only.", createdByMembershipId: "ravi" },
+  { id: "photography", name: "Wedding photography", category: "Photography", eventId: null, vendorId: "frame-story", estimatedAmountMinor: 20000000, actualAmountMinor: 19000000, currency: "INR", notes: "Photography across the three events.", createdByMembershipId: "priya" },
+  { id: "decoration", name: "Wedding and Reception decoration", category: "Decoration", eventId: null, vendorId: "dream-decorators", estimatedAmountMinor: 18000000, actualAmountMinor: 17000000, currency: "INR", notes: "", createdByMembershipId: "priya" },
+  { id: "sangeet-music", name: "Sangeet music", category: "Music", eventId: "sangeet", vendorId: "evening-notes", estimatedAmountMinor: 10000000, actualAmountMinor: 9500000, currency: "INR", notes: "", createdByMembershipId: "priya" },
+  { id: "makeup", name: "Wedding makeup", category: "Other", eventId: "wedding", vendorId: "mira-makeup", estimatedAmountMinor: 7000000, actualAmountMinor: 6500000, currency: "INR", notes: "", createdByMembershipId: "priya" },
+  { id: "other-celebration-costs", name: "Other celebration costs", category: "Other", eventId: null, vendorId: null, estimatedAmountMinor: 15000000, actualAmountMinor: 13000000, currency: "INR", notes: "Aggregate of invitations, stationery and other small celebration costs.", createdByMembershipId: "priya" },
 ];
 
 // Representative sample, not the full wedding task list. Overview retains its
@@ -203,8 +255,11 @@ export const weddingFixture = {
   timezone: "Asia/Kolkata",
   taskReferenceDate: "2026-12-06",
   demoCollaboratorMembershipId: "rahul",
+  demoOrganiserMembershipId: "priya",
   team,
   tasks,
+  vendors,
+  expenses,
   identity: {
     coupleNames: "Ravi & Priya",
     monogram: "R+P",

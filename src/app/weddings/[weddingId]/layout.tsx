@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { OrganiserShell } from "../../../components/layout/organiser-shell";
 import { WeddingEventsProvider } from "../../../components/wedding/events-context";
+import { WeddingVendorsProvider } from "../../../components/wedding/vendors-context";
 
 export default async function WeddingLayout({
   children,
@@ -12,7 +13,7 @@ export default async function WeddingLayout({
   const { weddingId } = await params;
   return (
     <OrganiserShell weddingId={weddingId}>
-      <WeddingEventsProvider key={weddingId}>{children}</WeddingEventsProvider>
+      <WeddingEventsProvider key={weddingId}><WeddingVendorsProvider>{children}</WeddingVendorsProvider></WeddingEventsProvider>
     </OrganiserShell>
   );
 }

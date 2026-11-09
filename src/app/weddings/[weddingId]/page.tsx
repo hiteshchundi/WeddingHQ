@@ -6,6 +6,7 @@ import { AttentionItem } from "../../../components/wedding/attention-item";
 import { UpcomingEvents } from "../../../components/wedding/upcoming-events";
 import { Metric } from "../../../components/wedding/metric";
 import { weddingFixture } from "../../../fixtures/wedding";
+import { expenseTotals, formatMoney } from "../../../components/wedding/money";
 
 export default async function WeddingPage({
   params,
@@ -15,6 +16,7 @@ export default async function WeddingPage({
   const { weddingId } = await params;
   const basePath = `/weddings/${encodeURIComponent(weddingId)}`;
   const { identity, summary, attention, recentActivity } = weddingFixture;
+  const spending = expenseTotals(weddingFixture.expenses);
 
   return (
     <>
@@ -37,7 +39,7 @@ export default async function WeddingPage({
           <dl className="grid grid-cols-2 gap-6 border-y border-border py-6 lg:grid-cols-4">
             <Metric value={summary.guestsConfirmed} label="Guests confirmed" detail={`${summary.householdsAwaiting} awaiting`} />
             <Metric value={summary.tasksRemaining} label="Tasks remaining" detail={`${summary.tasksOverdue} overdue · wedding snapshot`} />
-            <Metric value={summary.actualSpend} label="Actual spend" detail={`${summary.estimatedSpend} estimated`} />
+            <Metric value={formatMoney(spending.actual, true)} label="Actual spend" detail={`${formatMoney(spending.estimated, true)} estimated`} />
             <Metric value={summary.photosAwaitingReview} label="Photos waiting" detail="for review" />
           </dl>
         </section>

@@ -31,6 +31,7 @@ export function MobileMoreMenu({
         className="mobile-nav-item w-full"
         aria-haspopup="dialog"
         aria-controls={dialogId}
+        aria-current={secondaryNavigation.some((item) => item.available && isCurrentPath(pathname, navigationHref(basePath, item.segment), basePath)) ? "page" : undefined}
         onClick={() => dialog.current?.showModal()}
       >
         <Ellipsis size={22} aria-hidden="true" />
@@ -50,7 +51,7 @@ export function MobileMoreMenu({
               <X size={20} />
             </IconButton>
           </header>
-          <p className="mt-4 text-sm text-secondary-text">These areas will be available in a later phase.</p>
+          <p className="mt-4 text-sm text-secondary-text">Messages, Photos, Activity and Settings will be available in a later phase.</p>
           <nav aria-label="More organiser pages" className="mt-4">
             <ul className="space-y-1">
               {secondaryNavigation.map(({ label, segment, icon: Icon, available }) => {
