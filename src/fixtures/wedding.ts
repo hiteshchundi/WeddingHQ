@@ -8,6 +8,46 @@ const summary = {
   photosAwaitingReview: 83,
 };
 
+export type TeamMember = {
+  id: string; // Fixture wedding-membership ID, not a global user ID.
+  name: string;
+  role: "OWNER" | "ADMIN" | "COLLABORATOR";
+};
+
+export type WeddingTask = {
+  id: string;
+  title: string;
+  description: string;
+  assigneeMembershipId: string | null;
+  eventId: string | null;
+  dueAt: string;
+  priority: "LOW" | "MEDIUM" | "HIGH";
+  status: "TODO" | "IN_PROGRESS" | "DONE";
+  notes: string;
+};
+
+const team: TeamMember[] = [
+  { id: "priya", name: "Priya", role: "OWNER" },
+  { id: "ravi", name: "Ravi", role: "OWNER" },
+  { id: "rahul", name: "Rahul", role: "COLLABORATOR" },
+  { id: "ananya", name: "Ananya", role: "ADMIN" },
+];
+
+// Representative sample, not the full wedding task list. Overview retains its
+// approved 12 remaining / 4 overdue snapshot. Dates use the fixed demo day below.
+const tasks: WeddingTask[] = [
+  { id: "confirm-decorator", title: "Confirm decorator", description: "Confirm the final Wedding decoration plan.", assigneeMembershipId: "rahul", eventId: "wedding", dueAt: "2026-12-04T23:59:00+05:30", priority: "HIGH", status: "DONE", notes: "Final decoration plan confirmed." },
+  { id: "sangeet-playlist", title: "Finalize Sangeet playlist", description: "Review the family’s song selections with the DJ.", assigneeMembershipId: "rahul", eventId: "sangeet", dueAt: "2026-12-04T23:59:00+05:30", priority: "HIGH", status: "TODO", notes: "Include the couple’s entrance song." },
+  { id: "reception-stage", title: "Confirm Reception stage setup", description: "Review the stage layout and microphone positions.", assigneeMembershipId: "priya", eventId: "reception", dueAt: "2026-12-01T23:59:00+05:30", priority: "HIGH", status: "IN_PROGRESS", notes: "" },
+  { id: "invitation-family", title: "Share Wedding invitation with close family", description: "Check the invitation wording with both families.", assigneeMembershipId: "priya", eventId: "wedding", dueAt: "2026-12-02T23:59:00+05:30", priority: "MEDIUM", status: "TODO", notes: "This task does not send invitations from the prototype." },
+  { id: "caterer-headcount", title: "Confirm caterer headcount", description: "Review the latest household counts with the caterer.", assigneeMembershipId: "ravi", eventId: "reception", dueAt: "2026-12-05T23:59:00+05:30", priority: "HIGH", status: "TODO", notes: "" },
+  { id: "photography-schedule", title: "Review photography schedule", description: "Confirm the key family photo moments.", assigneeMembershipId: "rahul", eventId: null, dueAt: "2026-12-10T23:59:00+05:30", priority: "MEDIUM", status: "IN_PROGRESS", notes: "" },
+  { id: "invitation-proof", title: "Review Wedding invitation proof", description: "Check names, date and venue details on the final proof.", assigneeMembershipId: "rahul", eventId: "wedding", dueAt: "2026-12-08T23:59:00+05:30", priority: "LOW", status: "TODO", notes: "" },
+  { id: "sangeet-entrance", title: "Confirm Sangeet entrance order", description: "Share the entrance order with the family.", assigneeMembershipId: "ananya", eventId: "sangeet", dueAt: "2026-12-12T23:59:00+05:30", priority: "MEDIUM", status: "TODO", notes: "" },
+  { id: "ceremony-timing", title: "Review Wedding ceremony timing", description: "Confirm the ceremony start time with the family.", assigneeMembershipId: "priya", eventId: "wedding", dueAt: "2026-12-15T23:59:00+05:30", priority: "HIGH", status: "TODO", notes: "" },
+  { id: "welcome-note", title: "Write a welcome note", description: "Prepare a short welcome for the Reception.", assigneeMembershipId: null, eventId: "reception", dueAt: "2026-12-16T23:59:00+05:30", priority: "LOW", status: "TODO", notes: "" },
+];
+
 export type WeddingEvent = {
   id: string;
   name: string;
@@ -161,6 +201,10 @@ const events: WeddingEvent[] = [
 // not calculated against today's date or inferred from the event dates.
 export const weddingFixture = {
   timezone: "Asia/Kolkata",
+  taskReferenceDate: "2026-12-06",
+  demoCollaboratorMembershipId: "rahul",
+  team,
+  tasks,
   identity: {
     coupleNames: "Ravi & Priya",
     monogram: "R+P",

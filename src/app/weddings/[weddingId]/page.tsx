@@ -36,7 +36,7 @@ export default async function WeddingPage({
           <h2 id="summary-title" className="sr-only">Wedding summary</h2>
           <dl className="grid grid-cols-2 gap-6 border-y border-border py-6 lg:grid-cols-4">
             <Metric value={summary.guestsConfirmed} label="Guests confirmed" detail={`${summary.householdsAwaiting} awaiting`} />
-            <Metric value={summary.tasksRemaining} label="Tasks remaining" detail={`${summary.tasksOverdue} overdue`} />
+            <Metric value={summary.tasksRemaining} label="Tasks remaining" detail={`${summary.tasksOverdue} overdue · wedding snapshot`} />
             <Metric value={summary.actualSpend} label="Actual spend" detail={`${summary.estimatedSpend} estimated`} />
             <Metric value={summary.photosAwaitingReview} label="Photos waiting" detail="for review" />
           </dl>

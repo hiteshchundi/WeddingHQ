@@ -257,7 +257,8 @@
   margin: auto;
 }
 
-.household-drawer {
+.household-drawer,
+.task-drawer {
   inset: 0;
   width: min(640px, 100%);
   max-width: 100%;
@@ -268,13 +269,14 @@
   padding: 0;
 }
 
-.household-drawer > header {
+.household-drawer > header,
+.task-drawer > header {
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-html:has(.household-drawer[open]) {
+html:has(.household-drawer[open], .task-drawer[open]) {
   overflow: hidden;
 }
 
