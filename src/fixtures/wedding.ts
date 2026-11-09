@@ -26,6 +26,78 @@ export type WeddingEvent = {
   relativeTime?: string;
 };
 
+// Presentation-only household fields; event assignments and RSVP responses
+// remain separate resources when real API integration begins.
+export type Household = {
+  id: string;
+  householdName: string;
+  primaryContactName: string;
+  email: string;
+  phone: string;
+  adultsInvited: number;
+  childrenInvited: number;
+  memberNames: string[];
+  notes: string;
+  invitedEventIds: string[];
+  rsvpSummary: Record<string, "Confirmed" | "Awaiting" | "Declined">;
+  guestLinkStatus: "Active" | "Not sent" | "Revoked";
+};
+
+const households: Household[] = [
+  {
+    id: "reddy", householdName: "Reddy Family", primaryContactName: "Ravi Reddy",
+    email: "ravi@example.com", phone: "+91 90000 00001", adultsInvited: 4, childrenInvited: 2,
+    memberNames: ["Ravi Reddy", "Lakshmi Reddy"], notes: "Bride’s maternal uncle and family.",
+    invitedEventIds: ["sangeet", "wedding", "reception"],
+    rsvpSummary: { sangeet: "Awaiting", wedding: "Confirmed", reception: "Confirmed" }, guestLinkStatus: "Active",
+  },
+  {
+    id: "sharma", householdName: "Sharma Family", primaryContactName: "Neha Sharma",
+    email: "neha@example.com", phone: "+91 90000 00002", adultsInvited: 2, childrenInvited: 1,
+    memberNames: ["Neha Sharma", "Amit Sharma", "Aarav Sharma"], notes: "Family friends.",
+    invitedEventIds: ["wedding", "reception"],
+    rsvpSummary: { wedding: "Confirmed", reception: "Confirmed" }, guestLinkStatus: "Active",
+  },
+  {
+    id: "iyer", householdName: "Iyer Family", primaryContactName: "Meera Iyer",
+    email: "meera@example.com", phone: "+91 90000 00003", adultsInvited: 2, childrenInvited: 0,
+    memberNames: ["Meera Iyer", "Arun Iyer"], notes: "",
+    invitedEventIds: ["sangeet", "wedding", "reception"], rsvpSummary: {}, guestLinkStatus: "Not sent",
+  },
+  {
+    id: "patel", householdName: "Patel Family", primaryContactName: "Kiran Patel",
+    email: "kiran@example.com", phone: "+91 90000 00004", adultsInvited: 3, childrenInvited: 1,
+    memberNames: ["Kiran Patel"], notes: "Contact Kiran for the family’s updates.",
+    invitedEventIds: ["reception"], rsvpSummary: { reception: "Confirmed" }, guestLinkStatus: "Active",
+  },
+  {
+    id: "rao", householdName: "Rao Family", primaryContactName: "Suresh Rao",
+    email: "suresh@example.com", phone: "+91 90000 00005", adultsInvited: 2, childrenInvited: 0,
+    memberNames: [], notes: "",
+    invitedEventIds: ["wedding", "reception"],
+    rsvpSummary: { wedding: "Awaiting", reception: "Declined" }, guestLinkStatus: "Active",
+  },
+  {
+    id: "mehta", householdName: "Mehta Family", primaryContactName: "Pooja Mehta",
+    email: "pooja@example.com", phone: "+91 90000 00006", adultsInvited: 2, childrenInvited: 2,
+    memberNames: ["Pooja Mehta", "Vikram Mehta"], notes: "",
+    invitedEventIds: ["sangeet", "reception"], rsvpSummary: {}, guestLinkStatus: "Not sent",
+  },
+  {
+    id: "verma", householdName: "Verma Family", primaryContactName: "Anita Verma",
+    email: "anita@example.com", phone: "+91 90000 00007", adultsInvited: 1, childrenInvited: 0,
+    memberNames: ["Anita Verma"], notes: "Guest link is revoked in this fixture example.",
+    invitedEventIds: ["wedding"], rsvpSummary: { wedding: "Declined" }, guestLinkStatus: "Revoked",
+  },
+  {
+    id: "singh", householdName: "Singh Family", primaryContactName: "Harpreet Singh",
+    email: "harpreet@example.com", phone: "+91 90000 00008", adultsInvited: 2, childrenInvited: 1,
+    memberNames: ["Harpreet Singh", "Simran Singh"], notes: "College friends of Ravi.",
+    invitedEventIds: ["sangeet", "wedding", "reception"],
+    rsvpSummary: { sangeet: "Confirmed", wedding: "Confirmed", reception: "Confirmed" }, guestLinkStatus: "Active",
+  },
+];
+
 const events: WeddingEvent[] = [
   {
     id: "sangeet",
@@ -125,6 +197,7 @@ export const weddingFixture = {
     },
   ],
   events,
+  households,
   recentActivity: [
     { id: "reception-rsvp", description: "Reddy Family confirmed Reception" },
     { id: "decorator-task", description: 'Rahul completed "Confirm decorator"' },

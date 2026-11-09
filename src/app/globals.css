@@ -257,6 +257,27 @@
   margin: auto;
 }
 
+.household-drawer {
+  inset: 0;
+  width: min(640px, 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  margin: 0 0 0 auto;
+  border-radius: 0;
+  padding: 0;
+}
+
+.household-drawer > header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+html:has(.household-drawer[open]) {
+  overflow: hidden;
+}
+
 .appearance-options {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
