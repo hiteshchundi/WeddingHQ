@@ -13,12 +13,16 @@ import { HouseholdDetail } from "./household-detail";
 import { HouseholdForm } from "./household-form";
 import { HouseholdRow } from "./household-row";
 import { Metric } from "./metric";
+import { GuestImportExport } from "./guest-import-export";
 
 type Panel = { mode: "add" } | { mode: "detail" | "edit"; id: string } | null;
 
 export function GuestsPage({ initialEventId = "" }: { initialEventId?: string }) {
   const { events } = useWeddingEvents();
   const [households, setHouseholds] = useState(weddingFixture.households);
+  const [view, setView] = useState<"households" | "import-export">("households");
+  const [importMessage, setImportMessage] = useState("");
+  const listTitle = useRef<HTMLHeadingElement>(null);
   const [search, setSearch] = useState("");
   const [rsvpFilter, setRsvpFilter] = useState("all");
   const [eventFilter, setEventFilter] = useState(events.some((event) => event.id === initialEventId) ? initialEventId : "");
@@ -39,8 +43,19 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
   }, [panel]);
 
   function openPanel(next: NonNullable<Panel>) {
+    setView("households");
+    setImportMessage("");
     setSaved(false);
     setPanel(next);
+  }
+
+  function importHouseholds(imported: Household[]) {
+    setHouseholds((current) => [...imported, ...current]);
+    clearFilters();
+    setImportMessage(`${imported.length} ${imported.length === 1 ? "household" : "households"} imported.`);
+    setSaved(false);
+    setView("households");
+    requestAnimationFrame(() => listTitle.current?.focus());
   }
 
   function clearFilters() {
@@ -79,11 +94,14 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
       <PageHeader title="Guests" action={<Button onClick={() => openPanel({ mode: "add" })} className="gap-2"><Plus size={18} aria-hidden="true" />Add household</Button>} />
       <main id="organiser-content" tabIndex={-1} className="organiser-content space-y-6">
         <nav aria-label="Guests views" className="flex flex-wrap gap-2 border-b border-border pb-3">
-          <span aria-current="page" className="inline-flex min-h-[44px] items-center rounded-md bg-sage-soft px-4 text-sm font-semibold">Households</span>
+          <Button variant="tertiary" aria-current={view === "households" ? "page" : undefined} className="aria-[current=page]:bg-sage-soft" onClick={() => setView("households")}>Households</Button>
           <Button variant="tertiary" disabled>RSVPs</Button>
-          <Button variant="tertiary" disabled>Import / Export</Button>
+          <Button variant="tertiary" aria-current={view === "import-export" ? "page" : undefined} className="aria-[current=page]:bg-sage-soft" onClick={() => setView("import-export")}>Import / Export</Button>
         </nav>
-        <p className="text-sm text-secondary-text">Household management preview. RSVPs and Import / Export are planned for later phases.</p>
+        {view === "import-export" ? <GuestImportExport households={households} events={events} onImport={importHouseholds} /> : (
+        <>
+        <p className="text-sm text-secondary-text">Household management preview. The RSVPs view is planned for a later phase.</p>
+        {importMessage ? <p role="status" className="text-sm font-semibold">{importMessage}</p> : null}
         <Card>
           <dl className="grid grid-cols-3 gap-4 md:gap-6">
             <Metric value={households.length} label="Households" detail="Prototype sample" />
@@ -120,11 +138,13 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
           </Card>
         ) : (
           <section aria-labelledby="households-title" className="space-y-4">
-            <h2 id="households-title" className="text-lg font-semibold">Households · {visible.length} of {households.length}</h2>
+            <h2 ref={listTitle} tabIndex={-1} id="households-title" className="text-lg font-semibold">Households · {visible.length} of {households.length}</h2>
             {visible.length ? <ul className="space-y-4">{visible.map((household) => <HouseholdRow key={household.id} household={household} events={events} onOpen={() => openPanel({ mode: "detail", id: household.id })} />)}</ul> : (
               <Card className="space-y-3"><h3 className="text-lg font-semibold">No households match</h3><p>Try a different search or clear your filters.</p><Button variant="secondary" onClick={clearFilters}>Clear filters</Button></Card>
             )}
           </section>
+        )}
+        </>
         )}
       </main>
       <dialog ref={drawer} aria-labelledby="household-drawer-title" className="shell-dialog household-drawer" onClose={() => setPanel(null)} onClick={(event) => { if (event.target === event.currentTarget) setPanel(null); }}>
