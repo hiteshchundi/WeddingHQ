@@ -21,7 +21,7 @@ export const organiserNavigation = [
   { label: "Messages", segment: "messages", icon: Mail, available: true },
   { label: "Photos", segment: "photos", icon: Images, available: true },
   { label: "Activity", segment: "activity", icon: Activity, available: false },
-  { label: "Settings", segment: "settings", icon: Settings, available: false },
+  { label: "Settings", segment: "settings", icon: Settings, available: true },
 ] as const;
 
 export const mobilePrimaryNavigation = [

@@ -9,7 +9,8 @@ const summary = {
 export type TeamMember = {
   id: string; // Fixture wedding-membership ID, not a global user ID.
   name: string;
-  role: "OWNER" | "ADMIN" | "COLLABORATOR";
+  role: "OWNER" | "PLANNER" | "ADMIN" | "COLLABORATOR";
+  email?: string;
 };
 
 export type WeddingTask = {
@@ -305,6 +306,9 @@ const events: WeddingEvent[] = [
   },
 ];
 
+const partners = { brideName: "Priya", groomName: "Ravi" };
+const familyContact = households.find((household) => household.id === "reddy")!;
+
 // Approved presentation snapshot. Relative labels are fixed prototype copy,
 // not calculated against today's date or inferred from the event dates.
 export const weddingFixture = {
@@ -319,8 +323,13 @@ export const weddingFixture = {
   messages,
   photos,
   photoUploadEventId: "reception",
+  helpContact: { name: familyContact.primaryContactName, phone: familyContact.phone, email: familyContact.email },
   identity: {
-    coupleNames: "Ravi & Priya",
+    ...partners,
+    coupleNames: `${partners.groomName} & ${partners.brideName}`,
+    weddingTitle: `${partners.groomName} & ${partners.brideName}'s Wedding`,
+    startDate: events[0].startsAt.slice(0, 10),
+    endDate: events[events.length - 1].startsAt.slice(0, 10),
     monogram: "R+P",
     location: "Hyderabad",
     dateRange: "December 18–20, 2026",
