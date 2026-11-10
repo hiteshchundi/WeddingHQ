@@ -15,9 +15,11 @@ import { Sidebar } from "./sidebar";
 export function OrganiserShell({
   weddingId,
   children,
+  account,
 }: {
   weddingId: string;
   children: ReactNode;
+  account?: ReactNode;
 }) {
   const pathname = usePathname();
   const basePath = `/weddings/${encodeURIComponent(weddingId)}`;
@@ -38,7 +40,7 @@ export function OrganiserShell({
         collapsed={collapsed}
         onToggle={() => setPreference("sidebarCollapsed", String(!collapsed))}
       />
-      <div className="organiser-workspace">{children}</div>
+      <div className="organiser-workspace">{account}{children}</div>
       <MobileBottomNav basePath={basePath} pathname={pathname} />
     </div>
   );

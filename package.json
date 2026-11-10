@@ -6,13 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "lint": "eslint . --max-warnings=0",
-    "db:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/db-smoke.mjs"
+    "db:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/db-smoke.mjs",
+    "auth:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/auth-smoke.mjs"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "3.11.3",
     "exceljs": "4.4.0",
     "lucide-react": "1.70.0",
+    "mongodb": "6.22.0",
     "mongoose": "9.12.0",
     "next": "16.4.5",
+    "next-auth": "5.0.0-beta.32",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "server-only": "0.0.1"
