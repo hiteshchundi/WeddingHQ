@@ -8,7 +8,7 @@ import { authProviders } from "../../lib/auth-config";
 export async function signInWithGoogle() {
   if (!authProviders.google) redirect("/sign-in?error=Configuration");
   try {
-    await signIn("google", { redirectTo: "/weddings/demo" });
+    await signIn("google", { redirectTo: "/weddings" });
   } catch (error) {
     if (error instanceof AuthError) redirect("/sign-in?error=SignInFailed");
     throw error; // Next.js redirects must propagate.
@@ -23,7 +23,7 @@ export async function sendMagicLink(formData: FormData) {
     redirect("/sign-in?error=InvalidEmail");
   }
   try {
-    await signIn("resend", { email, redirectTo: "/weddings/demo" });
+    await signIn("resend", { email, redirectTo: "/weddings" });
   } catch (error) {
     if (error instanceof AuthError) redirect("/sign-in?error=SignInFailed");
     throw error;

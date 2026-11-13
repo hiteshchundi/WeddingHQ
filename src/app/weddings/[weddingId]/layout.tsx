@@ -5,6 +5,10 @@ import { OrganiserAccount } from "../../../components/auth/organiser-account";
 import { OrganiserShell } from "../../../components/layout/organiser-shell";
 import { WeddingEventsProvider } from "../../../components/wedding/events-context";
 import { WeddingVendorsProvider } from "../../../components/wedding/vendors-context";
+import { accessWedding } from "../../../services/weddings";
+import { getWeddingEvents } from "../../../services/events";
+import { getWedding } from "../../../services/weddings";
+import { pageData } from "../../../lib/page-access";
 
 export default async function WeddingLayout({
   children,
@@ -16,11 +20,17 @@ export default async function WeddingLayout({
   const session = await auth();
   if (!session?.user?.id) redirect("/sign-in");
   const { weddingId } = await params;
-  // Authenticated fixture surface only. H3 must use membership helpers before
-  // reading/mutating real wedding data; "demo" never grants real membership.
+  if (weddingId !== "demo") {
+    const { membership } = await pageData(() => accessWedding(weddingId));
+    if (membership.role === "COLLABORATOR") redirect(`/collaborator/${weddingId}`);
+  }
+  const [wedding, events] = weddingId === "demo" ? [undefined, undefined] : await Promise.all([
+    pageData(() => getWedding(weddingId)), pageData(() => getWeddingEvents(weddingId)),
+  ]);
+  const identity = wedding ? { coupleNames: `${wedding.groomName} & ${wedding.brideName}`, countdown: wedding.title, monogram: `${wedding.groomName.charAt(0)}${wedding.brideName.charAt(0)}` } : undefined;
   return (
-    <OrganiserShell weddingId={weddingId} account={<OrganiserAccount user={session.user} />}>
-      <WeddingEventsProvider key={weddingId}><WeddingVendorsProvider>{children}</WeddingVendorsProvider></WeddingEventsProvider>
+    <OrganiserShell weddingId={weddingId} identity={identity} account={<OrganiserAccount user={session.user} real={Boolean(wedding)} />}>
+      <WeddingEventsProvider key={weddingId} wedding={wedding} initialEvents={events}><WeddingVendorsProvider>{children}</WeddingVendorsProvider></WeddingEventsProvider>
     </OrganiserShell>
   );
 }

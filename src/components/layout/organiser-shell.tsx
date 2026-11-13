@@ -16,10 +16,12 @@ export function OrganiserShell({
   weddingId,
   children,
   account,
+  identity,
 }: {
   weddingId: string;
   children: ReactNode;
   account?: ReactNode;
+  identity?: { coupleNames: string; countdown: string; monogram: string };
 }) {
   const pathname = usePathname();
   const basePath = `/weddings/${encodeURIComponent(weddingId)}`;
@@ -35,6 +37,7 @@ export function OrganiserShell({
         Skip to content
       </a>
       <Sidebar
+        identity={identity}
         basePath={basePath}
         pathname={pathname}
         collapsed={collapsed}

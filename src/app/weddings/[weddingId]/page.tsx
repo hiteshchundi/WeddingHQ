@@ -7,6 +7,9 @@ import { UpcomingEvents } from "../../../components/wedding/upcoming-events";
 import { Metric } from "../../../components/wedding/metric";
 import { weddingFixture } from "../../../fixtures/wedding";
 import { expenseTotals, formatMoney } from "../../../components/wedding/money";
+import { getWedding } from "../../../services/weddings";
+import { pageData } from "../../../lib/page-access";
+import { eventDate } from "../../../components/wedding/event-format";
 
 export default async function WeddingPage({
   params,
@@ -17,24 +20,26 @@ export default async function WeddingPage({
   const basePath = `/weddings/${encodeURIComponent(weddingId)}`;
   const { identity, summary, attention, recentActivity } = weddingFixture;
   const spending = expenseTotals(weddingFixture.expenses);
+  const wedding = weddingId === "demo" ? undefined : await pageData(() => getWedding(weddingId));
 
   return (
     <>
       <PageHeader title="Overview" />
       <main id="organiser-content" tabIndex={-1} className="organiser-content space-y-8">
         <section aria-labelledby="wedding-title" className="space-y-4">
-          <p className="text-sm text-secondary-text">{identity.greeting}</p>
+          <p className="text-sm text-secondary-text">{wedding ? wedding.title : identity.greeting}</p>
           <h2 id="wedding-title" className="font-editorial text-4xl lg:text-5xl">
-            {identity.coupleNames}
+            {wedding ? `${wedding.groomName} & ${wedding.brideName}` : identity.coupleNames}
           </h2>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
-            <p className="font-semibold">{identity.countdown}</p>
-            <p className="text-secondary-text">{identity.dateRange}</p>
-            <p className="text-secondary-text">{identity.location}</p>
+            <p className="font-semibold">{wedding ? wedding.status : identity.countdown}</p>
+            <p className="text-secondary-text">{wedding ? `${eventDate(wedding.startDate, wedding.timezone, true)} – ${eventDate(wedding.endDate, wedding.timezone, true)}` : identity.dateRange}</p>
+            <p className="text-secondary-text">{wedding ? wedding.timezone : identity.location}</p>
           </div>
         </section>
 
         <section aria-labelledby="summary-title">
+          {wedding ? <p className="mb-4 text-sm text-secondary-text">Prototype data below: Guests, Tasks, Expenses, Photos, attention items and activity. Your wedding details and Events use saved data.</p> : null}
           <h2 id="summary-title" className="sr-only">Wedding summary</h2>
           <dl className="grid grid-cols-2 gap-6 border-y border-border py-6 lg:grid-cols-4">
             <Metric value={summary.guestsConfirmed} label="Guests confirmed" detail={`${summary.householdsAwaiting} awaiting`} />
@@ -51,7 +56,7 @@ export default async function WeddingPage({
               <h2 id="attention-title" className="text-2xl font-semibold">Needs your attention</h2>
             </div>
             <ul className="grid gap-x-6 lg:grid-cols-2">
-              {attention.map((item) => (
+              {attention.filter((item) => !wedding || item.id !== "reception-venue").map((item) => (
                 <AttentionItem
                   key={item.id}
                   itemId={item.id}

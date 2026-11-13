@@ -160,8 +160,9 @@ const tasks: WeddingTask[] = [
 export type WeddingEvent = {
   id: string;
   name: string;
-  type: "SANGEET" | "WEDDING" | "RECEPTION" | "CUSTOM";
+  type: "ENGAGEMENT" | "HALDI" | "MEHENDI" | "SANGEET" | "WEDDING" | "RECEPTION" | "CUSTOM";
   customType?: string;
+  description?: string;
   startsAt: string;
   endsAt: string;
   timezone: string;

@@ -18,7 +18,7 @@ export default async function SignInPage({ searchParams }: {
   searchParams: Promise<{ error?: string }>;
 }) {
   const session = await auth();
-  if (session?.user?.id) redirect("/weddings/demo");
+  if (session?.user?.id) redirect("/weddings");
   const { error } = await searchParams;
   return (
     <main className="grid min-h-dvh place-items-center bg-background px-4 py-10">

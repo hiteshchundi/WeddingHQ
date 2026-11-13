@@ -10,11 +10,13 @@ export function Sidebar({
   pathname,
   collapsed,
   onToggle,
+  identity = weddingFixture.identity,
 }: {
   basePath: string;
   pathname: string;
   collapsed: boolean;
   onToggle: () => void;
+  identity?: { coupleNames: string; countdown: string; monogram: string };
 }) {
   const toggleLabel = collapsed ? "Expand sidebar" : "Collapse sidebar";
 
@@ -46,11 +48,11 @@ export function Sidebar({
       </div>
       <div className="sidebar-identity">
         <div className="sidebar-expanded flex-col gap-1">
-          <p className="font-editorial text-2xl">{weddingFixture.identity.coupleNames}</p>
-          <p className="text-sm text-secondary-text">{weddingFixture.identity.countdown}</p>
+          <p className="break-words font-editorial text-2xl">{identity.coupleNames}</p>
+          <p className="text-sm text-secondary-text">{identity.countdown}</p>
         </div>
-        <span className="sidebar-collapsed text-sm font-semibold" title={weddingFixture.identity.coupleNames}>
-          {weddingFixture.identity.monogram}
+        <span className="sidebar-collapsed text-sm font-semibold" title={identity.coupleNames}>
+          {identity.monogram}
         </span>
       </div>
       <nav id="organiser-sidebar-nav" aria-label="Organiser" className="sidebar-nav">

@@ -8,9 +8,10 @@ type EventCardProps = {
   event: WeddingEvent;
   href: string;
   compact?: boolean;
+  fixtureGuests?: boolean;
 };
 
-export function EventCard({ event, href, compact = false }: EventCardProps) {
+export function EventCard({ event, href, compact = false, fixtureGuests = true }: EventCardProps) {
   return (
     <li>
       <Link href={href} prefetch={false} className="block rounded-lg hover:underline">
@@ -25,7 +26,7 @@ export function EventCard({ event, href, compact = false }: EventCardProps) {
           {!compact ? (
             <>
               <p className="break-words text-sm">{event.venue.name || "Venue not added"}</p>
-              <p className="text-sm text-secondary-text">{event.invitedHouseholds} households invited</p>
+              <p className="text-sm text-secondary-text">{fixtureGuests ? `${event.invitedHouseholds} households invited` : "Guest invitations are not connected yet"}</p>
               <dl className="grid grid-cols-2 gap-3 border-t border-border pt-4 text-sm md:grid-cols-4">
                 <div><dt className="mb-1 text-secondary-text">Venue</dt><dd><Badge>{event.venue.name ? "Complete" : "Not added"}</Badge></dd></div>
                 <div><dt className="mb-1 text-secondary-text">Invitation</dt><dd><Badge>{event.invitationAsset ? "Added" : "Not added"}</Badge></dd></div>

@@ -51,7 +51,7 @@ try {
   }
   const { authAdapter } = await import("../src/lib/auth-adapter.ts");
   const { getAuthClient } = await import("../src/lib/auth-db.ts");
-  const { authConfig } = await import("../src/lib/auth-config.ts");
+  const { authConfig, authProviders } = await import("../src/lib/auth-config.ts");
   const { connectToDatabase } = await import("../src/lib/db.ts");
   const { WeddingMembershipModel } = await import("../src/models/wedding-membership.ts");
   const { requireAuthenticatedUser, requireWeddingMembership, requireWeddingRole } = await import("../src/lib/authorization.ts");
@@ -87,6 +87,45 @@ try {
   console.info("Auth smoke: canonical user, timestamps, persisted session and safe identity passed.");
 
   if (localOrigin) {
+    stage = "running application local origin";
+    // Start on the IP address as a user might, but authenticate on localhost.
+    const aliasOrigin = new URL(localOrigin);
+    aliasOrigin.hostname = "127.0.0.1";
+    const entry = await fetch(`${aliasOrigin.origin}/sign-in`, { redirect: "manual" });
+    assert.equal(entry.status, 307);
+    const canonicalEntry = new URL(entry.headers.get("location"));
+    assert.equal(canonicalEntry.hostname, "localhost");
+    assert.equal(canonicalEntry.pathname, "/sign-in");
+    localOrigin = canonicalEntry.origin;
+
+    if (authProviders.resend) {
+      // Controlled callback regression: no email is sent. Before the fix this
+      // issued a cookie on 127.0.0.1, then lost it on a redirect to localhost.
+      stage = "running application magic-link origin regression";
+      const rawToken = randomBytes(32).toString("hex");
+      await authAdapter.createVerificationToken({
+        identifier: email,
+        token: createHash("sha256").update(rawToken + process.env.AUTH_SECRET).digest("hex"),
+        expires: new Date(Date.now() + 120000),
+      });
+      const aliasCallback = new URL("/api/auth/callback/resend", aliasOrigin);
+      aliasCallback.search = new URLSearchParams({ token: rawToken, email, callbackUrl: `${aliasOrigin.origin}/weddings/demo` }).toString();
+      const aliasResponse = await fetch(aliasCallback, { redirect: "manual" });
+      assert.equal(aliasResponse.status, 307);
+      assert(!aliasResponse.headers.getSetCookie().some((cookie) => cookie.startsWith("authjs.session-token=")));
+      const canonicalCallback = new URL(aliasResponse.headers.get("location"));
+      assert.equal(canonicalCallback.origin, localOrigin);
+      assert.equal(canonicalCallback.searchParams.get("token"), rawToken);
+      assert.equal(canonicalCallback.searchParams.get("email"), email);
+      const callback = await fetch(canonicalCallback, { redirect: "manual" });
+      assert.equal(callback.status, 302);
+      assert.equal(new URL(callback.headers.get("location")).origin, localOrigin);
+      const cookie = callback.headers.getSetCookie().map((value) => value.split(";")[0]).join("; ");
+      const resolvedSession = await (await fetch(`${localOrigin}/api/auth/session`, { headers: { cookie } })).json();
+      assert.equal(resolvedSession?.user?.id, user.id);
+      console.info("Auth smoke: IP-address callback redirects before token consumption; the session survives on localhost.");
+    }
+
     stage = "running application routes and session reload";
     const headers = { cookie: `authjs.session-token=${sessionToken}` };
     for (let reload = 0; reload < 2; reload++) {

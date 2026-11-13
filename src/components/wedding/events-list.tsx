@@ -12,7 +12,7 @@ import { EventForm } from "./event-form";
 import { useWeddingEvents } from "./events-context";
 
 export function EventsList({ weddingId }: { weddingId: string }) {
-  const { events, saveEvent } = useWeddingEvents();
+  const { events, saveEvent, wedding } = useWeddingEvents();
   const [adding, setAdding] = useState(false);
   const addButton = useRef<HTMLButtonElement>(null);
   const router = useRouter();
@@ -33,23 +33,23 @@ export function EventsList({ weddingId }: { weddingId: string }) {
           <Card>
             <EventForm
               onCancel={() => { setAdding(false); requestAnimationFrame(() => addButton.current?.focus()); }}
-              onSave={(event) => {
-                saveEvent(event);
+              onSave={async (event) => {
+                const saved = await saveEvent(event);
                 setAdding(false);
-                router.push(`${basePath}/events/${encodeURIComponent(event.id)}`);
+                router.push(`${basePath}/events/${encodeURIComponent(saved.id)}`);
               }}
             />
           </Card>
         ) : events.length ? (
           <>
             <p className="text-sm text-secondary-text">
-              {weddingFixture.identity.dateRange} · {weddingFixture.identity.location} · {events.length} events
+              {wedding ? wedding.title : `${weddingFixture.identity.dateRange} · ${weddingFixture.identity.location}`} · {events.length} events
             </p>
             <section aria-labelledby="schedule-title">
               <h2 id="schedule-title" className="sr-only">Wedding schedule</h2>
               <ul className="space-y-6">
                 {events.map((event) => (
-                  <EventCard key={event.id} event={event} href={`${basePath}/events/${encodeURIComponent(event.id)}`} />
+                  <EventCard key={event.id} event={event} fixtureGuests={!wedding} href={`${basePath}/events/${encodeURIComponent(event.id)}`} />
                 ))}
               </ul>
             </section>

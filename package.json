@@ -7,7 +7,8 @@
     "build": "next build",
     "lint": "eslint . --max-warnings=0",
     "db:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/db-smoke.mjs",
-    "auth:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/auth-smoke.mjs"
+    "auth:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/auth-smoke.mjs",
+    "h3:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h3-smoke.mjs"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "3.11.3",
@@ -19,7 +20,8 @@
     "next-auth": "5.0.0-beta.32",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "server-only": "0.0.1"
+    "server-only": "0.0.1",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.5",
