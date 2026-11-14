@@ -5,17 +5,20 @@ import type { Household, WeddingEvent } from "../../fixtures/wedding";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export function HouseholdForm({ household, events, onSave, onCancel }: {
+export function HouseholdForm({ household, events, onSave, onCancel, persistent = false }: {
   household?: Household;
   events: WeddingEvent[];
-  onSave: (household: Household) => void;
+  onSave: (household: Household) => Promise<void>;
   onCancel: () => void;
+  persistent?: boolean;
 }) {
   const nameInput = useRef<HTMLInputElement>(null);
   const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  function submit(event: FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (saving) return;
     const data = new FormData(event.currentTarget);
     const read = (key: string) => String(data.get(key) ?? "").trim();
     const householdName = read("householdName");
@@ -36,7 +39,8 @@ export function HouseholdForm({ household, events, onSave, onCancel }: {
       event.currentTarget.querySelector<HTMLInputElement>('[name="invitedEventIds"]')?.focus();
       return;
     }
-    onSave({
+    setError(""); setSaving(true);
+    try { await onSave({
       id: household?.id ?? crypto.randomUUID(),
       householdName,
       primaryContactName: read("primaryContactName"),
@@ -50,15 +54,16 @@ export function HouseholdForm({ household, events, onSave, onCancel }: {
       // Editing contact details or assignments never changes fixture replies.
       rsvpSummary: household?.rsvpSummary ?? {},
       guestLinkStatus: household?.guestLinkStatus ?? "Not sent",
-    });
+    }); } catch (error) { setError(error instanceof Error ? error.message : "The household could not be saved."); }
+    finally { setSaving(false); }
   }
 
   const textareaClass = "min-h-[96px] w-full min-w-0 resize-y rounded-md border border-border bg-surface p-3 text-base text-primary-text focus:border-sage";
   return (
-    <form onSubmit={submit} className="space-y-6">
-      <p className="text-sm text-secondary-text">Changes are local to this prototype view and reset on reload. Fields marked * are required.</p>
+    <form onSubmit={submit} className="space-y-6" aria-busy={saving}>
+      <p className="text-sm text-secondary-text">{persistent ? "Household details and invited Events are saved to your wedding." : "Demo changes reset on reload."} Fields marked * are required.</p>
       {error ? <p role="alert" className="text-sm font-semibold">{error}</p> : null}
-      <div className="grid gap-4 md:grid-cols-2">
+      <fieldset disabled={saving} className="grid gap-4 md:grid-cols-2">
         <div className="md:col-span-2">
           <Input ref={nameInput} id="household-name" name="householdName" label="Household name *" autoComplete="off" required maxLength={200} defaultValue={household?.householdName ?? ""} />
         </div>
@@ -78,8 +83,8 @@ export function HouseholdForm({ household, events, onSave, onCancel }: {
           <label htmlFor="household-notes" className="text-sm font-medium">Internal notes</label>
           <textarea id="household-notes" name="notes" className={textareaClass} defaultValue={household?.notes ?? ""} />
         </div>
-      </div>
-      <fieldset className="space-y-2">
+      </fieldset>
+      <fieldset disabled={saving} className="space-y-2">
         <legend className="mb-2 text-sm font-semibold">Invited events *</legend>
         {events.map((event) => (
           <label key={event.id} className="flex min-h-[44px] cursor-pointer items-center gap-3 rounded-md border border-border px-3 py-2">
@@ -87,11 +92,11 @@ export function HouseholdForm({ household, events, onSave, onCancel }: {
             <span className="min-w-0 break-words">{event.name}</span>
           </label>
         ))}
-        <p className="text-sm text-secondary-text">Choose at least one event. RSVP replies cannot be edited here.</p>
+        <p className="text-sm text-secondary-text">{events.length ? "Choose at least one event. RSVP replies cannot be edited here." : "Create an Event first, then assign this household."}</p>
       </fieldset>
       <div className="flex flex-wrap gap-3">
-        <Button type="submit">{household ? "Save changes" : "Save household"}</Button>
-        <Button variant="secondary" onClick={onCancel}>Cancel</Button>
+        <Button type="submit" disabled={saving || !events.length}>{saving ? "Saving…" : household ? "Save changes" : "Save household"}</Button>
+        <Button variant="secondary" disabled={saving} onClick={onCancel}>Cancel</Button>
       </div>
     </form>
   );

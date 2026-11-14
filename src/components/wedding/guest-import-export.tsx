@@ -6,16 +6,21 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { ImportPreview } from "./import-preview";
 import { classifyGuestRows, downloadGuestFile, guestExportBlob, readGuestFile, templateHousehold, type ImportRow } from "./guest-spreadsheet";
+import { saveResource } from "../../lib/api-client";
+import type { ImportPreviewDTO, ImportResultDTO } from "../../types/household";
 
-export function GuestImportExport({ households, events, onImport }: {
+export function GuestImportExport({ households, events, onImport, weddingId }: {
   households: Household[];
   events: WeddingEvent[];
-  onImport: (households: Household[]) => void;
+  onImport: (households: Household[], message?: string) => Promise<void>;
+  weddingId?: string;
 }) {
   const [rows, setRows] = useState<ImportRow[]>([]);
   const [decisions, setDecisions] = useState<Record<number, boolean>>({});
   const [filename, setFilename] = useState("");
   const [reading, setReading] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+  const [serverPreview, setServerPreview] = useState<ImportPreviewDTO | null>(null);
   const [exporting, setExporting] = useState(false);
   const [error, setError] = useState("");
   const [exportNotice, setExportNotice] = useState("");
@@ -24,7 +29,7 @@ export function GuestImportExport({ households, events, onImport }: {
   const confirmed = useRef(false);
   const previewTitle = useRef<HTMLHeadingElement>(null);
   useEffect(() => { if (rows.length) previewTitle.current?.focus(); }, [rows]);
-  const preview = classifyGuestRows(rows, households);
+  const preview = serverPreview?.rows ?? classifyGuestRows(rows, households);
   const invalid = preview.filter((row) => row.problems.length > 0);
   const duplicates = preview.filter((row) => !row.problems.length && row.duplicates.length > 0);
   const ready = preview.length - invalid.length - duplicates.length;
@@ -33,7 +38,7 @@ export function GuestImportExport({ households, events, onImport }: {
 
   function reset() {
     readId.current += 1;
-    setRows([]); setDecisions({}); setFilename(""); setError(""); setReading(false);
+    setRows([]); setServerPreview(null); setDecisions({}); setFilename(""); setError(""); setReading(false);
     confirmed.current = false;
     if (fileInput.current) { fileInput.current.value = ""; fileInput.current.focus(); }
   }
@@ -42,10 +47,18 @@ export function GuestImportExport({ households, events, onImport }: {
     const file = event.target.files?.[0];
     if (!file) return;
     const request = ++readId.current;
-    setRows([]); setDecisions({}); setError(""); setFilename(file.name); setReading(true);
+    setRows([]); setServerPreview(null); setDecisions({}); setError(""); setFilename(file.name); setReading(true);
     confirmed.current = false;
     try {
-      const parsed = await readGuestFile(file, events);
+      let parsed: ImportRow[];
+      if (weddingId) {
+        const form = new FormData(); form.set("file", file);
+        const response = await fetch(`/api/v1/weddings/${weddingId}/guest-imports/preview`, { method: "POST", body: form });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error?.message || "The file could not be previewed.");
+        if (request !== readId.current) return;
+        setServerPreview(result.data); parsed = result.data.rows;
+      } else parsed = await readGuestFile(file, events);
       if (request !== readId.current) return;
       setRows(parsed);
     } catch (problem) {
@@ -55,15 +68,33 @@ export function GuestImportExport({ households, events, onImport }: {
     }
   }
 
-  function confirmImport() {
+  async function confirmImport() {
     if (confirmed.current || reading || !eligible.length) return;
     confirmed.current = true; // Guards repeated clicks before React renders.
-    onImport(eligible.map((row) => ({ ...row.household, id: crypto.randomUUID(), rsvpSummary: {}, guestLinkStatus: "Not sent" })));
+    setConfirming(true); setError("");
+    try {
+      if (weddingId && serverPreview) {
+        const result = await saveResource<ImportResultDTO>(`/api/v1/weddings/${weddingId}/guest-imports/${serverPreview.importId}/confirm`, "POST", {
+          previewProof: serverPreview.previewProof, duplicatePolicy: "SKIP",
+          importAnywayRows: Object.entries(decisions).filter(([, value]) => value).map(([row]) => Number(row)),
+        });
+        await onImport([], `${result.created} households imported; ${result.invalidSkipped} invalid rows and ${result.duplicatesSkipped} duplicates skipped; ${result.duplicatesImported} duplicates imported by choice.`);
+      } else await onImport(eligible.map((row) => ({ ...row.household, id: crypto.randomUUID(), rsvpSummary: {}, guestLinkStatus: "Not sent" })));
+    } catch (error) { confirmed.current = false; setError(error instanceof Error ? error.message : "The import could not be completed."); }
+    finally { setConfirming(false); }
   }
 
   async function download(format: "csv" | "xlsx", template = false) {
     setExporting(true); setExportNotice("");
     try {
+      if (weddingId && !template) {
+        const response = await fetch(`/api/v1/weddings/${weddingId}/guest-exports?format=${format}`, { cache: "no-store" });
+        if (!response.ok) throw new Error("Export failed.");
+        const filename = response.headers.get("content-disposition")?.match(/filename="([^"]+)"/)?.[1] ?? `wedding-guests.${format}`;
+        downloadGuestFile(await response.blob(), filename);
+        setExportNotice(`${format === "csv" ? "CSV" : "Excel"} download started from saved household data.`);
+        return;
+      }
       const data = template ? [templateHousehold(events)] : households;
       const blob = await guestExportBlob(data, events, format);
       downloadGuestFile(blob, template ? "wedding-hq-household-template.csv" : `ravi-priya-guests.${format}`);
@@ -80,15 +111,15 @@ export function GuestImportExport({ households, events, onImport }: {
           <p>Bring households into Wedding HQ from a CSV or Excel file.</p>
           <div className="grid gap-2">
             <label htmlFor="guest-import-file" className="text-sm font-semibold">Choose CSV or Excel file</label>
-            <input ref={fileInput} id="guest-import-file" type="file" accept=".csv,.xlsx" onChange={chooseFile} aria-describedby="guest-import-help" className="min-h-[44px] w-full min-w-0 max-w-full rounded-md border border-border bg-surface p-3 text-sm file:mr-3 file:min-h-[44px] file:cursor-pointer file:rounded-md file:border file:border-border file:bg-surface-alt file:px-3 file:text-primary-text" />
+            <input ref={fileInput} disabled={confirming} id="guest-import-file" type="file" accept=".csv,.xlsx" onChange={chooseFile} aria-describedby="guest-import-help" className="min-h-[44px] w-full min-w-0 max-w-full rounded-md border border-border bg-surface p-3 text-sm file:mr-3 file:min-h-[44px] file:cursor-pointer file:rounded-md file:border file:border-border file:bg-surface-alt file:px-3 file:text-primary-text" />
           </div>
           {filename ? <p className="break-words text-sm">Selected file: {filename}</p> : null}
-          <p id="guest-import-help" className="text-sm text-secondary-text">Accepted: .csv and .xlsx, up to 5 MB and 1,000 household rows. Excel uses the first worksheet. Column headings belong in row 1. Files stay in your browser.</p>
+          <p id="guest-import-help" className="text-sm text-secondary-text">Accepted: .csv and .xlsx, up to 5 MB and 1,000 household rows. Excel uses the first worksheet. Column headings belong in row 1. {weddingId ? "Files are parsed on the server. Large previews may need to be split into smaller files." : "Demo files stay in your browser."}</p>
           <p className="text-sm text-secondary-text">Required: Household Name, Adults Invited, Children Invited, Events. Separate event names and member names with semicolons, for example: {events.map((event) => event.name).join("; ")}.</p>
           <Button variant="secondary" disabled={exporting} onClick={() => download("csv", true)}>Download template</Button>
           {reading ? <p role="status">Reading file…</p> : null}
           {error ? <p role="alert" className="break-words text-sm font-semibold">{error}</p> : null}
-          {filename ? <Button variant="tertiary" onClick={reset}>Cancel import / choose another file</Button> : null}
+          {filename ? <Button variant="tertiary" disabled={confirming} onClick={reset}>Cancel import / choose another file</Button> : null}
         </Card>
       </section>
       {preview.length ? (
@@ -108,10 +139,10 @@ export function GuestImportExport({ households, events, onImport }: {
           <Card className="space-y-4">
             <h2 className="text-lg font-semibold">Confirm import</h2>
             <p>{eligible.length} {eligible.length === 1 ? "household" : "households"} will be imported. {invalid.length} invalid {invalid.length === 1 ? "row" : "rows"} and {skippedDuplicates} possible duplicate {skippedDuplicates === 1 ? "row" : "rows"} will be skipped.</p>
-            <p className="text-sm text-secondary-text">Existing households remain unchanged. Changes reset on reload.</p>
+            <p className="text-sm text-secondary-text">Existing households remain unchanged. {weddingId ? "Confirmed imports are saved to your wedding." : "Demo changes reset on reload."}</p>
             <div className="flex flex-wrap gap-3">
-              <Button onClick={confirmImport} disabled={!eligible.length || reading}>Import {eligible.length} {eligible.length === 1 ? "household" : "households"}</Button>
-              <Button variant="secondary" onClick={reset}>Cancel import</Button>
+              <Button onClick={confirmImport} disabled={!eligible.length || reading || confirming}>{confirming ? "Importing…" : `Import ${eligible.length} ${eligible.length === 1 ? "household" : "households"}`}</Button>
+              <Button variant="secondary" disabled={confirming} onClick={reset}>Cancel import</Button>
             </div>
           </Card>
         </>
@@ -119,7 +150,7 @@ export function GuestImportExport({ households, events, onImport }: {
       <section aria-labelledby="guest-export-title">
         <Card className="space-y-4">
           <h2 id="guest-export-title" className="text-2xl font-semibold">Export guest list</h2>
-          <p>Export all {households.length} current households, including local additions and imports. Household list filters do not limit the export.</p>
+          <p>Export all {households.length} current households{weddingId ? " from saved wedding data" : ", including local additions and imports"}. Household list filters do not limit the export.</p>
           <div className="flex flex-wrap gap-3">
             <Button variant="secondary" disabled={exporting} onClick={() => download("csv")}>Export CSV</Button>
             <Button variant="secondary" disabled={exporting} onClick={() => download("xlsx")}>Export Excel</Button>

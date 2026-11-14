@@ -39,7 +39,7 @@ export default async function WeddingPage({
         </section>
 
         <section aria-labelledby="summary-title">
-          {wedding ? <p className="mb-4 text-sm text-secondary-text">Prototype data below: Guests, Tasks, Expenses, Photos, attention items and activity. Your wedding details and Events use saved data.</p> : null}
+          {wedding ? <p className="mb-4 text-sm text-secondary-text">Prototype data below: RSVP totals, Tasks, Expenses, Photos, attention items and activity. Wedding details, Events and Households use saved data.</p> : null}
           <h2 id="summary-title" className="sr-only">Wedding summary</h2>
           <dl className="grid grid-cols-2 gap-6 border-y border-border py-6 lg:grid-cols-4">
             <Metric value={summary.guestsConfirmed} label="Guests confirmed" detail={`${summary.householdsAwaiting} awaiting`} />

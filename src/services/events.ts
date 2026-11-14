@@ -62,12 +62,17 @@ export async function updateEvent(weddingId: string, eventId: string, input: Eve
   return eventDTO(event);
 }
 export async function deleteEvent(weddingId: string, eventId: string) {
-  const event = await scopedEvent(weddingId, eventId);
-  const db = mongoose.connection.db!;
-  const filter = { weddingId: event.weddingId, eventId: event._id };
-  // Read-only checks of documented dependent collections; no future models or
-  // cascade cleanup are introduced in H3. R2 assets also require later cleanup.
-  const dependencies = await Promise.all(["event_invitations", "rsvps", "tasks", "expenses", "photos"].map((name) => db.collection(name).findOne(filter, { projection: { _id: 1 } })));
-  if (event.invitationAsset || dependencies.some(Boolean)) throw new ApiError(409, "EVENT_HAS_DEPENDENCIES", "This event has related records or an invitation asset and cannot be deleted yet.");
-  await EventModel.deleteOne({ _id: event._id, weddingId: event.weddingId });
+  await accessWedding(weddingId, true); assertId(eventId);
+  // H4 assignments now write the referenced Event's internal version in their
+  // transaction. Read dependencies and delete atomically to prevent write skew.
+  await mongoose.connection.transaction(async (session) => {
+    const event = await EventModel.findOne({ _id: eventId, weddingId }).session(session);
+    if (!event) throw new ApiError(404, "NOT_FOUND", "Event not found.");
+    const filter = { weddingId: event.weddingId, eventId: event._id };
+    for (const name of ["event_invitations", "rsvps", "tasks", "expenses", "photos"]) {
+      if (await mongoose.connection.db!.collection(name).findOne(filter, { session, projection: { _id: 1 } })) throw new ApiError(409, "EVENT_HAS_DEPENDENCIES", "This event has related records and cannot be deleted yet.");
+    }
+    if (event.invitationAsset) throw new ApiError(409, "EVENT_HAS_DEPENDENCIES", "This event has an invitation asset and cannot be deleted yet.");
+    await EventModel.deleteOne({ _id: event._id, weddingId: event.weddingId }, { session });
+  });
 }

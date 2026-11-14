@@ -1,12 +1,20 @@
+"use client";
+
+import { useState } from "react";
 import type { Household, WeddingEvent } from "../../fixtures/wedding";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
-export function HouseholdDetail({ household, events, onEdit }: {
+export function HouseholdDetail({ household, events, onEdit, persistent = false, onDelete }: {
   household: Household;
   events: WeddingEvent[];
   onEdit: () => void;
+  persistent?: boolean;
+  onDelete?: () => Promise<void>;
 }) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [error, setError] = useState("");
   return (
     <div className="space-y-6">
       <dl className="grid gap-4 md:grid-cols-2">
@@ -18,7 +26,7 @@ export function HouseholdDetail({ household, events, onEdit }: {
       </dl>
       <section aria-labelledby="household-events-title" className="space-y-3">
         <h3 id="household-events-title" className="text-lg font-semibold">Invited events</h3>
-        <p className="text-sm text-secondary-text">RSVP summary · fixture replies only</p>
+        <p className="text-sm text-secondary-text">{persistent ? "Invited Events are saved. RSVP responses are not connected yet." : "RSVP summary · fixture replies only"}</p>
         <dl className="space-y-3">
           {events.filter((event) => household.invitedEventIds.includes(event.id)).map((event) => (
             <div key={event.id} className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
@@ -37,7 +45,14 @@ export function HouseholdDetail({ household, events, onEdit }: {
         <Button variant="secondary" disabled>Send invitation</Button>
         <Button variant="secondary" disabled>Regenerate guest link</Button>
       </div>
-      <p className="text-sm text-secondary-text">Invitations and guest links will be available in a later phase. Link status is display data only.</p>
+      <p className="text-sm text-secondary-text">{persistent ? "Secure guest links and invitation emails are not enabled yet." : "Invitations and guest links will be available in a later phase. Link status is display data only."}</p>
+      {onDelete ? <section aria-label="Delete household" className="space-y-3">
+        {error ? <p role="alert">{error}</p> : null}
+        {confirmDelete ? <><p>Delete this household and its unsent Event assignments? This cannot be undone. Households with history cannot be deleted yet.</p><div className="flex flex-wrap gap-3">
+          <Button disabled={deleting} onClick={async () => { setDeleting(true); setError(""); try { await onDelete(); } catch (error) { setError(error instanceof Error ? error.message : "The household could not be deleted."); setDeleting(false); } }}>{deleting ? "Deleting…" : "Confirm delete"}</Button>
+          <Button variant="secondary" disabled={deleting} onClick={() => setConfirmDelete(false)}>Cancel</Button>
+        </div></> : <Button variant="secondary" onClick={() => setConfirmDelete(true)}>Delete household</Button>}
+      </section> : null}
     </div>
   );
 }

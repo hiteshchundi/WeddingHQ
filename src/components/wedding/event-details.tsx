@@ -11,7 +11,7 @@ import { EventForm } from "./event-form";
 import { eventDate, eventTime } from "./event-format";
 import { eventView, useWeddingEvents } from "./events-context";
 
-export function EventDetails({ weddingId, eventId, initialEvent }: { weddingId: string; eventId: string; initialEvent?: EventDTO }) {
+export function EventDetails({ weddingId, eventId, initialEvent, invitedHouseholds }: { weddingId: string; eventId: string; initialEvent?: EventDTO; invitedHouseholds?: number }) {
   const { events, saveEvent, deleteEvent, persistent, wedding } = useWeddingEvents();
   const event = events.find((item) => item.id === eventId) ?? (initialEvent ? eventView(initialEvent) : undefined);
   const [editing, setEditing] = useState(false);
@@ -53,7 +53,7 @@ export function EventDetails({ weddingId, eventId, initialEvent }: { weddingId: 
             <p className="text-secondary-text">
               <time dateTime={event.startsAt}>{eventDate(event.startsAt, event.timezone, true)} · {eventTime(event.startsAt, event.timezone)}</time>
             </p>
-            {persistent ? <p className="text-sm text-secondary-text">Guest invitations are not connected yet.</p> : <Link href={`${basePath}/guests?eventId=${encodeURIComponent(event.id)}`} prefetch={false} className={linkClass}>View guests</Link>}
+            <Link href={`${basePath}/guests?eventId=${encodeURIComponent(event.id)}`} prefetch={false} className={linkClass}>View guests</Link>
             <div className="grid gap-6 md:grid-cols-2">
               <section aria-labelledby="event-core-title" className="md:col-span-2">
                 <Card className="space-y-4">
@@ -83,7 +83,7 @@ export function EventDetails({ weddingId, eventId, initialEvent }: { weddingId: 
                   <h2 id="rsvp-title" className="text-2xl font-semibold">RSVP</h2>
                   <dl className="space-y-4">
                     <div><dt className="text-sm text-secondary-text">RSVP deadline</dt><dd>{event.rsvpDeadline || wedding?.rsvpDefaultDeadline ? `${eventDate(event.rsvpDeadline || wedding!.rsvpDefaultDeadline!, event.timezone, true)} · ${eventTime(event.rsvpDeadline || wedding!.rsvpDefaultDeadline!, event.timezone)}${!event.rsvpDeadline ? " (wedding default)" : ""}` : "Not set"}</dd></div>
-                    <div><dt className="text-sm text-secondary-text">Invited households</dt><dd>{persistent ? "Not connected yet" : event.invitedHouseholds}</dd></div>
+                    <div><dt className="text-sm text-secondary-text">Invited households</dt><dd>{persistent ? invitedHouseholds ?? 0 : event.invitedHouseholds}</dd></div>
                   </dl>
                 </Card>
               </section>

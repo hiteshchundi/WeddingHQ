@@ -14,12 +14,15 @@ import { HouseholdForm } from "./household-form";
 import { HouseholdRow } from "./household-row";
 import { Metric } from "./metric";
 import { GuestImportExport } from "./guest-import-export";
+import { saveResource } from "../../lib/api-client";
+import { householdView } from "../../lib/household-view";
+import type { HouseholdDTO } from "../../types/household";
 
 type Panel = { mode: "add" } | { mode: "detail" | "edit"; id: string } | null;
 
-export function GuestsPage({ initialEventId = "" }: { initialEventId?: string }) {
-  const { events } = useWeddingEvents();
-  const [households, setHouseholds] = useState(weddingFixture.households);
+export function GuestsPage({ initialEventId = "", initialHouseholds }: { initialEventId?: string; initialHouseholds?: HouseholdDTO[] }) {
+  const { events, wedding, persistent } = useWeddingEvents();
+  const [households, setHouseholds] = useState(() => initialHouseholds ? initialHouseholds.map(householdView) : persistent ? [] : weddingFixture.households);
   const [view, setView] = useState<"households" | "import-export">("households");
   const [importMessage, setImportMessage] = useState("");
   const listTitle = useRef<HTMLHeadingElement>(null);
@@ -49,10 +52,20 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
     setPanel(next);
   }
 
-  function importHouseholds(imported: Household[]) {
-    setHouseholds((current) => [...imported, ...current]);
+  async function importHouseholds(imported: Household[], message?: string) {
+    if (wedding) {
+      const rows: HouseholdDTO[] = [];
+      for (let page = 1; ; page++) {
+        const response = await fetch(`/api/v1/weddings/${wedding.id}/households?limit=100&page=${page}`, { cache: "no-store" });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error?.message || "Refresh the household list to see your import.");
+        rows.push(...result.data);
+        if (page >= result.meta.totalPages) break;
+      }
+      setHouseholds(rows.map(householdView));
+    } else setHouseholds((current) => [...imported, ...current]);
     clearFilters();
-    setImportMessage(`${imported.length} ${imported.length === 1 ? "household" : "households"} imported.`);
+    setImportMessage(message ?? `${imported.length} ${imported.length === 1 ? "household" : "households"} imported.`);
     setSaved(false);
     setView("households");
     requestAnimationFrame(() => listTitle.current?.focus());
@@ -64,13 +77,25 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
     setEventFilter("");
   }
 
-  function saveHousehold(household: Household) {
-    setHouseholds((current) => current.some((item) => item.id === household.id)
-      ? current.map((item) => item.id === household.id ? household : item)
-      : [...current, household]);
+  async function saveHousehold(household: Household) {
+    let saved = household;
+    if (wedding) {
+      const editing = households.some((item) => item.id === household.id);
+      const body = { householdName: household.householdName, primaryContact: { name: household.primaryContactName, email: household.email || null, phone: household.phone },
+        adultsInvited: household.adultsInvited, childrenInvited: household.childrenInvited,
+        members: household.memberNames.map((name) => ({ name })), notes: household.notes || null, eventIds: household.invitedEventIds };
+      saved = householdView(await saveResource<HouseholdDTO>(`/api/v1/weddings/${wedding.id}/households${editing ? `/${household.id}` : ""}`, editing ? "PATCH" : "POST", body));
+    }
+    setHouseholds((current) => current.some((item) => item.id === saved.id)
+      ? current.map((item) => item.id === saved.id ? saved : item)
+      : [...current, saved]);
     if (panel?.mode === "add") clearFilters();
     setSaved(true);
-    setPanel({ mode: "detail", id: household.id });
+    setPanel({ mode: "detail", id: saved.id });
+  }
+  async function removeHousehold(id: string) {
+    if (wedding) await saveResource(`/api/v1/weddings/${wedding.id}/households/${id}`, "DELETE");
+    setHouseholds((current) => current.filter((row) => row.id !== id)); setPanel(null);
   }
 
   const query = search.trim().toLowerCase();
@@ -98,15 +123,15 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
           <Button variant="tertiary" disabled>RSVPs</Button>
           <Button variant="tertiary" aria-current={view === "import-export" ? "page" : undefined} className="aria-[current=page]:bg-sage-soft" onClick={() => setView("import-export")}>Import / Export</Button>
         </nav>
-        {view === "import-export" ? <GuestImportExport households={households} events={events} onImport={importHouseholds} /> : (
+        {view === "import-export" ? <GuestImportExport households={households} events={events} onImport={importHouseholds} weddingId={wedding?.id} /> : (
         <>
-        <p className="text-sm text-secondary-text">Household management preview. The RSVPs view is planned for a later phase.</p>
+        <p className="text-sm text-secondary-text">{persistent ? "Households and invited Events are saved. Guest links and RSVP responses are not connected yet." : "Household management preview. The RSVPs view is planned for a later phase."}</p>
         {importMessage ? <p role="status" className="text-sm font-semibold">{importMessage}</p> : null}
         <Card>
           <dl className="grid grid-cols-3 gap-4 md:gap-6">
-            <Metric value={households.length} label="Households" detail="Prototype sample" />
-            <Metric value={weddingFixture.summary.guestsConfirmed} label="Confirmed guests" detail="Wedding snapshot" />
-            <Metric value={weddingFixture.summary.householdsAwaiting} label="Awaiting households" detail="Wedding snapshot" />
+            <Metric value={households.length} label="Households" detail={persistent ? "Saved households" : "Prototype sample"} />
+            <Metric value={persistent ? "—" : weddingFixture.summary.guestsConfirmed} label="Confirmed guests" detail={persistent ? "RSVP not connected" : "Wedding snapshot"} />
+            <Metric value={persistent ? "—" : weddingFixture.summary.householdsAwaiting} label="Awaiting households" detail={persistent ? "RSVP not connected" : "Wedding snapshot"} />
           </dl>
         </Card>
         <section aria-label="Search and filter households" className="space-y-3">
@@ -115,7 +140,7 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
             <div className="grid min-w-0 gap-2">
               <label htmlFor="household-rsvp-filter" className="text-sm font-medium">RSVP</label>
               <select id="household-rsvp-filter" className={selectClass} value={rsvpFilter} onChange={(event) => setRsvpFilter(event.target.value)}>
-                <option value="all">All households</option><option value="awaiting">Awaiting RSVP</option><option value="confirmed">Confirmed</option>
+                <option value="all">All households</option><option value="awaiting">Awaiting RSVP</option>{!persistent ? <option value="confirmed">Confirmed</option> : null}
               </select>
             </div>
             <div className="grid min-w-0 gap-2">
@@ -126,10 +151,10 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
               </select>
             </div>
           </div>
-          <p className="text-sm text-secondary-text">Confirmed means every invited event is marked Confirmed. Awaiting means at least one event has no reply yet.</p>
+          <p className="text-sm text-secondary-text">{persistent ? "No real RSVP responses have been collected yet." : "Confirmed means every invited event is marked Confirmed. Awaiting means at least one event has no reply yet."}</p>
           {search || rsvpFilter !== "all" || eventFilter ? <Button variant="tertiary" onClick={clearFilters}>Clear filters</Button> : null}
         </section>
-        {saved && !panel ? <p role="status" className="text-sm font-semibold">Household saved for this view.</p> : null}
+        {saved && !panel ? <p role="status" className="text-sm font-semibold">Household saved{persistent ? "." : " for this demo view."}</p> : null}
         {!households.length ? (
           <Card className="space-y-4">
             <h2 className="text-2xl font-semibold">No households yet</h2>
@@ -153,10 +178,10 @@ export function GuestsPage({ initialEventId = "" }: { initialEventId?: string })
           <IconButton aria-label="Close household" onClick={() => setPanel(null)}><X size={20} /></IconButton>
         </header>
         <div className="space-y-4 p-4 md:p-6">
-          {saved && panel?.mode === "detail" ? <p role="status" className="text-sm font-semibold">Household saved for this view.</p> : null}
+          {saved && panel?.mode === "detail" ? <p role="status" className="text-sm font-semibold">Household saved{persistent ? "." : " for this demo view."}</p> : null}
           {panel?.mode === "add" || (panel?.mode === "edit" && selected) ? (
-            <HouseholdForm key={panel.mode === "add" ? "add" : selected?.id} household={panel.mode === "edit" ? selected : undefined} events={events} onSave={saveHousehold} onCancel={() => panel.mode === "edit" && selected ? openPanel({ mode: "detail", id: selected.id }) : setPanel(null)} />
-          ) : selected ? <HouseholdDetail household={selected} events={events} onEdit={() => openPanel({ mode: "edit", id: selected.id })} /> : null}
+            <HouseholdForm persistent={persistent} key={panel.mode === "add" ? "add" : selected?.id} household={panel.mode === "edit" ? selected : undefined} events={events} onSave={saveHousehold} onCancel={() => panel.mode === "edit" && selected ? openPanel({ mode: "detail", id: selected.id }) : setPanel(null)} />
+          ) : selected ? <HouseholdDetail key={selected.id} persistent={persistent} household={selected} events={events} onEdit={() => openPanel({ mode: "edit", id: selected.id })} onDelete={persistent ? () => removeHousehold(selected.id) : undefined} /> : null}
         </div>
       </dialog>
     </>

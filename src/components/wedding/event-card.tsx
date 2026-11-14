@@ -26,7 +26,7 @@ export function EventCard({ event, href, compact = false, fixtureGuests = true }
           {!compact ? (
             <>
               <p className="break-words text-sm">{event.venue.name || "Venue not added"}</p>
-              <p className="text-sm text-secondary-text">{fixtureGuests ? `${event.invitedHouseholds} households invited` : "Guest invitations are not connected yet"}</p>
+              <p className="text-sm text-secondary-text">{fixtureGuests ? `${event.invitedHouseholds} households invited` : "Guest links and RSVP are not connected yet"}</p>
               <dl className="grid grid-cols-2 gap-3 border-t border-border pt-4 text-sm md:grid-cols-4">
                 <div><dt className="mb-1 text-secondary-text">Venue</dt><dd><Badge>{event.venue.name ? "Complete" : "Not added"}</Badge></dd></div>
                 <div><dt className="mb-1 text-secondary-text">Invitation</dt><dd><Badge>{event.invitationAsset ? "Added" : "Not added"}</Badge></dd></div>
