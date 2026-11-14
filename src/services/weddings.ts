@@ -73,6 +73,15 @@ export async function updateWedding(weddingId: string, input: WeddingPatch) {
   if (input.status && input.status !== wedding.status && weddingStatuses.indexOf(input.status) !== weddingStatuses.indexOf(wedding.status) + 1) {
     throw new ApiError(422, "INVALID_STATUS_TRANSITION", "Wedding status must move to the next lifecycle stage.");
   }
+  if (input.currency && input.currency !== wedding.currency) {
+    // Finance writes touch this same Wedding, preventing a currency-change race.
+    return mongoose.connection.transaction(async (session) => {
+      const locked = await WeddingModel.findOneAndUpdate({ _id: weddingId }, { $inc: { __v: 1 } }, { session, returnDocument: "after", timestamps: false });
+      if (!locked) throw new ApiError(404, "NOT_FOUND", "Wedding not found.");
+      for (const name of ["vendors", "expenses"]) if (await mongoose.connection.db!.collection(name).findOne({ weddingId: locked._id }, { session, projection: { _id: 1 } })) throw new ApiError(409, "CURRENCY_HAS_FINANCIAL_RECORDS", "Currency cannot change while Vendor or Expense records exist.");
+      locked.set(input); await locked.save({ session }); return weddingDTO(locked);
+    });
+  }
   // Save a complete scoped document so cross-field Mongoose date validation runs.
   wedding.set(input);
   await wedding.save();

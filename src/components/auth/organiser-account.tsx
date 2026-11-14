@@ -8,7 +8,7 @@ export function OrganiserAccount({ user, real = false }: { user: Session["user"]
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-surface px-4 py-3 text-sm">
       <div className="min-w-0">
         <p className="break-words">Signed in as {user.name || user.email}</p>
-        <p className="text-secondary-text">{real ? "Wedding, Events, Households, RSVP and Tasks are saved · other areas use prototype data" : "Fixture demo · Ravi & Priya · changes reset on reload"}</p>
+        <p className="text-secondary-text">{real ? "Wedding, Events, Households, RSVP, Tasks, Vendors and Expenses are saved · Messages and Photos use prototype data" : "Fixture demo · Ravi & Priya · changes reset on reload"}</p>
       </div>
       <div className="flex flex-wrap items-center gap-4"><Link href="/weddings" className="inline-flex min-h-[44px] items-center underline">Your weddings</Link><form action={signOutOrganiser}><Button type="submit" variant="tertiary">Sign out</Button></form></div>
     </div>

@@ -11,7 +11,8 @@
     "h3:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h3-smoke.mjs",
     "h4:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h4-smoke.mjs",
     "h5:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h5-smoke.mjs",
-    "h6:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h6-smoke.mjs"
+    "h6:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h6-smoke.mjs",
+    "h7:smoke": "node --conditions=react-server --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/h7-smoke.mjs"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "3.11.3",

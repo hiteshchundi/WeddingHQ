@@ -100,7 +100,7 @@ export type WeddingVendor = {
   eventIds: string[];
   estimatedCostMinor: number | null;
   actualCostMinor: number | null;
-  currency: "INR";
+  currency: string;
   responsibleMembershipId: string | null;
   status: keyof typeof vendorStatusLabels;
   notes: string;
@@ -114,9 +114,9 @@ export type WeddingExpense = {
   vendorId: string | null;
   estimatedAmountMinor: number | null;
   actualAmountMinor: number | null;
-  currency: "INR";
+  currency: string;
   notes: string;
-  createdByMembershipId: string;
+  createdByMembershipId?: string;
 };
 
 // All monetary values are integer paise. Vendor costs are reference information

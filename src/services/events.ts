@@ -72,6 +72,7 @@ export async function deleteEvent(weddingId: string, eventId: string) {
     for (const name of ["event_invitations", "rsvps", "tasks", "expenses", "photos"]) {
       if (await mongoose.connection.db!.collection(name).findOne(filter, { session, projection: { _id: 1 } })) throw new ApiError(409, "EVENT_HAS_DEPENDENCIES", "This event has related records and cannot be deleted yet.");
     }
+    if (await mongoose.connection.db!.collection("vendors").findOne({ weddingId: event.weddingId, eventIds: event._id }, { session, projection: { _id: 1 } })) throw new ApiError(409, "EVENT_HAS_DEPENDENCIES", "This event has related Vendors and cannot be deleted yet.");
     if (event.invitationAsset) throw new ApiError(409, "EVENT_HAS_DEPENDENCIES", "This event has an invitation asset and cannot be deleted yet.");
     await EventModel.deleteOne({ _id: event._id, weddingId: event.weddingId }, { session });
   });

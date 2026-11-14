@@ -12,6 +12,7 @@ import { getWedding } from "../../../services/weddings";
 import { pageData } from "../../../lib/page-access";
 import { eventDate } from "../../../components/wedding/event-format";
 import { getTaskSummary } from "../../../services/tasks";
+import { getExpenseSummary } from "../../../services/expenses";
 
 export default async function WeddingPage({
   params,
@@ -21,13 +22,14 @@ export default async function WeddingPage({
   const { weddingId } = await params;
   const basePath = `/weddings/${encodeURIComponent(weddingId)}`;
   const { identity, summary, attention, recentActivity } = weddingFixture;
-  const spending = expenseTotals(weddingFixture.expenses);
+  const fixtureSpending = expenseTotals(weddingFixture.expenses);
   const wedding = weddingId === "demo" ? undefined : await pageData(() => getWedding(weddingId));
 
   const households = wedding ? await pageData(() => getWeddingHouseholds(weddingId)) : [];
   const confirmed = households.filter((row) => row.rsvps?.some((rsvp) => rsvp.response === "YES")).length;
   const awaiting = households.filter((row) => row.invitedEventIds.some((id) => !row.rsvps?.some((rsvp) => rsvp.eventId === id))).length;
   const { remaining, overdue } = wedding ? await pageData(() => getTaskSummary(weddingId)) : { remaining: 0, overdue: 0 };
+  const spending = wedding ? await pageData(() => getExpenseSummary(weddingId)) : { currency: "INR", estimatedTotalMinor: fixtureSpending.estimated, actualTotalMinor: fixtureSpending.actual };
 
   return (
     <>
@@ -46,12 +48,12 @@ export default async function WeddingPage({
         </section>
 
         <section aria-labelledby="summary-title">
-          {wedding ? <p className="mb-4 text-sm text-secondary-text">Expenses, Photos and recent activity still use prototype data. Wedding details, Events, Households, RSVP and Tasks use saved data.</p> : null}
+          {wedding ? <p className="mb-4 text-sm text-secondary-text">Photos and recent activity still use prototype data. Wedding details, Events, Households, RSVP, Tasks, Vendors and Expenses use saved data.</p> : null}
           <h2 id="summary-title" className="sr-only">Wedding summary</h2>
           <dl className="grid grid-cols-2 gap-6 border-y border-border py-6 lg:grid-cols-4">
             <Metric value={wedding ? confirmed : summary.guestsConfirmed} label={wedding ? "Confirmed households" : "Guests confirmed"} detail={`${wedding ? awaiting : summary.householdsAwaiting} awaiting${wedding ? " · per invited Event" : ""}`} />
             <Metric value={wedding ? remaining : summary.tasksRemaining} label="Tasks remaining" detail={`${wedding ? overdue : summary.tasksOverdue} overdue${wedding ? "" : " · wedding snapshot"}`} />
-            <Metric value={formatMoney(spending.actual, true)} label="Actual spend" detail={`${formatMoney(spending.estimated, true)} estimated`} />
+            <Metric value={formatMoney(spending.actualTotalMinor, true, spending.currency)} label="Actual spend" detail={`${formatMoney(spending.estimatedTotalMinor, true, spending.currency)} estimated`} />
             <Metric value={summary.photosAwaitingReview} label="Photos waiting" detail="for review" />
           </dl>
         </section>

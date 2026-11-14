@@ -3,6 +3,7 @@
 import { Plus, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { vendorCategories, vendorStatusLabels, weddingFixture, type WeddingVendor } from "../../fixtures/wedding";
+import type { MemberDTO } from "../../types/task";
 import { PageHeader } from "../layout/page-header";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -14,9 +15,10 @@ import { formatMoney } from "./money";
 import { VendorForm } from "./vendor-form";
 import { useWeddingVendors } from "./vendors-context";
 
-export function VendorsPage() {
+export function VendorsPage({ members = weddingFixture.team }: { members?: { id: string; name: string; status?: MemberDTO["status"] }[] }) {
   const { vendors, saveVendor } = useWeddingVendors();
-  const { events } = useWeddingEvents();
+  const { events, wedding, persistent } = useWeddingEvents();
+  const categories = [...new Set([...vendorCategories, ...vendors.map((vendor) => vendor.category)])];
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
@@ -36,9 +38,9 @@ export function VendorsPage() {
     && (!category || vendor.category === category) && (!status || vendor.status === status) && (!eventFilter || vendor.eventIds.includes(eventFilter)));
   function clearFilters() { setSearch(""); setCategory(""); setStatus(""); setEventFilter(""); }
   function openForm(id: string) { setNotice(""); setEditing(id); }
-  function save(vendor: WeddingVendor) {
-    saveVendor(vendor);
-    setNotice(`${vendor.name} ${editing === "new" ? "added" : "updated"} for this session.`);
+  async function save(vendor: WeddingVendor) {
+    await saveVendor(vendor);
+    setNotice(`${vendor.name} ${editing === "new" ? "added" : "updated"} ${persistent ? "and saved." : "for this session."}`);
     setEditing(null);
     clearFilters();
   }
@@ -47,11 +49,11 @@ export function VendorsPage() {
     <>
       <PageHeader title="Vendors" action={<Button onClick={() => openForm("new")} className="gap-2"><Plus size={18} aria-hidden="true" />Add vendor</Button>} />
       <main id="organiser-content" tabIndex={-1} className="organiser-content space-y-6">
-        <p className="text-sm text-secondary-text">Keep vendor contacts and reference costs together. Expenses supplies wedding totals. Vendor changes remain available across organiser pages and reset on reload.</p>
+        <p className="text-sm text-secondary-text">Keep vendor contacts and reference costs together. Expenses supplies wedding totals. {persistent ? "Changes are saved to your wedding." : "Vendor changes remain available across organiser pages and reset on reload."}</p>
         <section aria-label="Search and filter vendors" className="space-y-4">
           <Input id="vendor-search" label="Search vendors" type="search" autoComplete="off" placeholder="Vendor, category or contact" value={search} onChange={(event) => setSearch(event.target.value)} />
           <div className="grid gap-4 md:grid-cols-3">
-            <div className="grid min-w-0 gap-2"><label htmlFor="vendor-filter-category" className="text-sm font-medium">Category</label><select id="vendor-filter-category" className={selectClass} value={category} onChange={(event) => setCategory(event.target.value)}><option value="">All categories</option>{vendorCategories.map((item) => <option key={item}>{item}</option>)}</select></div>
+            <div className="grid min-w-0 gap-2"><label htmlFor="vendor-filter-category" className="text-sm font-medium">Category</label><select id="vendor-filter-category" className={selectClass} value={category} onChange={(event) => setCategory(event.target.value)}><option value="">All categories</option>{categories.map((item) => <option key={item}>{item}</option>)}</select></div>
             <div className="grid min-w-0 gap-2"><label htmlFor="vendor-filter-status" className="text-sm font-medium">Status</label><select id="vendor-filter-status" className={selectClass} value={status} onChange={(event) => setStatus(event.target.value)}><option value="">All statuses</option>{Object.entries(vendorStatusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></div>
             <div className="grid min-w-0 gap-2"><label htmlFor="vendor-filter-event" className="text-sm font-medium">Related event</label><select id="vendor-filter-event" className={selectClass} value={eventFilter} onChange={(event) => setEventFilter(event.target.value)}><option value="">All events</option>{events.map((event) => <option key={event.id} value={event.id}>{event.name}</option>)}</select></div>
           </div>
@@ -66,15 +68,15 @@ export function VendorsPage() {
             <dl className="grid gap-4 text-sm md:grid-cols-2 xl:grid-cols-3">
               <div className="min-w-0"><dt className="text-secondary-text">Contact</dt><dd className="break-words">{vendor.contact.person || "Not added"}</dd>{vendor.contact.phone ? <dd className="break-words">{vendor.contact.phone}</dd> : null}{vendor.contact.email ? <dd className="break-words">{vendor.contact.email}</dd> : null}</div>
               <div><dt className="text-secondary-text">Related events</dt><dd className="break-words">{vendor.eventIds.map((id) => events.find((event) => event.id === id)?.name ?? "Unavailable event").join(" · ") || "Not linked"}</dd></div>
-              <div><dt className="text-secondary-text">Responsible person</dt><dd>{weddingFixture.team.find((member) => member.id === vendor.responsibleMembershipId)?.name ?? "Unassigned"}</dd></div>
-              <div><dt className="text-secondary-text">Estimated cost</dt><dd className="break-words font-semibold tabular-nums">{formatMoney(vendor.estimatedCostMinor, true)}</dd></div>
-              <div><dt className="text-secondary-text">Actual cost</dt><dd className="break-words font-semibold tabular-nums">{formatMoney(vendor.actualCostMinor, true)}</dd></div>
+              <div><dt className="text-secondary-text">Responsible person</dt><dd>{members.find((member) => member.id === vendor.responsibleMembershipId)?.name ?? "Unassigned"}</dd></div>
+              <div><dt className="text-secondary-text">Estimated cost</dt><dd className="break-words font-semibold tabular-nums">{formatMoney(vendor.estimatedCostMinor, true, vendor.currency)}</dd></div>
+              <div><dt className="text-secondary-text">Actual cost</dt><dd className="break-words font-semibold tabular-nums">{formatMoney(vendor.actualCostMinor, true, vendor.currency)}</dd></div>
             </dl>
           </Card></li>)}</ul>}
       </main>
       <dialog ref={drawer} aria-labelledby="vendor-drawer-title" className="shell-dialog cost-drawer" onClose={() => setEditing(null)} onClick={(event) => { if (event.target === event.currentTarget) setEditing(null); }}>
         <header className="flex items-start justify-between gap-4 border-b border-border bg-surface p-4 md:p-6"><h2 id="vendor-drawer-title" className="text-2xl font-semibold">{selected ? "Edit vendor" : "Add vendor"}</h2><IconButton aria-label="Close vendor" onClick={() => setEditing(null)}><X size={20} /></IconButton></header>
-        <div className="p-4 md:p-6">{editing ? <VendorForm key={editing} vendor={selected} events={events} onSave={save} onCancel={() => setEditing(null)} /> : null}</div>
+        <div className="p-4 md:p-6">{editing ? <VendorForm key={editing} vendor={selected} events={events} members={members.filter((member) => !member.status || member.status === "ACTIVE")} currency={wedding?.currency} persistent={persistent} onSave={save} onCancel={() => setEditing(null)} /> : null}</div>
       </dialog>
     </>
   );
