@@ -11,7 +11,7 @@ import { EventForm } from "./event-form";
 import { eventDate, eventTime } from "./event-format";
 import { eventView, useWeddingEvents } from "./events-context";
 
-export function EventDetails({ weddingId, eventId, initialEvent, invitedHouseholds }: { weddingId: string; eventId: string; initialEvent?: EventDTO; invitedHouseholds?: number }) {
+export function EventDetails({ weddingId, eventId, initialEvent, invitedHouseholds, rsvpSummary }: { weddingId: string; eventId: string; initialEvent?: EventDTO; invitedHouseholds?: number; rsvpSummary?: { YES: number; NO: number; MAYBE: number; AWAITING: number } }) {
   const { events, saveEvent, deleteEvent, persistent, wedding } = useWeddingEvents();
   const event = events.find((item) => item.id === eventId) ?? (initialEvent ? eventView(initialEvent) : undefined);
   const [editing, setEditing] = useState(false);
@@ -81,6 +81,7 @@ export function EventDetails({ weddingId, eventId, initialEvent, invitedHousehol
               <section aria-labelledby="rsvp-title">
                 <Card className="h-full space-y-4">
                   <h2 id="rsvp-title" className="text-2xl font-semibold">RSVP</h2>
+                  {rsvpSummary ? <dl className="grid grid-cols-2 gap-3 text-sm">{Object.entries(rsvpSummary).map(([response, count]) => <div key={response}><dt>{response === "YES" ? "Confirmed" : response === "NO" ? "Declined" : response === "MAYBE" ? "Maybe" : "Awaiting"}</dt><dd className="text-xl font-semibold">{count}</dd></div>)}</dl> : null}
                   <dl className="space-y-4">
                     <div><dt className="text-sm text-secondary-text">RSVP deadline</dt><dd>{event.rsvpDeadline || wedding?.rsvpDefaultDeadline ? `${eventDate(event.rsvpDeadline || wedding!.rsvpDefaultDeadline!, event.timezone, true)} · ${eventTime(event.rsvpDeadline || wedding!.rsvpDefaultDeadline!, event.timezone)}${!event.rsvpDeadline ? " (wedding default)" : ""}` : "Not set"}</dd></div>
                     <div><dt className="text-sm text-secondary-text">Invited households</dt><dd>{persistent ? invitedHouseholds ?? 0 : event.invitedHouseholds}</dd></div>

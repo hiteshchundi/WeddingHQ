@@ -23,7 +23,7 @@ type Panel = { mode: "add" } | { mode: "detail" | "edit"; id: string } | null;
 export function GuestsPage({ initialEventId = "", initialHouseholds }: { initialEventId?: string; initialHouseholds?: HouseholdDTO[] }) {
   const { events, wedding, persistent } = useWeddingEvents();
   const [households, setHouseholds] = useState(() => initialHouseholds ? initialHouseholds.map(householdView) : persistent ? [] : weddingFixture.households);
-  const [view, setView] = useState<"households" | "import-export">("households");
+  const [view, setView] = useState<"households" | "rsvps" | "import-export">("households");
   const [importMessage, setImportMessage] = useState("");
   const listTitle = useRef<HTMLHeadingElement>(null);
   const [search, setSearch] = useState("");
@@ -93,6 +93,14 @@ export function GuestsPage({ initialEventId = "", initialHouseholds }: { initial
     setSaved(true);
     setPanel({ mode: "detail", id: saved.id });
   }
+  async function refreshHousehold(id: string) {
+    if (!wedding) return;
+    const response = await fetch(`/api/v1/weddings/${wedding.id}/households/${id}`, { cache: "no-store" });
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.error?.message || "The household could not be refreshed.");
+    const household = householdView(result.data);
+    setHouseholds((current) => current.map((row) => row.id === id ? household : row));
+  }
   async function removeHousehold(id: string) {
     if (wedding) await saveResource(`/api/v1/weddings/${wedding.id}/households/${id}`, "DELETE");
     setHouseholds((current) => current.filter((row) => row.id !== id)); setPanel(null);
@@ -106,10 +114,11 @@ export function GuestsPage({ initialEventId = "", initialHouseholds }: { initial
       || (phoneQuery.length > 0 && /^[\d+\s()-]+$/.test(query) && household.phone.replace(/[^\d+]/g, "").includes(phoneQuery));
     const matchesEvent = !eventFilter || household.invitedEventIds.includes(eventFilter);
     // These filters inspect display replies only; no RSVP totals or mutations.
-    const replies = household.invitedEventIds.map((id) => household.rsvpSummary[id] ?? "Awaiting");
+    const replies = (eventFilter ? [eventFilter] : household.invitedEventIds).map((id) => household.rsvpSummary[id] ?? "Awaiting");
     const matchesRsvp = rsvpFilter === "all"
       || (rsvpFilter === "awaiting" && replies.includes("Awaiting"))
-      || (rsvpFilter === "confirmed" && replies.length > 0 && replies.every((reply) => reply === "Confirmed"));
+      || (rsvpFilter === "confirmed" && replies.includes("Confirmed"))
+      || (rsvpFilter === "declined" && replies.includes("Declined")) || (rsvpFilter === "maybe" && replies.includes("Maybe"));
     return matchesText && matchesEvent && matchesRsvp;
   });
   const selectClass = "min-h-[44px] w-full min-w-0 rounded-md border border-border bg-surface px-3 text-base text-primary-text focus:border-sage";
@@ -120,18 +129,18 @@ export function GuestsPage({ initialEventId = "", initialHouseholds }: { initial
       <main id="organiser-content" tabIndex={-1} className="organiser-content space-y-6">
         <nav aria-label="Guests views" className="flex flex-wrap gap-2 border-b border-border pb-3">
           <Button variant="tertiary" aria-current={view === "households" ? "page" : undefined} className="aria-[current=page]:bg-sage-soft" onClick={() => setView("households")}>Households</Button>
-          <Button variant="tertiary" disabled>RSVPs</Button>
+          <Button variant="tertiary" disabled={!persistent} aria-current={view === "rsvps" ? "page" : undefined} onClick={() => setView("rsvps")}>RSVPs</Button>
           <Button variant="tertiary" aria-current={view === "import-export" ? "page" : undefined} className="aria-[current=page]:bg-sage-soft" onClick={() => setView("import-export")}>Import / Export</Button>
         </nav>
         {view === "import-export" ? <GuestImportExport households={households} events={events} onImport={importHouseholds} weddingId={wedding?.id} /> : (
         <>
-        <p className="text-sm text-secondary-text">{persistent ? "Households and invited Events are saved. Guest links and RSVP responses are not connected yet." : "Household management preview. The RSVPs view is planned for a later phase."}</p>
+        <p className="text-sm text-secondary-text">{persistent ? "Households, guest access and per-Event RSVP responses are saved to your wedding." : "Household management preview. The RSVPs view is planned for a later phase."}</p>
         {importMessage ? <p role="status" className="text-sm font-semibold">{importMessage}</p> : null}
         <Card>
           <dl className="grid grid-cols-3 gap-4 md:gap-6">
             <Metric value={households.length} label="Households" detail={persistent ? "Saved households" : "Prototype sample"} />
-            <Metric value={persistent ? "—" : weddingFixture.summary.guestsConfirmed} label="Confirmed guests" detail={persistent ? "RSVP not connected" : "Wedding snapshot"} />
-            <Metric value={persistent ? "—" : weddingFixture.summary.householdsAwaiting} label="Awaiting households" detail={persistent ? "RSVP not connected" : "Wedding snapshot"} />
+            <Metric value={persistent ? households.filter((row) => Object.values(row.rsvpSummary).includes("Confirmed")).length : weddingFixture.summary.guestsConfirmed} label={persistent ? "Confirmed households" : "Confirmed guests"} detail={persistent ? "At least one Event" : "Wedding snapshot"} />
+            <Metric value={persistent ? households.filter((row) => row.invitedEventIds.some((id) => !row.rsvpSummary[id])).length : weddingFixture.summary.householdsAwaiting} label="Awaiting households" detail={persistent ? "At least one invited Event" : "Wedding snapshot"} />
           </dl>
         </Card>
         <section aria-label="Search and filter households" className="space-y-3">
@@ -140,7 +149,7 @@ export function GuestsPage({ initialEventId = "", initialHouseholds }: { initial
             <div className="grid min-w-0 gap-2">
               <label htmlFor="household-rsvp-filter" className="text-sm font-medium">RSVP</label>
               <select id="household-rsvp-filter" className={selectClass} value={rsvpFilter} onChange={(event) => setRsvpFilter(event.target.value)}>
-                <option value="all">All households</option><option value="awaiting">Awaiting RSVP</option>{!persistent ? <option value="confirmed">Confirmed</option> : null}
+                <option value="all">All households</option><option value="awaiting">Awaiting RSVP</option><option value="confirmed">Confirmed</option><option value="declined">Declined</option><option value="maybe">Maybe</option>
               </select>
             </div>
             <div className="grid min-w-0 gap-2">
@@ -151,7 +160,7 @@ export function GuestsPage({ initialEventId = "", initialHouseholds }: { initial
               </select>
             </div>
           </div>
-          <p className="text-sm text-secondary-text">{persistent ? "No real RSVP responses have been collected yet." : "Confirmed means every invited event is marked Confirmed. Awaiting means at least one event has no reply yet."}</p>
+          <p className="text-sm text-secondary-text">{persistent ? "Match at least one invited Event, or choose a specific Event. Open a household to record an offline response." : "Confirmed means every invited event is marked Confirmed. Awaiting means at least one event has no reply yet."}</p>
           {search || rsvpFilter !== "all" || eventFilter ? <Button variant="tertiary" onClick={clearFilters}>Clear filters</Button> : null}
         </section>
         {saved && !panel ? <p role="status" className="text-sm font-semibold">Household saved{persistent ? "." : " for this demo view."}</p> : null}
@@ -181,7 +190,7 @@ export function GuestsPage({ initialEventId = "", initialHouseholds }: { initial
           {saved && panel?.mode === "detail" ? <p role="status" className="text-sm font-semibold">Household saved{persistent ? "." : " for this demo view."}</p> : null}
           {panel?.mode === "add" || (panel?.mode === "edit" && selected) ? (
             <HouseholdForm persistent={persistent} key={panel.mode === "add" ? "add" : selected?.id} household={panel.mode === "edit" ? selected : undefined} events={events} onSave={saveHousehold} onCancel={() => panel.mode === "edit" && selected ? openPanel({ mode: "detail", id: selected.id }) : setPanel(null)} />
-          ) : selected ? <HouseholdDetail key={selected.id} persistent={persistent} household={selected} events={events} onEdit={() => openPanel({ mode: "edit", id: selected.id })} onDelete={persistent ? () => removeHousehold(selected.id) : undefined} /> : null}
+          ) : selected ? <HouseholdDetail key={selected.id} weddingId={wedding?.id} defaultDeadline={wedding?.rsvpDefaultDeadline ?? undefined} onRefresh={() => refreshHousehold(selected.id)} persistent={persistent} household={selected} events={events} onEdit={() => openPanel({ mode: "edit", id: selected.id })} onDelete={persistent ? () => removeHousehold(selected.id) : undefined} /> : null}
         </div>
       </dialog>
     </>

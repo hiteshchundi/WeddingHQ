@@ -1,0 +1,10 @@
+import { z } from "zod";
+import { objectIdSchema } from "./household-validation";
+import { listQuerySchema } from "./validation";
+export const bearerPattern = /^[A-Za-z0-9_-]{43}$/;
+export const guestSessionSchema = z.strictObject({ token: z.string().regex(bearerPattern, "Invalid invitation.") });
+export const guestLinkSchema = z.strictObject({ sendEmail: z.boolean().default(true), showLink: z.boolean().default(false) });
+export const rsvpSchema = z.strictObject({ response: z.enum(["YES", "NO", "MAYBE"]), adultsAttending: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER), childrenAttending: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER) });
+export const rsvpNoteSchema = z.strictObject({ internalNote: z.string().trim().max(5000) });
+export const rsvpQuerySchema = listQuerySchema.extend({ eventId: objectIdSchema.optional(), householdId: objectIdSchema.optional(), response: z.enum(["YES", "NO", "MAYBE"]).optional() });
+export type RsvpInput = z.infer<typeof rsvpSchema>;

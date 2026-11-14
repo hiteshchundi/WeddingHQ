@@ -1,18 +1,5 @@
-import { GuestWeddingPage } from "../../../components/wedding/guest-wedding-page";
-import { guestDemo } from "../../../fixtures/guest-demo";
-
-export default async function GuestRoute({ params, searchParams }: {
-  params: Promise<{ token: string }>;
-  searchParams: Promise<{ preview?: string; household?: string }>;
-}) {
-  const [{ token }, query] = await Promise.all([params, searchParams]);
-  // Fixture previews only: no token lookup, authorization, session or cookie.
-  // No development controls are rendered in the guest interface.
-  const development = process.env.NODE_ENV === "development";
-  const data = guestDemo({
-    householdId: development && query.household === "sharma" ? "sharma" : "reddy",
-    closed: development && query.preview === "closed",
-    empty: development && query.preview === "empty",
-  });
-  return <GuestWeddingPage key={`${token}-${data.household.id}-${query.preview ?? "default"}`} data={data} />;
+import Link from "next/link";
+import { Card } from "../../../components/ui/card";
+export default function InvalidGuestInvitation() {
+  return <main className="mx-auto max-w-xl px-6 py-16"><Card><h1 className="font-editorial text-3xl">Invitation unavailable</h1><p className="mt-4">This invitation is invalid or no longer active. Ask the organiser for a new private link.</p><Link href="/guest" className="mt-4 inline-flex min-h-[44px] items-center underline">Return to your guest page</Link></Card></main>;
 }

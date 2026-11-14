@@ -179,6 +179,7 @@ export type WeddingEvent = {
 // Presentation-only household fields; event assignments and RSVP responses
 // remain separate resources when real API integration begins.
 export type Household = {
+  rsvps?: import("../types/guest").AdminRsvpDTO[];
   id: string;
   householdName: string;
   primaryContactName: string;
@@ -189,7 +190,7 @@ export type Household = {
   memberNames: string[];
   notes: string;
   invitedEventIds: string[];
-  rsvpSummary: Record<string, "Confirmed" | "Awaiting" | "Declined">;
+  rsvpSummary: Record<string, "Confirmed" | "Awaiting" | "Declined" | "Maybe">;
   guestLinkStatus: "Active" | "Not sent" | "Revoked";
 };
 

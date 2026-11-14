@@ -6,6 +6,8 @@ import { EventModel } from "../models/event";
 import { EventInvitationModel } from "../models/event-invitation";
 import { HouseholdModel, type HouseholdRecord } from "../models/household";
 import type { HouseholdDTO } from "../types/household";
+import { RsvpModel } from "../models/rsvp";
+import { adminRsvpDTO } from "../lib/rsvp-view";
 import { accessWedding } from "./weddings";
 
 export async function initHouseholds() { await Promise.all([HouseholdModel.init(), EventInvitationModel.init()]); }
@@ -13,11 +15,11 @@ export function householdDTO(record: HydratedDocument<HouseholdRecord>, ids: str
   return { id: String(record._id), householdName: record.householdName,
     primaryContact: { ...(record.primaryContact?.name ? { name: record.primaryContact.name } : {}), ...(record.primaryContact?.email ? { email: record.primaryContact.email } : {}), ...(record.primaryContact?.phone ? { phone: record.primaryContact.phone } : {}) },
     adultsInvited: record.adultsInvited, childrenInvited: record.childrenInvited,
-    members: record.members.map(({ name }) => ({ name })), notes: record.notes ?? null, invitedEventIds: ids };
+    members: record.members.map(({ name }) => ({ name })), notes: record.notes ?? null, invitedEventIds: ids, guestAccessStatus: record.guestAccess?.status ?? null };
 }
 export async function scopedHousehold(weddingId: string, householdId: string, session?: ClientSession) {
   assertId(householdId);
-  const household = await HouseholdModel.findOne({ _id: householdId, weddingId }).session(session ?? null);
+  const household = await HouseholdModel.findOne({ _id: householdId, weddingId }).select("+guestAccess").session(session ?? null);
   if (!household) throw new ApiError(404, "NOT_FOUND", "Household not found.");
   return household;
 }
@@ -40,33 +42,47 @@ export async function getHousehold(weddingId: string, householdId: string) {
   await accessWedding(weddingId, true);
   const household = await scopedHousehold(weddingId, householdId);
   const invites = await EventInvitationModel.find({ weddingId, householdId, status: "ACTIVE" }).select("eventId");
-  return householdDTO(household, invites.map((item) => String(item.eventId)));
+  const rsvps = await RsvpModel.find({ weddingId, householdId, eventId: { $in: invites.map((item) => item.eventId) } });
+  return { ...householdDTO(household, invites.map((item) => String(item.eventId))), rsvps: rsvps.map(adminRsvpDTO) };
 }
 async function householdFilter(weddingId: string, query: Partial<HouseholdQuery>) {
-  if (query.rsvpResponse && query.rsvpResponse !== "AWAITING") throw new ApiError(422, "RSVP_NOT_CONNECTED", "RSVP response filtering is not connected yet.");
+
   let ids: mongoose.Types.ObjectId[] | undefined;
   if (query.eventId) {
     if (!await EventModel.exists({ _id: query.eventId, weddingId })) throw new ApiError(404, "NOT_FOUND", "Event not found.");
     ids = await EventInvitationModel.distinct("householdId", { weddingId, eventId: query.eventId, status: "ACTIVE" });
+  }
+  if (query.rsvpResponse) {
+    const invitations = await EventInvitationModel.find({ weddingId, status: "ACTIVE", ...(query.eventId ? { eventId: query.eventId } : {}) });
+    const replies = await RsvpModel.find({ weddingId, ...(query.eventId ? { eventId: query.eventId } : {}) });
+    const matching = invitations.filter((invitation) => {
+      const reply = replies.find((row) => String(row.householdId) === String(invitation.householdId) && String(row.eventId) === String(invitation.eventId));
+      return query.rsvpResponse === "AWAITING" ? !reply : reply?.response === query.rsvpResponse;
+    }).map((invitation) => invitation.householdId);
+    ids = ids ? matching.filter((id) => ids!.some((existing) => existing.equals(id))) : matching;
   }
   const literal = query.q?.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return { weddingId, ...(ids ? { _id: { $in: ids } } : {}), ...(literal ? { $or: ["householdName", "primaryContact.name", "primaryContact.email", "primaryContact.phone"].map((field) => ({ [field]: { $regex: literal, $options: "i" } })) } : {}) };
 }
 async function addAssignments(weddingId: string, records: HydratedDocument<HouseholdRecord>[]) {
   const invites = await EventInvitationModel.find({ weddingId, householdId: { $in: records.map((row) => row._id) }, status: "ACTIVE" }).select("eventId householdId");
-  return records.map((row) => householdDTO(row, invites.filter((invitation) => String(invitation.householdId) === String(row._id)).map((invitation) => String(invitation.eventId))));
+  const replies = await RsvpModel.find({ weddingId, householdId: { $in: records.map((row) => row._id) } });
+  return records.map((row) => {
+    const eventIds = invites.filter((invitation) => String(invitation.householdId) === String(row._id)).map((invitation) => String(invitation.eventId));
+    return { ...householdDTO(row, eventIds), rsvps: replies.filter((reply) => String(reply.householdId) === String(row._id) && eventIds.includes(String(reply.eventId))).map(adminRsvpDTO) };
+  });
 }
 export async function listHouseholds(weddingId: string, query: HouseholdQuery) {
   await accessWedding(weddingId, true);
   const filter = await householdFilter(weddingId, query);
   const [records, total] = await Promise.all([
-    HouseholdModel.find(filter).sort({ householdName: 1, _id: 1 }).skip((query.page - 1) * query.limit).limit(query.limit), HouseholdModel.countDocuments(filter),
+    HouseholdModel.find(filter).select("+guestAccess").sort({ householdName: 1, _id: 1 }).skip((query.page - 1) * query.limit).limit(query.limit), HouseholdModel.countDocuments(filter),
   ]);
   return { data: await addAssignments(weddingId, records), meta: { page: query.page, limit: query.limit, total, totalPages: Math.ceil(total / query.limit) } };
 }
 export async function getWeddingHouseholds(weddingId: string, query: Partial<HouseholdQuery> = {}) {
   await accessWedding(weddingId, true);
-  const records = await HouseholdModel.find(await householdFilter(weddingId, query)).sort({ householdName: 1, _id: 1 });
+  const records = await HouseholdModel.find(await householdFilter(weddingId, query)).select("+guestAccess").sort({ householdName: 1, _id: 1 });
   return addAssignments(weddingId, records);
 }
 // Used inside both the ordinary save transaction and the import transaction.

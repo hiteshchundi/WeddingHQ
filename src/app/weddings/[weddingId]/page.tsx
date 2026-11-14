@@ -7,6 +7,7 @@ import { UpcomingEvents } from "../../../components/wedding/upcoming-events";
 import { Metric } from "../../../components/wedding/metric";
 import { weddingFixture } from "../../../fixtures/wedding";
 import { expenseTotals, formatMoney } from "../../../components/wedding/money";
+import { getWeddingHouseholds } from "../../../services/households";
 import { getWedding } from "../../../services/weddings";
 import { pageData } from "../../../lib/page-access";
 import { eventDate } from "../../../components/wedding/event-format";
@@ -21,6 +22,10 @@ export default async function WeddingPage({
   const { identity, summary, attention, recentActivity } = weddingFixture;
   const spending = expenseTotals(weddingFixture.expenses);
   const wedding = weddingId === "demo" ? undefined : await pageData(() => getWedding(weddingId));
+
+  const households = wedding ? await pageData(() => getWeddingHouseholds(weddingId)) : [];
+  const confirmed = households.filter((row) => row.rsvps?.some((rsvp) => rsvp.response === "YES")).length;
+  const awaiting = households.filter((row) => row.invitedEventIds.some((id) => !row.rsvps?.some((rsvp) => rsvp.eventId === id))).length;
 
   return (
     <>
@@ -39,10 +44,10 @@ export default async function WeddingPage({
         </section>
 
         <section aria-labelledby="summary-title">
-          {wedding ? <p className="mb-4 text-sm text-secondary-text">Prototype data below: RSVP totals, Tasks, Expenses, Photos, attention items and activity. Wedding details, Events and Households use saved data.</p> : null}
+          {wedding ? <p className="mb-4 text-sm text-secondary-text">Tasks, Expenses, Photos and recent activity still use prototype data. Wedding details, Events, Households and RSVP use saved data.</p> : null}
           <h2 id="summary-title" className="sr-only">Wedding summary</h2>
           <dl className="grid grid-cols-2 gap-6 border-y border-border py-6 lg:grid-cols-4">
-            <Metric value={summary.guestsConfirmed} label="Guests confirmed" detail={`${summary.householdsAwaiting} awaiting`} />
+            <Metric value={wedding ? confirmed : summary.guestsConfirmed} label={wedding ? "Confirmed households" : "Guests confirmed"} detail={`${wedding ? awaiting : summary.householdsAwaiting} awaiting${wedding ? " · per invited Event" : ""}`} />
             <Metric value={summary.tasksRemaining} label="Tasks remaining" detail={`${summary.tasksOverdue} overdue · wedding snapshot`} />
             <Metric value={formatMoney(spending.actual, true)} label="Actual spend" detail={`${formatMoney(spending.estimated, true)} estimated`} />
             <Metric value={summary.photosAwaitingReview} label="Photos waiting" detail="for review" />
@@ -60,9 +65,9 @@ export default async function WeddingPage({
                 <AttentionItem
                   key={item.id}
                   itemId={item.id}
-                  issue={item.issue}
-                  action={item.action}
-                  href={item.available ? `${basePath}/${item.destination}` : undefined}
+                  issue={wedding && item.id === "awaiting-rsvp" ? `${awaiting} households have an unanswered Event` : item.issue}
+                  action={wedding && item.id === "awaiting-rsvp" ? "View RSVPs" : item.action}
+                  href={item.available ? `${basePath}/${wedding && item.id === "awaiting-rsvp" ? "guests" : item.destination}` : undefined}
                 />
               ))}
             </ul>

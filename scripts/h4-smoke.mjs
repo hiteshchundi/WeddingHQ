@@ -112,7 +112,7 @@ try {
   assert.equal((await request(creator, `${path}/${household.id}`)).data.householdName, householdBody.householdName);
   await request(creator, invitationsPath, "POST", { eventIds: [foreignEvent.id] }, 422);
   await request(creator, path, "POST", householdBody, 403, { origin: "https://unrelated.invalid" });
-  await request(creator, `${path}?rsvpResponse=YES`, "GET", undefined, 422);
+  await request(creator, `${path}?rsvpResponse=YES`, "GET", undefined, 200);
 
   stage = "actual CSV/XLSX files and zero-write preview";
   directory = await mkdtemp(join(tmpdir(), "weddinghq-h4-smoke-"));

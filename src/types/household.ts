@@ -1,4 +1,5 @@
 import type { PreviewRow } from "../lib/guest-spreadsheet";
+import type { AdminRsvpDTO } from "./guest";
 export type HouseholdDTO = {
   id: string; householdName: string;
   primaryContact: { name?: string; email?: string; phone?: string };
@@ -6,6 +7,8 @@ export type HouseholdDTO = {
   members: { name: string }[]; notes: string | null;
   // Derived from EventInvitation; never embedded in the Household document.
   invitedEventIds: string[];
+  guestAccessStatus?: "ACTIVE" | "REVOKED" | null;
+  rsvps?: AdminRsvpDTO[];
 };
 export type ImportPreviewDTO = {
   importId: string; format: "CSV" | "XLSX"; previewProof: string;
